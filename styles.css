@@ -1795,14 +1795,22 @@ a {
 /* Stack the marks below 780px: side by side they lose the icon or wrap the
    label to four lines, and the label is the content. */
 @media (max-width: 780px) {
+  /* Pulled out through the band's gutter so the hairlines run the full width
+     of the screen; the gutter is given back on each row so the content never
+     touches the edge. */
   .ethos__proof {
     grid-template-columns: minmax(0, 1fr);
+    margin-inline: calc(var(--gutter) * -1);
   }
 
+  /* Stacked, each mark is a full-width row: the icon holds the left edge and
+     the label takes the whole rest of the row, so the hairlines read as rules
+     across the band rather than as a narrow centred column. */
   .ethos__mark {
     justify-content: flex-start;
-    gap: 18px;
-    padding: 20px 0;
+    gap: 24px;
+    width: 100%;
+    padding: 26px var(--gutter);
     border-left: 0;
     border-top: 1px solid var(--ethos-rule);
   }
@@ -1818,6 +1826,23 @@ a {
 
   .ethos__icon {
     width: 42px;
+  }
+
+  /* The label takes the rest of the row, and the authored break is dropped:
+     stacked, the row is wide enough that the phrase can run on and only wrap
+     if it truly has to, instead of being forced into two short lines. */
+  .ethos__label {
+    flex: 1;
+  }
+
+  .ethos__label br {
+    display: none;
+  }
+
+  /* The statement is the band's only display type; at this width it can take
+     a step up without crowding the authored line breaks. */
+  .ethos__title {
+    font-size: clamp(26px, 8.5vw, 38px);
   }
 }
 
