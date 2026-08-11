@@ -26,13 +26,24 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
-/* The horizontal product rail overflows its box; clip sideways so the page
-   itself never pans. `clip` (not `hidden`) keeps sticky/scroll behaviour intact. */
+/* The horizontal product rails overflow their boxes; lock the page sideways so
+   it can never be dragged. `hidden` (not `clip`) on BOTH <html> and <body>:
+   mobile Safari/Chrome do not reliably honour `clip` on the viewport, which let
+   the whole page pan right on phones. Nothing on this page is `position:
+   sticky`, so the usual downside of `hidden` does not apply here.
+   `overscroll-behavior-x: none` stops a rail swipe from chaining to the page. */
 body {
   margin: 0;
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
   color: var(--ink);
   background: var(--ivory);
   font-family: "DM Sans", Arial, sans-serif;
