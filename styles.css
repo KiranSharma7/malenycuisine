@@ -1111,6 +1111,13 @@ a {
   padding: 4px var(--gutter) 22px;
   list-style: none;
   overflow-x: auto;
+  /* `overflow-x: auto` clips what you SEE, but the cards still counted towards
+     the document's scrollable width — the root reported 4759px on a 414px
+     phone. iOS Safari then let the whole page be dragged sideways, and it
+     ignores `overflow-x: hidden` on <html>/<body>, so no page-level guard could
+     stop it. `contain: paint` keeps the cards out of the document's scroll area
+     entirely while the rail itself still scrolls and snaps normally. */
+  contain: paint;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scroll-padding-left: var(--gutter);
@@ -1473,6 +1480,8 @@ a {
     margin: 0 calc(var(--gutter) * -1);
     padding: 2px var(--gutter);
     overflow-x: auto;
+    /* Same reason as .collection__rail. */
+    contain: paint;
     scrollbar-width: none;
   }
 
@@ -2075,6 +2084,9 @@ a {
    into the cream instead of being guillotined by the viewport. */
 .recipes__viewport {
   overflow: hidden;
+  /* Same reason as .collection__rail: keep the marquee out of the document's
+     scrollable width so the page cannot be dragged sideways on iOS. */
+  contain: paint;
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent 0,
