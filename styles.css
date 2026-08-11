@@ -30,6 +30,10 @@ html {
   max-width: 100%;
   overflow-x: hidden;
   overscroll-behavior-x: none;
+  /* Chrome on Android inflates text in long blocks ("font boosting"), which can
+     push a line wider than the screen and make the page pannable. Pin it. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* The horizontal product rails overflow their boxes; lock the page sideways so

@@ -1912,5 +1912,88 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- TEMPORARY overflow debugger. Delete once the mobile pan bug is found. -->
+    <script>
+      (function () {
+        var box = document.createElement("pre");
+        box.style.cssText =
+          "position:fixed;z-index:99999;top:0;left:0;right:0;max-height:50vh;overflow:auto;" +
+          "margin:0;padding:8px;font:11px/1.35 monospace;background:#000;color:#0f0;white-space:pre-wrap;";
+        document.body.appendChild(box);
+
+        function inScroller(node) {
+          var p = node.parentElement;
+          while (p) {
+            if (getComputedStyle(p).overflowX !== "visible") return true;
+            p = p.parentElement;
+          }
+          return false;
+        }
+
+        function label(el) {
+          return (
+            el.tagName.toLowerCase() +
+            "." + String(el.className || "").split(" ").filter(Boolean).slice(0, 2).join(".")
+          );
+        }
+
+        function report() {
+          var de = document.documentElement;
+          var vw = de.clientWidth;
+          var vv = window.visualViewport;
+          var hits = [];
+
+          // 1. element boxes that stick out
+          document.querySelectorAll("body *").forEach(function (el) {
+            if (el === box) return;
+            var cs = getComputedStyle(el);
+            if (cs.display === "none" || cs.visibility === "hidden") return;
+            var r = el.getBoundingClientRect();
+            if (r.width === 0 || r.height === 0) return;
+            if (r.right <= vw + 1) return;
+            if (cs.position !== "fixed" && inScroller(el)) return;
+            hits.push("BOX " + label(el) + " R" + Math.round(r.right) + (cs.position === "fixed" ? " [fixed]" : ""));
+          });
+
+          // 2. text lines that spill out of their box
+          var walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          var t;
+          while ((t = walk.nextNode())) {
+            if (!t.nodeValue.trim()) continue;
+            if (box.contains(t)) continue;
+            if (inScroller(t)) continue;
+            var rg = document.createRange();
+            rg.selectNodeContents(t);
+            var rects = rg.getClientRects();
+            for (var i = 0; i < rects.length; i++) {
+              if (rects[i].right > vw + 1) {
+                hits.push("TXT " + label(t.parentElement) + " R" + Math.round(rects[i].right) + ' "' + t.nodeValue.trim().slice(0, 24) + '"');
+                break;
+              }
+            }
+          }
+
+          box.textContent = [
+            "vw=" + vw + " innerW=" + window.innerWidth +
+              " visualW=" + (vv ? Math.round(vv.width) : "?") +
+              " scale=" + (vv ? vv.scale.toFixed(2) : "?"),
+            "html.sw=" + de.scrollWidth + " body.sw=" + document.body.scrollWidth +
+              " scrollX=" + Math.round(window.scrollX) +
+              " vvLeft=" + (vv ? Math.round(vv.offsetLeft + vv.pageLeft) : "?"),
+            "OFFENDERS=" + hits.length
+          ].concat(hits.slice(0, 20)).join("\n");
+        }
+
+        report();
+        addEventListener("scroll", report, { passive: true });
+        addEventListener("resize", report);
+        addEventListener("touchend", report, { passive: true });
+        if (window.visualViewport) {
+          visualViewport.addEventListener("scroll", report);
+          visualViewport.addEventListener("resize", report);
+        }
+      })();
+    </script>
+
   </body>
 </html>
