@@ -6,6 +6,68 @@ const searchClose = document.querySelector(".search-close");
 const searchInput = document.querySelector("#site-search");
 const searchForm = document.querySelector(".search-form");
 
+/* Promotional delivery offer ------------------------------------------------
+   It appears on every page load, remains a real accessible dialog, and sends
+   the customer straight to the product collection. */
+const promotion = document.querySelector("[data-promotion]");
+
+if (promotion) {
+  const dialog = promotion.querySelector(".promotion__dialog");
+  const closeButton = promotion.querySelector("[data-promotion-close]");
+  const shopLink = promotion.querySelector("[data-promotion-shop]");
+  let previouslyFocused;
+
+  function closePromotion() {
+    promotion.classList.remove("is-visible");
+    document.body.classList.remove("promotion-open");
+
+    window.setTimeout(() => {
+      promotion.hidden = true;
+      previouslyFocused?.focus?.();
+    }, 220);
+  }
+
+  function showPromotion() {
+    previouslyFocused = document.activeElement;
+    promotion.hidden = false;
+    document.body.classList.add("promotion-open");
+    window.requestAnimationFrame(() => {
+      promotion.classList.add("is-visible");
+      closeButton.focus({ preventScroll: true });
+    });
+  }
+
+  window.setTimeout(showPromotion, 550);
+
+  closeButton.addEventListener("click", () => closePromotion());
+  shopLink.addEventListener("click", () => closePromotion());
+
+  promotion.addEventListener("click", (event) => {
+    if (event.target === promotion) closePromotion();
+  });
+
+  promotion.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closePromotion();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+    const focusable = Array.from(dialog.querySelectorAll('a[href], button:not([disabled])'));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
 const megaTrigger = document.querySelector(".has-mega > a");
 const megaMenu = document.querySelector(".mega-menu");
 let megaCloseTimer;
@@ -176,12 +238,17 @@ if (collection) {
   const nextButton = collection.querySelector("[data-rail-next]");
   const emptyMessage = collection.querySelector("[data-collection-empty]");
   const status = collection.querySelector("[data-collection-status]");
+  const shopAll = collection.querySelector("[data-shop-all]");
   const bagLink = document.querySelector(".bag-link");
   const bagCount = document.querySelector(".bag-count");
 
   const MIN_QUANTITY = 1;
   const MAX_QUANTITY = 99;
   const CONFIRM_MS = 1600;
+
+  /* The band opens on the best sellers rather than the whole catalogue: six
+     jars is a choice a visitor can make, sixteen is a list they have to read. */
+  const DEFAULT_FILTER = "best";
 
   const confirmTimers = new WeakMap();
   let statusTimer;
@@ -224,11 +291,21 @@ if (collection) {
 
   /* Filtering */
 
-  function applyFilter(slug) {
+  /* Three kinds of slug, not two: "all" is the whole catalogue, "best" reads a
+     flag set on the item rather than its category, and anything else matches a
+     category. Keeping "best" as a filter rather than a separate list means the
+     same rail, arrows and add-to-cart code serve both views. */
+  function matchesFilter(item, slug) {
+    if (slug === "all") return true;
+    if (slug === "best") return item.hasAttribute("data-bestseller");
+    return item.dataset.category === slug;
+  }
+
+  function applyFilter(slug, { silent = false } = {}) {
     let shown = 0;
 
     items.forEach((item) => {
-      const match = slug === "all" || item.dataset.category === slug;
+      const match = matchesFilter(item, slug);
       item.hidden = !match;
       if (match) shown += 1;
     });
@@ -244,11 +321,15 @@ if (collection) {
     rail.scrollTo({ left: 0, behavior: "auto" });
     updateArrows();
 
+    /* The opening filter is the page's resting state, not something the visitor
+       did, so it is not read out. Only a real change is announced. */
+    if (silent) return;
+
     const chosen = chips.find((chip) => chip.dataset.filter === slug);
     window.clearTimeout(statusTimer);
     statusTimer = window.setTimeout(() => {
       announce(
-        `${chosen ? chosen.textContent.trim() : "All jars"}: ${shown} ${shown === 1 ? "product" : "products"}.`
+        `${chosen ? chosen.textContent.trim() : "All products"}: ${shown} ${shown === 1 ? "product" : "products"}.`
       );
     }, 120);
   }
@@ -336,8 +417,20 @@ if (collection) {
     link.addEventListener("click", () => applyFilter(link.dataset.jumpFilter));
   });
 
+  /* "Shop all products" is a real link to the shop page for the no-JavaScript
+     case. While the whole catalogue still lives in this rail, take it over and
+     drop the filter instead of leaving the page. */
+  if (shopAll) {
+    shopAll.addEventListener("click", (event) => {
+      event.preventDefault();
+      applyFilter("all");
+    });
+  }
+
   items.forEach((item) => setQuantity(item.querySelector(".product-card"), MIN_QUANTITY));
-  updateArrows();
+
+  /* applyFilter calls updateArrows itself, so this is also the arrows' setup. */
+  applyFilter(DEFAULT_FILTER, { silent: true });
 }
 
 /* Band reveal — the content settles upward once, the first time the band
@@ -376,39 +469,39 @@ function armBandReveal(band) {
 }
 
 if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  armBandReveal(document.querySelector(".mission"));
   armBandReveal(document.querySelector(".ethos"));
 }
 
 /* ---------------------------------------------------------------
-   Recipes strip — the marquee runs from CSS alone, so it still moves
-   without this file. Script only does the two things CSS cannot: hold
-   the drift at one constant speed whatever the tile size works out to,
-   and give the visitor a real stop button.
+   Marquees — the recipes strip and the footer's assurance bar. Both
+   drift from CSS alone, so they still move without this file. Script
+   only does the two things CSS cannot: hold the drift at one constant
+   speed whatever the content measures out to, and give the visitor a
+   real stop button (WCAG 2.2.2).
    --------------------------------------------------------------- */
 
-const recipes = document.querySelector(".recipes");
+const calmMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-if (recipes) {
-  const track = recipes.querySelector("[data-recipes-track]");
-  const pauseButton = recipes.querySelector("[data-recipes-pause]");
-  const calmMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+function armMarquee(root, options) {
+  if (!root) return;
 
-  /* Pixels per second. The tiles are fluid, so a fixed duration would drift
-     faster on a wide screen than a narrow one; the duration is derived from
-     the measured width instead so reading speed stays the same everywhere. */
-  const DRIFT_SPEED = 42;
+  const track = root.querySelector(options.trackSelector);
+  const pauseButton = root.querySelector(options.pauseSelector);
 
   function syncDuration() {
     if (!track || calmMotion.matches) return;
 
-    /* The loop distance is one half of the strip plus the gap that follows
-       it — the same half-gap correction the keyframe makes. */
+    /* The loop distance is one copy of the content plus the gap that follows
+       it — the same correction the keyframe makes, and the reason `copies` has
+       to match the number of times the set is repeated in the markup. */
     const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
-    const distance = (track.scrollWidth + gap) / 2;
+    const distance = (track.scrollWidth + gap) / options.copies;
     if (distance <= 0) return;
 
-    recipes.style.setProperty("--marquee-duration", `${(distance / DRIFT_SPEED).toFixed(2)}s`);
+    root.style.setProperty(
+      options.durationProperty,
+      `${(distance / options.speed).toFixed(2)}s`
+    );
   }
 
   let resizeTimer;
@@ -417,8 +510,8 @@ if (recipes) {
     resizeTimer = window.setTimeout(syncDuration, 150);
   });
 
-  /* Images arrive after first paint and change the track width, so measure
-     again once they have all landed. */
+  /* Images and webfonts arrive after first paint and change the track width,
+     so measure again once they have all landed. */
   window.addEventListener("load", syncDuration);
   if (calmMotion.addEventListener) calmMotion.addEventListener("change", syncDuration);
   syncDuration();
@@ -427,15 +520,37 @@ if (recipes) {
     pauseButton.addEventListener("click", () => {
       const paused = pauseButton.getAttribute("aria-pressed") !== "true";
 
-      recipes.classList.toggle("is-paused", paused);
+      root.classList.toggle("is-paused", paused);
       pauseButton.setAttribute("aria-pressed", String(paused));
       pauseButton.setAttribute(
         "aria-label",
-        paused ? "Play the moving recipe strip" : "Pause the moving recipe strip"
+        `${paused ? "Play" : "Pause"} the moving ${options.subject}`
       );
     });
   }
 }
+
+/* Pixels per second. The content is fluid, so a fixed duration would drift
+   faster on a wide screen than a narrow one; the duration is derived from the
+   measured width instead so reading speed stays the same everywhere. The bar
+   runs slower than the recipe tiles: its claims are read, not glanced at. */
+armMarquee(document.querySelector(".recipes"), {
+  trackSelector: "[data-recipes-track]",
+  pauseSelector: "[data-recipes-pause]",
+  durationProperty: "--marquee-duration",
+  copies: 2,
+  speed: 42,
+  subject: "recipe strip",
+});
+
+armMarquee(document.querySelector(".assurance"), {
+  trackSelector: "[data-assurance-track]",
+  pauseSelector: "[data-assurance-pause]",
+  durationProperty: "--assurance-duration",
+  copies: 3,
+  speed: 60,
+  subject: "information bar",
+});
 
 /* ---------------------------------------------------------------------------
    Footer — keep the copyright year current without editing the markup.

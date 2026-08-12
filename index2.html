@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
+      content="Maleny Cuisine — Australian made, family owned since 1988. Handcrafted chutneys, relishes, sauces and dressings from Queensland's Sunshine Coast. Free shipping over $60."
     />
-    <title>Maleny Cuisine — Handcrafted on the Sunshine Coast</title>
+    <title>Maleny Cuisine — Australian Made, Handcrafted Since 1988</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,6 +20,60 @@
 
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div class="promotion" data-promotion hidden>
+      <section
+        class="promotion__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="promotion-title"
+        aria-describedby="promotion-description"
+      >
+        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M13 13l22 22M35 13 13 35" />
+          </svg>
+        </button>
+
+        <div class="promotion__copy">
+          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
+
+          <div class="promotion__delivery">
+            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
+              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
+              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
+              <circle cx="48" cy="64" r="11" />
+              <circle cx="88" cy="64" r="11" />
+            </svg>
+            <div>
+              <p class="promotion__offer">Free delivery</p>
+              <p class="promotion__threshold">On orders over $60</p>
+            </div>
+          </div>
+
+          <p class="promotion__description" id="promotion-description">
+            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
+            products and enjoy free delivery.
+          </p>
+
+          <a class="promotion__cta" href="#shop" data-promotion-shop>Shop now</a>
+        </div>
+
+        <div class="promotion__visual" aria-hidden="true">
+          <img
+            class="promotion__scene promotion__scene--desktop"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
+            alt=""
+          />
+          <img
+            class="promotion__scene promotion__scene--mobile"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
+            alt=""
+          />
+          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
+        </div>
+      </section>
+    </div>
 
     <header class="site-header">
       <div class="announcement">
@@ -87,13 +141,13 @@
         <div class="mega-menu__inner">
           <div class="mega-menu__column">
             <ul class="mega-links">
-              <li><a href="#best-sellers">Best Sellers</a></li>
+              <li><a href="#best-sellers" data-jump-filter="best">Best Sellers</a></li>
               <li><a href="#chutneys">Chutneys</a></li>
               <li><a href="#relishes">Relishes</a></li>
               <li><a href="#sauces">Sauces</a></li>
               <li><a href="#dressings">Salad Dressings</a></li>
               <li><a href="#jams">Jams &amp; Marmalades</a></li>
-              <li><a href="#shop">Shop All</a></li>
+              <li><a href="#shop" data-jump-filter="all">Shop All</a></li>
             </ul>
           </div>
 
@@ -199,7 +253,7 @@
         <div class="drawer-panel is-active" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop">
           <ul class="drawer-list">
             <li>
-              <a class="drawer-card" href="#best-sellers">
+              <a class="drawer-card" href="#best-sellers" data-jump-filter="best">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Best Sellers</span>
                   <span class="drawer-card__sub">The best of Maleny Cuisine</span>
@@ -265,7 +319,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="#shop">
+              <a class="drawer-card" href="#shop" data-jump-filter="all">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Shop All</span>
                   <span class="drawer-card__sub">Browse the full range</span>
@@ -345,18 +399,35 @@
     <main id="main-content">
       <section class="hero hero--dark" aria-labelledby="hero-title">
         <div class="hero__content">
-          <h1 id="hero-title">Handcrafted flavour,<br />made on the<br />Sunshine Coast.</h1>
-          <a class="button" href="#shop">Shop the range</a>
+          <p class="hero__eyebrow">Sunshine Coast, Queensland</p>
+
+          <!-- The authored breaks are held to the same longest line as before
+               ("Handcrafted flavour,"), so nothing here is wider than what the
+               mobile type ramp is already proven against. -->
+          <h1 id="hero-title">Handcrafted flavour,<br />made in Australia<br />since 1988.</h1>
+
+          <div class="hero__actions">
+            <a class="button" href="#best-sellers" data-jump-filter="best">Shop our range</a>
+            <a class="button button--quiet" href="#story">Our story</a>
+          </div>
         </div>
       </section>
 
       <section class="collection" id="shop" aria-labelledby="collection-title">
-        <div class="collection__head">
-          <h2 class="collection__title" id="collection-title">Shop Gourmet Condiments</h2>
+        <div class="collection__head" id="best-sellers">
+          <h2 class="collection__title" id="collection-title">Our Best Sellers</h2>
         </div>
 
         <div class="collection__controls">
           <div class="collection__filters" role="group" aria-label="Filter products by category">
+            <!-- The page opens on this chip, so the rail starts at six jars
+                 rather than the whole catalogue. Script sets its active state. -->
+            <button
+              class="collection-chip"
+              type="button"
+              data-filter="best"
+              aria-pressed="false"
+            >Best Sellers</button>
             <button
               class="collection-chip"
               type="button"
@@ -400,9 +471,10 @@
         </div>
 
         <ul class="collection__rail" data-rail>
-        <li class="collection__item" data-category="chutneys">
+        <li class="collection__item" data-category="chutneys" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-1-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Apple-Fig-And-Ginger-hutney.jpg"
@@ -467,9 +539,10 @@
           </article>
         </li>
 
-        <li class="collection__item" data-category="chutneys">
+        <li class="collection__item" data-category="chutneys" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-2-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Homestyle-Tomato-Chutney_.png"
@@ -527,9 +600,10 @@
           </article>
         </li>
 
-        <li class="collection__item" data-category="chutneys">
+        <li class="collection__item" data-category="chutneys" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-3-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Spicy-Tomato-Relish.jpg"
@@ -587,9 +661,10 @@
           </article>
         </li>
 
-        <li class="collection__item" data-category="chutneys">
+        <li class="collection__item" data-category="chutneys" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-4-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Mediterranean-Eggplant-Relish.png"
@@ -709,9 +784,10 @@
           </article>
         </li>
 
-        <li class="collection__item" data-category="sauces">
+        <li class="collection__item" data-category="sauces" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-6-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Sweet-Chilli-Sauce.jpg"
@@ -953,9 +1029,10 @@
           </article>
         </li>
 
-        <li class="collection__item" data-category="jams">
+        <li class="collection__item" data-category="jams" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-10-name">
             <div class="product-card__media">
+              <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
                 src="assets/images/Caramelised-Onion.jpg"
@@ -1383,9 +1460,18 @@
           <a href="#shop-all">browse every jar</a>.
         </p>
 
+        <!-- A real link to the future shop page, so it still goes somewhere with
+             JavaScript off. While the catalogue lives in this rail, the script
+             intercepts it and drops the filter instead. -->
+        <div class="collection__foot">
+          <a class="button collection__all" href="#shop-all" data-shop-all>Shop all products</a>
+        </div>
+
         <p class="visually-hidden" aria-live="polite" data-collection-status></p>
       </section>
 
+      <!-- The brand proof answers the products above it: who makes this, where,
+           and since when, once the visitor has seen what is for sale. -->
       <section class="ethos" id="story" aria-labelledby="ethos-title">
         <ul class="ethos__proof">
           <li class="ethos__mark" data-reveal>
@@ -1410,7 +1496,7 @@
                 />
               </svg>
             </span>
-            <span class="ethos__label">Incredibly <br /> delicious</span>
+            <span class="ethos__label">Handcrafted <br /> in small batches</span>
           </li>
 
           <li class="ethos__mark" data-reveal>
@@ -1427,22 +1513,27 @@
                 <path d="M20.8 58v-4.8a11.2 11.2 0 0 1 22.4 0V58Z" />
               </svg>
             </span>
-            <span class="ethos__label">Family owned <br /> &amp; operated</span>
+            <span class="ethos__label">Family owned <br /> since 1988</span>
           </li>
         </ul>
 
         <div class="ethos__body">
           <h2 class="ethos__title" id="ethos-title" data-reveal>
-            Proudly 100% Australian<br />owned with only the best, all<br />natural ingredients.
+            Proudly Australian owned<br />since 1988, with only the<br />best natural ingredients.
           </h2>
 
           <div class="ethos__copy" data-reveal>
-            <p>Our delicious products are made using Australian ingredients that are locally sourced.</p>
             <p>
-              Every product is made by hand with love and all are gluten free, preservative free with no
-              artificial colours.
+              Since 1988 we have made every jar by hand on Queensland&rsquo;s Sunshine Coast, using
+              Australian ingredients that are locally sourced.
             </p>
-            <p>We invite you to browse our range and try our delicious flavours.</p>
+            <!-- Regulated claim. The range-wide gluten free line must carve out the
+                 Special BBQ Sauce, which contains wheat. Do not shorten this. -->
+            <p>
+              Every product is preservative free with no artificial colours. Our range is gluten free,
+              with one exception &mdash; our Special BBQ Sauce contains wheat.
+            </p>
+            <p>Over thirty-five years on, the family and the recipes have not changed.</p>
             <p>From our pantry to yours… We hope you enjoy our unique artisan products.</p>
           </div>
         </div>
@@ -1767,48 +1858,198 @@
           <p class="pantry-cta__copy">
             Handcrafted chutneys, sauces, dressings and preserves from Maleny Cuisine.
           </p>
-          <a class="button pantry-cta__button" href="#shop">Shop the range</a>
+          <a class="button pantry-cta__button" href="#shop" data-jump-filter="all">Shop the range</a>
         </div>
-      </section>
-
-      <section class="mission" id="mission" aria-labelledby="mission-title">
-        <div class="mission__body">
-          <p class="mission__eyebrow" data-reveal>Our mission</p>
-
-          <blockquote class="mission__quote" id="mission-title" data-reveal>
-            <p>
-              &ldquo;We started Maleny Cuisine to put honest, handmade flavour back on the
-              everyday table.&rdquo;
-            </p>
-          </blockquote>
-
-          <div class="mission__sign" data-reveal>
-            <p class="mission__signature" aria-hidden="true">Marina &amp; Will</p>
-            <p class="mission__credit">Marina, Will &amp; Family &mdash; Founders</p>
-          </div>
-
-          <a class="button mission__button" href="#story" data-reveal>
-            Our story
-            <svg class="mission__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M4 12h15M13 6l6 6-6 6" />
-            </svg>
-          </a>
-        </div>
-
-        <figure class="mission__figure" data-reveal>
-          <img
-            src="assets/images/471475891_1132466684927598_2544310554581189725_n.jpeg"
-            alt="Marina, Will and family at home on the Sunshine Coast"
-            width="1437"
-            height="1450"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
       </section>
     </main>
 
     <footer class="footer footer--split">
+      <!-- The page opens on a Chocolate bar and now closes on one. Six things a
+           shopper wants settled before they leave, short enough that a normal
+           screen holds all six at once. Every claim here is documented in
+           PRODUCT.md. Nothing on this bar may become a shipping promise, a
+           rating, an award or a dietary claim — regulated dietary text has to
+           stand still on a pale ground.
+           The set is repeated three times: copies two and three are hidden from
+           assistive tech and out of the tab order, and they are in the markup so
+           the loop closes without script and never runs short on a wide screen. -->
+      <section class="assurance" aria-labelledby="assurance-title">
+        <h2 class="visually-hidden" id="assurance-title">Why shop with Maleny Cuisine</h2>
+
+        <div class="assurance__viewport">
+          <ul class="assurance__track" data-assurance-track>
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+          </ul>
+        </div>
+
+        <button
+          class="icon-button assurance__pause"
+          type="button"
+          data-assurance-pause
+          aria-pressed="false"
+          aria-label="Pause the moving information bar"
+        >
+          <span class="assurance__pause-icon assurance__pause-icon--pause" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M9.25 5.5v13M14.75 5.5v13" />
+            </svg>
+          </span>
+          <span class="assurance__pause-icon assurance__pause-icon--play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M8 5.6v12.8L18.4 12 8 5.6Z" />
+            </svg>
+          </span>
+        </button>
+      </section>
+
       <div class="split-image">
         <img
           src="assets/images/generated/footer-last-serving-three-products.png"
@@ -1823,10 +2064,7 @@
 
       <div class="split-content">
         <section class="split-lead" aria-labelledby="split-title">
-          <h2 id="split-title">Bring good flavour<br />to the table.</h2>
-          <a class="outline-button" href="#shop">
-            Shop all products <span aria-hidden="true">&rarr;</span>
-          </a>
+          <h2 id="split-title">Handmade in Australia<br />since 1988.</h2>
         </section>
 
         <div class="split-links">
@@ -1912,5 +2150,6 @@
     </footer>
 
     <script src="script.js"></script>
+
   </body>
 </html>

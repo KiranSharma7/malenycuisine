@@ -1,21 +1,97 @@
-:root {
-  --chocolate: #4a261c;
-  --chocolate-deep: #32150f;
-  --ivory: #f8f4ec;
-  --cream: #eee4d6;
-  --ink: #2d150f;
-  --lamplight: #f7ede1; /* type and strokes on dark grounds only */
-  --header-height: 122px;
+/* ===========================================================================
+   MALENY CUISINE — DESIGN TOKENS
+   Every page links this one stylesheet. Build new pages from these tokens and
+   from the "Shared page primitives" layer below; never re-type a raw value
+   that already has a token. See design-system.html for the rendered catalogue.
+   =========================================================================== */
 
-  /* Site-wide corner radius scale — keep everything on these three values */
+:root {
+  /* --- Colour -------------------------------------------------------------
+     One warm brown family at different lightnesses, plus the grounds it sits
+     on. There is no second accent hue anywhere in this system. */
+  --chocolate: #4a261c; /* structural brown: announcement bar, footer photo ground */
+  --chocolate-deep: #32150f; /* the closer: headings, borders, filled buttons, dark bands */
+  --ink: #2d150f; /* body and interface text on pale grounds */
+  --night: #171310; /* hero ground and the fallback behind hero photography */
+
+  --paper: #ffffff; /* the ground of every content band below the hero */
+  --ivory: #f8f4ec; /* the chrome ground: header, panels, footer, mobile drawer */
+  --cream: #eee4d6; /* one step down from ivory: tiles, thumbs, quiet fills */
+  --lamplight: #f7ede1; /* type and strokes on dark grounds only */
+
+  /* Two near-neutrals that only ever appear as type on a filled ground. They
+     are warmer than pure white so a filled brown button does not glare. */
+  --on-deep: #fffaf3; /* label on a filled --chocolate-deep control */
+  --on-chocolate: #fffdf8; /* label on the --chocolate announcement bar */
+  --on-lamplight: #23150f; /* label once a lamplight button fills on a dark ground */
+
+  /* Ink at reduced strength. Use these instead of writing a fresh rgba(). */
+  --ink-muted: rgba(45, 21, 15, 0.72); /* supporting copy under a heading */
+  --ink-soft: rgba(45, 21, 15, 0.65); /* placeholders, sub-labels */
+  --ink-quiet: rgba(45, 21, 15, 0.55); /* resting state of an unselected control */
+
+  /* --- Rules and edges ---------------------------------------------------- */
+  --hairline: rgba(74, 38, 28, 0.2); /* the default divider */
+  --hairline-soft: rgba(74, 38, 28, 0.12); /* an edge that should barely register */
+  --hairline-strong: rgba(74, 38, 28, 0.45); /* a card edge answering to hover */
+  --rule-on-dark: rgba(247, 237, 225, 0.16); /* dividers inside a dark band */
+
+  /* --- Type --------------------------------------------------------------- */
+  --font-display: "Libre Caslon Display", Georgia, serif;
+  --font-body: "DM Sans", Arial, sans-serif;
+  --font-script: "Mrs Saint Delafield", "Libre Caslon Display", cursive;
+
+  /* The five sizes that recur across bands. Anything else is component-local. */
+  --type-display: clamp(60px, 4.8vw, 82px); /* hero h1 only, one per page */
+  --type-section: clamp(38px, 4.2vw, 58px); /* the h2 that opens a band */
+  --type-statement: clamp(26px, 3vw, 50px); /* a centred sentence inside a band */
+  --type-lede: clamp(16px, 1.15vw, 18px); /* standing copy in a full-width band */
+  --type-body: 16px;
+
+  /* Uppercase tracking ladder — the smaller the type, the wider the track. */
+  --track-15: 0.12em;
+  --track-14: 0.11em;
+  --track-12: 0.08em;
+
+  /* --- Shape -------------------------------------------------------------- */
   --radius-sm: 2px; /* buttons, inputs, small chips */
   --radius-md: 4px; /* cards, image tiles, panels */
   --radius-pill: 999px; /* circular things only: icon hovers, badges */
 
-  /* Single fluid page gutter — header, hero and every full-width band share it */
-  --gutter: clamp(28px, 3.2vw, 64px);
+  /* --- Depth --------------------------------------------------------------
+     The system is flat at rest. Both shadows are states, never resting surfaces. */
+  --shadow-lift: 0 16px 26px -20px rgba(45, 21, 15, 0.6); /* hover on a card or tile */
+  --shadow-panel: 0 24px 40px -28px rgba(45, 21, 15, 0.45); /* a panel over the page */
+  --shadow-hero-text: 0 2px 24px rgba(0, 0, 0, 0.45); /* legibility over photography */
+  --lift: -3px; /* how far an interactive card rises */
+  --lift-button: -2px; /* how far a button rises */
 
-  --hairline: rgba(74, 38, 28, 0.2);
+  /* --- Motion -------------------------------------------------------------
+     Short and ease-only. Nothing bounces. 400ms belongs to image scale alone. */
+  --dur-fast: 160ms;
+  --dur: 200ms;
+  --dur-slow: 220ms;
+  --dur-image: 400ms;
+  --dur-reveal: 520ms;
+
+  /* --- Space --------------------------------------------------------------- */
+  --gutter: clamp(28px, 3.2vw, 64px); /* the single fluid page gutter */
+  --section-y: clamp(64px, 7.5vw, 118px); /* top padding of a content band */
+  --section-y-end: clamp(56px, 6vw, 96px); /* its bottom padding */
+  --head-gap: clamp(36px, 4vw, 64px); /* band heading down to its content */
+
+  --measure: 68ch; /* long-form reading width */
+  --measure-tight: 62ch; /* a copy column beside a heading */
+
+  /* --- Structure ----------------------------------------------------------- */
+  --header-height: 122px; /* 34px announcement + 88px nav; the hero and mega menu both measure against it */
+
+  --z-promotion: 1000;
+  --z-skip: 100;
+  --z-header: 10;
+  --z-mega: 6;
+  --z-search: 5;
+  --z-drawer: 4;
 
   color-scheme: light;
 }
@@ -24,6 +100,12 @@
   box-sizing: border-box;
 }
 
+/* The horizontal product rails overflow their boxes; lock the page sideways so
+   it can never be dragged. `hidden` (not `clip`) on BOTH <html> and <body>:
+   mobile Safari/Chrome do not reliably honour `clip` on the viewport, which let
+   the whole page pan right on phones. Nothing on this page is `position:
+   sticky`, so the usual downside of `hidden` does not apply here.
+   `overscroll-behavior-x: none` stops a rail swipe from chaining to the page. */
 html {
   scroll-behavior: smooth;
   width: 100%;
@@ -36,12 +118,6 @@ html {
   text-size-adjust: 100%;
 }
 
-/* The horizontal product rails overflow their boxes; lock the page sideways so
-   it can never be dragged. `hidden` (not `clip`) on BOTH <html> and <body>:
-   mobile Safari/Chrome do not reliably honour `clip` on the viewport, which let
-   the whole page pan right on phones. Nothing on this page is `position:
-   sticky`, so the usual downside of `hidden` does not apply here.
-   `overscroll-behavior-x: none` stops a rail swipe from chaining to the page. */
 body {
   margin: 0;
   width: 100%;
@@ -50,7 +126,7 @@ body {
   overscroll-behavior-x: none;
   color: var(--ink);
   background: var(--ivory);
-  font-family: "DM Sans", Arial, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -68,9 +144,596 @@ a {
   color: inherit;
 }
 
+/* ===========================================================================
+   SHARED PAGE PRIMITIVES
+   The classes a new page is built from. Each one is the generalised version of
+   a pattern that already recurs on the home page, so a new page picks these up
+   and lands on the same rhythm without copying a band's private CSS.
+   =========================================================================== */
+
+/* --- Bands ---------------------------------------------------------------
+   Every content band is full-bleed with the page gutter inside it. Pick a
+   ground: paper is the default for content, ivory separates two paper bands,
+   deep is the sanctioned dark band. */
+.section {
+  padding: var(--section-y) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+}
+
+.section--ivory {
+  background: var(--ivory);
+}
+
+.section--cream {
+  background: var(--cream);
+}
+
+.section--deep {
+  color: var(--lamplight);
+  background: var(--chocolate-deep);
+}
+
+/* A band that runs its own rail or marquee to the page edge: the band keeps
+   its vertical padding but hands the horizontal gutter to its children. */
+.section--bleed {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.section--bleed > .section__head,
+.section--bleed > .section__foot {
+  padding-right: var(--gutter);
+  padding-left: var(--gutter);
+}
+
+/* --- Band heading --------------------------------------------------------- */
+.section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px clamp(24px, 4vw, 64px);
+  margin-bottom: var(--head-gap);
+}
+
+.section-title {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.section--deep .section-title {
+  color: var(--lamplight);
+}
+
+/* A sentence set as display type inside a band — a quote, a claim, a promise.
+   Sits below the section title step so the band never rivals the hero. */
+.section-statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+}
+
+/* The uppercase micro line that labels a block. */
+.eyebrow {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.section--deep .eyebrow {
+  color: var(--lamplight);
+}
+
+/* Standing copy in a full-width band, where 16px looks undersized beside a
+   50px serif. Long-form article text uses .prose instead. */
+.lede {
+  max-width: var(--measure-tight);
+  margin: 0;
+  font-size: var(--type-lede);
+  line-height: 1.72;
+}
+
+/* Long-form reading: capped by measure, not by a fraction of the grid. */
+.prose {
+  max-width: var(--measure);
+  font-size: var(--type-body);
+  line-height: 1.7;
+}
+
+.prose > * {
+  margin: 0 0 1.25em;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.prose h2 {
+  margin: 1.8em 0 0.5em;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.prose h3 {
+  margin: 1.6em 0 0.4em;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.prose a {
+  text-underline-offset: 4px;
+}
+
+/* --- Underline wipe -------------------------------------------------------
+   The site's one link signature. Direction carries meaning, so it is a
+   modifier rather than a default: header nav wipes in from the right, content
+   links wipe in from the left, and a centred label opens from its middle. */
+.link-wipe {
+  position: relative;
+  text-decoration: none;
+}
+
+.link-wipe::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) ease;
+}
+
+.link-wipe--from-right::after {
+  transform-origin: right;
+}
+
+.link-wipe--from-centre::after {
+  transform-origin: center;
+}
+
+.link-wipe:hover::after,
+.link-wipe:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.link-wipe--from-right:hover::after,
+.link-wipe--from-right:focus-visible::after {
+  transform-origin: left;
+}
+
+/* --- Lift -----------------------------------------------------------------
+   Flat at rest, rises on hover. Put it on the interactive element; put
+   .lift__media on the wrapper whose image should scale with it. */
+.lift {
+  transition: transform var(--dur-slow) ease, box-shadow var(--dur-slow) ease;
+}
+
+.lift:hover,
+.lift:focus-visible,
+.lift:focus-within {
+  transform: translateY(var(--lift));
+  box-shadow: var(--shadow-lift);
+}
+
+.lift__media {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.lift__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform var(--dur-image) ease;
+}
+
+.lift:hover .lift__media img,
+.lift:focus-visible .lift__media img,
+.lift:focus-within .lift__media img {
+  transform: scale(1.04);
+}
+
+/* --- Focus ----------------------------------------------------------------
+   One visible focus ring for anything that does not define its own. */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.section--deep .focus-ring:focus-visible {
+  outline-color: var(--lamplight);
+}
+
+/* --- Reveal ---------------------------------------------------------------
+   Content settles upward once as its band comes into view. The band is only
+   armed by script when the browser can observe it and the visitor accepts
+   motion, so copy is never left invisible by a failed script. */
+.is-armed [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.is-armed.is-revealed [data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-reveal) ease-out, transform var(--dur-reveal) ease-out;
+}
+
+.is-armed.is-revealed [data-reveal-delay="1"] {
+  transition-delay: 80ms;
+}
+
+.is-armed.is-revealed [data-reveal-delay="2"] {
+  transition-delay: 160ms;
+}
+
+.is-armed.is-revealed [data-reveal-delay="3"] {
+  transition-delay: 240ms;
+}
+
+/* Delivery promotion ------------------------------------------------------- */
+body.promotion-open {
+  overflow: hidden;
+}
+
+.promotion {
+  position: fixed;
+  z-index: var(--z-promotion);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 1.3vw, 26px);
+  background: rgba(23, 19, 16, 0.46);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.promotion[hidden] {
+  display: none;
+}
+
+.promotion.is-visible {
+  opacity: 1;
+}
+
+.promotion__dialog {
+  position: relative;
+  width: min(78vw, calc(74dvh * 2.13), 1320px);
+  aspect-ratio: 2.13 / 1;
+  display: grid;
+  grid-template-columns: 52% 48%;
+  overflow: hidden;
+  border: 2px solid var(--chocolate-deep);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  background: var(--ivory);
+  transform: translateY(10px) scale(0.99);
+  transition: transform 220ms ease;
+}
+
+.promotion.is-visible .promotion__dialog {
+  transform: none;
+}
+
+.promotion__copy {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 3.2vw, 60px) clamp(24px, 3.5vw, 66px);
+}
+
+.promotion__copy h2 {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.1vw, 56px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.033em;
+}
+
+.promotion__delivery {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.25vw, 24px);
+  margin-top: clamp(32px, 4.4vh, 58px);
+  padding-bottom: clamp(24px, 3.2vh, 38px);
+  border-bottom: 1px solid rgba(50, 21, 15, 0.82);
+}
+
+.promotion__truck {
+  flex: 0 0 auto;
+  width: clamp(64px, 5.3vw, 96px);
+  color: var(--chocolate-deep);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.promotion__delivery p {
+  margin: 0;
+}
+
+.promotion__offer {
+  color: var(--chocolate-deep);
+  font-size: clamp(20px, 1.9vw, 35px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.promotion__threshold {
+  margin-top: 12px !important;
+  color: var(--night);
+  font-size: clamp(15px, 1.3vw, 25px);
+  line-height: 1.2;
+}
+
+.promotion__description {
+  margin: clamp(24px, 3.4vh, 42px) 0 0;
+  color: var(--night);
+  font-size: clamp(15px, 1.2vw, 22px);
+  line-height: 1.55;
+}
+
+.promotion__cta {
+  width: fit-content;
+  min-width: clamp(140px, 9vw, 168px);
+  min-height: clamp(38px, 5vh, 52px);
+  display: inline-grid;
+  place-items: center;
+  margin-top: clamp(28px, 4vh, 48px);
+  padding: 10px 20px;
+  border: 1px solid var(--chocolate-deep);
+  border-radius: var(--radius-sm);
+  color: var(--on-deep);
+  background: var(--chocolate-deep);
+  font-size: clamp(12px, 0.85vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.promotion__cta:hover,
+.promotion__cta:focus-visible {
+  color: var(--chocolate-deep);
+  background: var(--lamplight);
+  transform: translateY(-2px);
+}
+
+.promotion__visual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--ivory);
+}
+
+.promotion__scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.promotion__scene--desktop {
+  object-position: center;
+  transform: translateY(15%);
+}
+
+.promotion__scene--mobile {
+  display: none;
+}
+
+.promotion__logo {
+  position: absolute;
+  z-index: 2;
+  top: 8.5%;
+  left: 50%;
+  width: clamp(138px, 12.5vw, 234px);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+.promotion__close {
+  position: absolute;
+  z-index: 5;
+  top: clamp(16px, 2vw, 34px);
+  right: clamp(16px, 2vw, 34px);
+  width: clamp(42px, 3.4vw, 58px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid var(--chocolate-deep);
+  border-radius: 50%;
+  color: var(--chocolate-deep);
+  background: rgba(248, 244, 236, 0.72);
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.promotion__close svg {
+  width: 56%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+.promotion__close:hover,
+.promotion__close:hover {
+  color: var(--lamplight);
+  background: var(--chocolate-deep);
+  transform: rotate(4deg);
+}
+
+.promotion__close:focus-visible,
+.promotion__cta:focus-visible {
+  outline: 3px solid var(--ivory);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px var(--chocolate-deep);
+}
+
+@media (max-width: 1000px) {
+  .promotion {
+    padding: 8px;
+  }
+
+  .promotion__dialog {
+    width: min(94vw, calc(90dvh * 0.66), 470px);
+    aspect-ratio: 0.66;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40% 60%;
+  }
+
+  .promotion__visual {
+    grid-row: 1;
+  }
+
+  .promotion__copy {
+    grid-row: 2;
+    justify-content: space-between;
+    align-items: stretch;
+    --promo-copy-x: clamp(20px, 6vw, 32px);
+    padding: clamp(14px, 4vw, 22px) var(--promo-copy-x) 0;
+    text-align: center;
+  }
+
+  .promotion__copy h2 {
+    font-size: clamp(27px, 8.2vw, 39px);
+    line-height: 1.04;
+  }
+
+  .promotion__delivery {
+    justify-content: center;
+    gap: clamp(10px, 3vw, 16px);
+    margin-top: 0;
+    padding-bottom: clamp(10px, 2.6vw, 15px);
+  }
+
+  .promotion__truck {
+    width: clamp(54px, 16vw, 76px);
+  }
+
+  .promotion__offer {
+    font-size: clamp(18px, 5.5vw, 25px);
+    letter-spacing: 0.065em;
+  }
+
+  .promotion__threshold {
+    margin-top: 3px !important;
+    font-size: clamp(15px, 4.2vw, 19px);
+  }
+
+  .promotion__description {
+    margin-top: 0;
+    font-size: clamp(14px, 4vw, 17px);
+    line-height: 1.38;
+  }
+
+  .promotion__desktop-break {
+    display: none;
+  }
+
+  .promotion__cta {
+    width: auto;
+    min-width: 0;
+    min-height: clamp(48px, 12vw, 58px);
+    margin: 0 calc(-1 * var(--promo-copy-x));
+    border: none;
+    border-radius: 0;
+    padding: 11px 20px;
+    font-size: clamp(16px, 4.7vw, 21px);
+  }
+
+  .promotion__scene--desktop {
+    display: none;
+    transform: none;
+  }
+
+  .promotion__scene--mobile {
+    display: block;
+    object-position: center;
+  }
+
+  .promotion__logo {
+    top: clamp(18px, 5vw, 28px);
+    left: clamp(20px, 6vw, 30px);
+    width: clamp(94px, 28vw, 132px);
+    transform: none;
+  }
+
+  .promotion__close {
+    top: clamp(18px, 5vw, 28px);
+    right: clamp(18px, 5vw, 28px);
+    width: clamp(48px, 14vw, 64px);
+  }
+}
+
+@media (max-width: 1000px) and (max-height: 680px) {
+  .promotion__dialog {
+    grid-template-rows: 38% 62%;
+  }
+
+  .promotion__copy {
+    padding-top: 10px;
+  }
+
+  .promotion__copy h2 {
+    font-size: clamp(25px, 7.5vw, 33px);
+  }
+
+  .promotion__delivery {
+    padding-bottom: 8px;
+  }
+
+  .promotion__description {
+    line-height: 1.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promotion,
+  .promotion__dialog,
+  .promotion__close,
+  .promotion__cta {
+    transition: none;
+  }
+}
+
 .skip-link {
   position: fixed;
-  z-index: 100;
+  z-index: var(--z-skip);
   top: 8px;
   left: 8px;
   padding: 10px 16px;
@@ -87,7 +750,7 @@ a {
 
 .site-header {
   position: relative;
-  z-index: 10;
+  z-index: var(--z-header);
 }
 
 .announcement {
@@ -95,7 +758,7 @@ a {
   display: grid;
   place-items: center;
   padding: 0 24px;
-  color: #fffdf8;
+  color: var(--on-chocolate);
   background: var(--chocolate);
 }
 
@@ -103,7 +766,7 @@ a {
   margin: 0;
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--track-12);
   line-height: 1;
   text-transform: uppercase;
 }
@@ -270,8 +933,8 @@ a {
   max-width: 720px;
   margin: 0;
   color: var(--chocolate-deep);
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(60px, 4.8vw, 82px);
+  font-family: var(--font-display);
+  font-size: var(--type-display);
   font-weight: 400;
   letter-spacing: -0.033em;
   line-height: 1.055;
@@ -290,7 +953,7 @@ a {
   background: rgba(250, 247, 240, 0.86);
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--track-15);
   text-decoration: none;
   text-transform: uppercase;
   transition: color 200ms ease, background 200ms ease, transform 200ms ease;
@@ -298,14 +961,41 @@ a {
 
 .button:hover,
 .button:focus-visible {
-  color: #fffaf3;
+  color: var(--on-deep);
   background: var(--chocolate-deep);
   transform: translateY(-2px);
 }
 
+/* The same button with a trailing arrow: only the row layout and the arrow's
+   nudge are new. Was `.mission__button` until the mission band was retired;
+   it is a button modifier, not a band part, so it is named as one. */
+.button--arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.button__arrow {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 200ms ease;
+}
+
+.button--arrow:hover .button__arrow,
+.button--arrow:focus-visible .button__arrow {
+  transform: translateX(4px);
+}
+
 .search-panel {
   position: absolute;
-  z-index: 5;
+  z-index: var(--z-search);
   top: 34px;
   right: 0;
   left: 0;
@@ -355,7 +1045,7 @@ a {
   outline: 0;
   color: var(--ink);
   background: transparent;
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 25px;
 }
 
@@ -366,7 +1056,7 @@ a {
   background: transparent;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.11em;
+  letter-spacing: var(--track-14);
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -516,7 +1206,7 @@ a {
 
   .mobile-menu {
     position: fixed;
-    z-index: 4;
+    z-index: var(--z-drawer);
     top: var(--header-height);
     right: 0;
     bottom: 0;
@@ -576,7 +1266,7 @@ a {
   }
 
   .drawer-search input::placeholder {
-    color: rgba(45, 21, 15, 0.55);
+    color: var(--ink-quiet);
   }
 
   .drawer-search input:focus {
@@ -605,7 +1295,7 @@ a {
     height: 46px;
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
-    color: rgba(45, 21, 15, 0.55);
+    color: var(--ink-quiet);
     background: var(--cream);
     font-size: 15px;
     font-weight: 600;
@@ -673,7 +1363,7 @@ a {
   }
 
   .drawer-card__sub {
-    color: rgba(45, 21, 15, 0.65);
+    color: var(--ink-soft);
     font-size: 15px;
   }
 
@@ -696,15 +1386,15 @@ a {
     margin-top: 22px;
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--track-12);
     text-decoration: underline;
     text-underline-offset: 4px;
     text-transform: uppercase;
   }
 
   .hero {
-    min-height: calc(100svh - var(--header-height));
-    height: 760px;
+    min-height: 0;
+    height: 70svh;
     background-position: 54% center;
     background-size: auto 100%;
   }
@@ -740,7 +1430,7 @@ a {
 
 @media (max-width: 520px) {
   .hero {
-    height: 700px;
+    height: 70svh;
     background-position: 57% center;
   }
 
@@ -768,14 +1458,14 @@ a {
 
 .mega-menu {
   position: absolute;
-  z-index: 6;
+  z-index: var(--z-mega);
   top: var(--header-height);
   right: 0;
   left: 0;
   padding: clamp(34px, 3.4vw, 56px) clamp(28px, 3.2vw, 64px) clamp(30px, 3vw, 48px);
   background: var(--ivory);
   border-top: 1px solid rgba(50, 21, 15, 0.1);
-  box-shadow: 0 24px 40px -28px rgba(45, 21, 15, 0.45);
+  box-shadow: var(--shadow-panel);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
@@ -844,7 +1534,7 @@ a {
 .mega-card:hover,
 .mega-card:focus-visible {
   transform: translateY(-3px);
-  box-shadow: 0 16px 26px -20px rgba(45, 21, 15, 0.6);
+  box-shadow: var(--shadow-lift);
 }
 
 .mega-card__media {
@@ -920,7 +1610,7 @@ a {
   max-height: calc(100vh - var(--header-height));
   display: grid;
   place-items: center;
-  background-color: #171310;
+  background-color: var(--night);
   background-image: url("assets/images/generated/hero-evening-dark-stone-desktop.png");
   background-position: center;
   background-size: cover;
@@ -945,7 +1635,7 @@ a {
   max-width: none;
   margin: 0 auto;
   color: #f7ede1;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  text-shadow: var(--shadow-hero-text);
 }
 
 .hero--dark .button {
@@ -957,12 +1647,82 @@ a {
 
 .hero--dark .button:hover,
 .hero--dark .button:focus-visible {
-  color: #23150f;
+  color: var(--on-lamplight);
   background: #f7ede1;
 }
 
+/* The heritage line above the heading. Kept to the eyebrow step and tinted back
+   from the heading's lamplight so it introduces the h1 rather than competing
+   with it, but not so far back that it fails against the photograph. */
+.hero__eyebrow {
+  margin: 0 0 clamp(18px, 2.2vh, 26px);
+  color: rgba(247, 237, 225, 0.82);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: var(--shadow-hero-text);
+}
+
+/* The proposition, one sentence. Capped well inside the content column so it
+   breaks to three or four short lines under the heading instead of running the
+   full 760px and reading as body copy. */
+.hero__lede {
+  max-width: 56ch;
+  margin: clamp(20px, 2.6vh, 30px) auto 0;
+  color: rgba(247, 237, 225, 0.92);
+  font-size: var(--type-lede);
+  line-height: 1.66;
+  text-shadow: var(--shadow-hero-text);
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px clamp(16px, 2vw, 26px);
+  margin-top: clamp(26px, 3.4vh, 38px);
+}
+
+/* The buttons carry their own top margin for the single-button case; inside the
+   actions row the container owns the spacing instead. */
+.hero__actions .button {
+  margin-top: 0;
+}
+
+/* The second action is a route, not an offer. Same height and letter-spacing as
+   the primary so the pair sits on one line, but no frame and no fill, so the
+   eye still lands on "Shop best sellers" first. */
+.hero--dark .button--quiet {
+  min-width: 0;
+  padding-inline: 10px;
+  border-color: transparent;
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+}
+
+.hero--dark .button--quiet:hover,
+.hero--dark .button--quiet:focus-visible {
+  color: #f7ede1;
+  background: transparent;
+  text-decoration-thickness: 2px;
+}
+
 @media (max-width: 860px) {
+  /* Four stacked elements instead of two, so the band stops being a fixed pane
+     and becomes a normal block with a floor. It can never be shorter than the
+     viewport it used to fill, and it grows rather than clipping the buttons on
+     a short phone. */
   .hero--dark {
+    height: auto;
+    min-height: min(95vh, calc(100svh - var(--header-height)));
+    max-height: none;
+    padding: clamp(56px, 11vh, 92px) 0;
     background-image: url("assets/images/generated/hero-evening-dark-stone-mobile.png");
     background-position: center;
     background-size: cover;
@@ -975,6 +1735,19 @@ a {
   .hero--dark .hero__content {
     width: min(560px, 88%);
     padding: 0 4px;
+  }
+
+  /* Side by side the two labels would each wrap to two lines at this width.
+     Stacked, the primary sits just inside the content column so it reads as a
+     deliberate button rather than a full-bleed bar, and the quiet action sits
+     under it as a plain link. */
+  .hero__actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hero__actions .button {
+    width: min(100%, 260px);
   }
 }
 
@@ -994,7 +1767,7 @@ a {
 
 .collection {
   padding: clamp(64px, 7.5vw, 118px) 0 clamp(56px, 6vw, 96px);
-  background: #fff;
+  background: var(--paper);
 }
 
 .collection__head,
@@ -1014,8 +1787,8 @@ a {
   max-width: 16ch;
   margin: 0;
   color: var(--chocolate-deep);
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(38px, 4.2vw, 58px);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
   font-weight: 400;
   letter-spacing: -0.028em;
   line-height: 1.06;
@@ -1040,9 +1813,9 @@ a {
 .collection-chip {
   min-height: 42px;
   padding: 10px 18px;
-  border: 1px solid rgba(74, 38, 28, 0.12);
+  border: 1px solid var(--hairline-soft);
   border-radius: var(--radius-sm);
-  color: rgba(45, 21, 15, 0.62);
+  color: var(--ink-soft);
   background: rgba(238, 228, 214, 0.5);
   cursor: pointer;
   font-size: 15px;
@@ -1154,6 +1927,22 @@ a {
   text-underline-offset: 4px;
 }
 
+/* The way out of the six-jar view and into the whole catalogue. Centred under
+   the rail so it closes the band, rather than sitting in the filter row where
+   it would read as a seventh chip. */
+.collection__foot {
+  display: flex;
+  justify-content: center;
+  padding: clamp(16px, 2.2vw, 30px) var(--gutter) 0;
+}
+
+/* The same plain .button as the recipes band's "Browse recipes": outline at
+   rest, fills on hover. The band-closing CTA reads the same wherever it
+   appears, so only the built-in top margin needs clearing here. */
+.collection__all {
+  margin-top: 0;
+}
+
 /* Product card — approved composition from product-card-demo */
 
 .product-card {
@@ -1162,7 +1951,7 @@ a {
   flex: 1;
   flex-direction: column;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--paper);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-md);
   transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
@@ -1170,9 +1959,9 @@ a {
 
 .product-card:hover,
 .product-card:focus-within {
-  border-color: rgba(74, 38, 28, 0.45);
+  border-color: var(--hairline-strong);
   transform: translateY(-3px);
-  box-shadow: 0 16px 26px -20px rgba(45, 21, 15, 0.6);
+  box-shadow: var(--shadow-lift);
 }
 
 .product-card__media {
@@ -1180,8 +1969,27 @@ a {
   isolation: isolate;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  background: #ffffff;
+  background: var(--paper);
   border-bottom: 1px solid var(--hairline);
+}
+
+/* Marks the six jars that open the rail, and keeps marking them once a visitor
+   filters into a category, where the band title no longer says it for them.
+   Sits above both packshot layers, which have no z-index of their own. */
+.product-card__flag {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  left: 12px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--on-deep);
+  background: var(--chocolate-deep);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 /* Packshots are shot on white; multiply drops the white onto the card ground. */
@@ -1262,7 +2070,7 @@ a {
   color: var(--chocolate);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--track-12);
   line-height: 1.3;
   text-transform: uppercase;
 }
@@ -1338,7 +2146,7 @@ a {
   color: var(--ink);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--track-12);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -1431,7 +2239,7 @@ a {
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--track-12);
   text-transform: uppercase;
   transition: color 200ms ease, background-color 200ms ease, transform 200ms ease;
 }
@@ -1510,173 +2318,12 @@ a {
 }
 
 /* ==========================================================================
-   Mission — the founders' line in their own voice, next to the family photo.
-   Text column left, image right, both settling on the same optical centre.
-   Pure white ground: the last band on the page, and the cleanest backdrop
-   for the family photo.
-   ========================================================================== */
-.mission {
-  display: grid;
-  /* Text column runs wider than the photo — the quote is the section, the
-     photo only puts a face to it. */
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
-  align-items: center;
-  gap: clamp(36px, 4.5vw, 80px);
-  padding: clamp(56px, 6vw, 104px) var(--gutter);
-  background: #ffffff;
-}
-
-.mission__body {
-  max-width: 68ch;
-}
-
-.mission__eyebrow {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: rgba(45, 21, 15, 0.68);
-}
-
-/* The quote is the section's voice: the documented Statement step, the same
-   one the ethos band uses, filling its column edge to edge. */
-.mission__quote {
-  margin: clamp(18px, 1.8vw, 28px) 0 0;
-}
-
-.mission__quote p {
-  margin: 0;
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(26px, 3vw, 50px);
-  font-weight: 400;
-  letter-spacing: -0.028em;
-  line-height: 1.12;
-}
-
-.mission__sign {
-  margin-top: clamp(24px, 2.6vw, 40px);
-}
-
-/* Script face is used here and nowhere else — it stands in for a signed
-   name, not for reading. Hidden from assistive tech; the credit line below
-   carries the same information in plain text. */
-.mission__signature {
-  margin: 0;
-  font-family: "Mrs Saint Delafield", "Libre Caslon Display", cursive;
-  font-size: clamp(36px, 3.6vw, 52px);
-  font-weight: 400;
-  line-height: 0.9;
-  color: var(--ink);
-}
-
-.mission__credit {
-  margin: clamp(12px, 1.2vw, 18px) 0 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: rgba(45, 21, 15, 0.72);
-}
-
-/* Same button as the rest of the site; only the arrow needs a row layout. */
-.mission__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: clamp(24px, 2.4vw, 34px);
-}
-
-.mission__arrow {
-  flex: none;
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 200ms ease;
-}
-
-.mission__button:hover .mission__arrow,
-.mission__button:focus-visible .mission__arrow {
-  transform: translateX(4px);
-}
-
-.mission__figure {
-  margin: 0;
-}
-
-.mission__figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-}
-
-/* Same settle-upward reveal as the ethos band, driven by the same script. */
-.mission.is-armed [data-reveal] {
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.mission.is-armed.is-revealed [data-reveal] {
-  opacity: 1;
-  transform: none;
-  transition: opacity 520ms ease-out, transform 520ms ease-out;
-}
-
-.mission.is-armed.is-revealed .mission__quote {
-  transition-delay: 80ms;
-}
-
-.mission.is-armed.is-revealed .mission__sign {
-  transition-delay: 160ms;
-}
-
-.mission.is-armed.is-revealed .mission__button {
-  transition-delay: 220ms;
-}
-
-.mission.is-armed.is-revealed .mission__figure {
-  transition-delay: 120ms;
-}
-
-@media (max-width: 900px) {
-  .mission {
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(28px, 5vw, 44px);
-  }
-
-  /* Photo first on narrow screens: it introduces the family before the
-     quote is attributed to them. */
-  .mission__figure {
-    order: -1;
-  }
-
-  .mission__body {
-    max-width: 46ch;
-  }
-
-  /* Square everywhere; capped so the photo never eats a whole phone screen. */
-  .mission__figure img {
-    max-width: 520px;
-  }
-}
-
-/* ==========================================================================
    Ethos band — the brand's three proof marks, then the family statement.
    The one sanctioned dark band below the hero: Fig Chutney Deep, not Night
    Stone, so it stays inside the one-brown-family rule.
    ========================================================================== */
 .ethos {
-  --ethos-rule: rgba(247, 237, 225, 0.16);
+  --ethos-rule: var(--rule-on-dark);
 
   padding: clamp(40px, 4vw, 62px) var(--gutter) clamp(44px, 4.6vw, 72px);
   color: var(--lamplight);
@@ -1726,7 +2373,7 @@ a {
 .ethos__label {
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.11em;
+  letter-spacing: var(--track-14);
   line-height: 1.32;
   text-transform: uppercase;
 }
@@ -1748,8 +2395,8 @@ a {
 .ethos__title {
   align-self: center; /* centred against the taller copy column, not top-aligned */
   margin: 0 auto;
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(26px, 3vw, 50px);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
   font-weight: 400;
   letter-spacing: -0.028em;
   line-height: 1.1;
@@ -1765,7 +2412,7 @@ a {
    wording, so it stays at maximum contrast against the brown. */
 .ethos__copy p {
   margin: 0 0 1.25em;
-  font-size: clamp(16px, 1.15vw, 18px);
+  font-size: var(--type-lede);
   line-height: 1.72;
 }
 
@@ -1879,7 +2526,7 @@ a {
    ========================================================================== */
 .range {
   padding: clamp(64px, 7.5vw, 118px) var(--gutter) clamp(36px, 4vw, 64px);
-  background: #fff;
+  background: var(--paper);
 }
 
 .range__head {
@@ -1890,8 +2537,8 @@ a {
   max-width: 20ch;
   margin: 0;
   color: var(--chocolate-deep);
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(38px, 4.2vw, 58px);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
   font-weight: 400;
   letter-spacing: -0.028em;
   line-height: 1.06;
@@ -1977,7 +2624,7 @@ a {
 }
 
 .range-tile__use {
-  color: rgba(45, 21, 15, 0.72);
+  color: var(--ink-muted);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -1989,7 +2636,7 @@ a {
 
 .range-tile:hover .range-tile__frame,
 .range-tile:focus-visible .range-tile__frame {
-  box-shadow: 0 16px 26px -20px rgba(45, 21, 15, 0.6);
+  box-shadow: var(--shadow-lift);
 }
 
 .range-tile:hover .range-tile__frame img,
@@ -2054,7 +2701,7 @@ a {
      read as one gap. Split the standard section break between them instead of
      letting each pay it in full. */
   padding: clamp(28px, 3.5vw, 54px) 0 clamp(64px, 7vw, 104px);
-  background: #ffffff;
+  background: var(--paper);
 }
 
 .recipes__head {
@@ -2071,8 +2718,8 @@ a {
   max-width: 24ch;
   margin: 0;
   color: var(--chocolate-deep);
-  font-family: "Libre Caslon Display", Georgia, serif;
-  font-size: clamp(38px, 4.2vw, 58px);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
   font-weight: 400;
   letter-spacing: -0.028em;
   line-height: 1.06;
@@ -2203,7 +2850,7 @@ a {
 
 .dish:hover .dish__frame,
 .dish:focus-visible .dish__frame {
-  box-shadow: 0 16px 26px -20px rgba(45, 21, 15, 0.6);
+  box-shadow: var(--shadow-lift);
 }
 
 .dish:hover .dish__frame img,
@@ -2308,7 +2955,7 @@ a {
   }
 }
 
-/* ========================================================================== 
+/* ==========================================================================
    Pantry CTA. The approved product panorama remains a real
    image asset; every word and control stays semantic, selectable HTML.
    ========================================================================== */
@@ -2346,7 +2993,7 @@ a {
   max-width: 20ch;
   margin: 0;
   color: var(--lamplight);
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(40px, 3.2vw, 54px);
   font-weight: 400;
   letter-spacing: -0.028em;
@@ -2358,7 +3005,7 @@ a {
   max-width: 42ch;
   margin: 16px 0 0;
   color: var(--lamplight);
-  font-size: clamp(16px, 1.15vw, 18px);
+  font-size: var(--type-lede);
   line-height: 1.55;
 }
 
@@ -2371,7 +3018,7 @@ a {
 
 .pantry-cta__button:hover,
 .pantry-cta__button:focus-visible {
-  color: #23150f;
+  color: var(--on-lamplight);
   background: var(--lamplight);
 }
 
@@ -2454,6 +3101,195 @@ a {
 }
 
 /* ==========================================================================
+   Assurance bar — the footer's top rail, and the announcement bar's twin.
+   The page opens on a Chocolate bar and closes on the same one, so the shop
+   is bracketed rather than trailing off. This is chrome, not a content band:
+   it spends none of the Dark Band Allowance, and it carries no dietary text,
+   because regulated claims have to stand still on a pale ground.
+   ========================================================================== */
+.assurance {
+  /* One knob drives three things — the space between claims, the offset that
+     centres each hairline in that space, and the keyframe's seam correction.
+     Sized so all six claims sit on screen together from about 1200px up. */
+  --assurance-gap: clamp(20px, 2.4vw, 40px);
+
+  /* Lives inside the footer's two-column grid and spans the whole width. */
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: clamp(44px, 3.4vw, 50px);
+  color: var(--on-chocolate);
+  background: var(--chocolate);
+}
+
+/* Full bleed on purpose: the rail has to run out past both page edges or it
+   stops reading as endless. The mask does the leaving, so claims dissolve
+   into the brown instead of being guillotined by the viewport. */
+.assurance__viewport {
+  overflow: hidden;
+  /* Same reason as .collection__rail: keep the rail out of the document's
+     scrollable width so the page cannot be dragged sideways on iOS. */
+  contain: paint;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 clamp(16px, 2vw, 40px),
+    #000 calc(100% - clamp(16px, 2vw, 40px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 clamp(16px, 2vw, 40px),
+    #000 calc(100% - clamp(16px, 2vw, 40px)),
+    transparent 100%
+  );
+}
+
+.assurance__track {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: var(--assurance-gap);
+  margin: 0;
+  padding: clamp(11px, 1.1vw, 14px) 0;
+  list-style: none;
+  /* Fallback only: script replaces this with a duration measured from the real
+     track width, so the drift holds one speed at every screen size. */
+  animation: assurance-drift var(--assurance-duration, 20s) linear infinite;
+  will-change: transform;
+}
+
+/* The track holds three identical copies of the six claims, so a wide monitor
+   never sees the rail run out. Shifting by one copy is a third of the track,
+   but flex `gap` sits between copies too: 18 claims share 17 gaps, so a third
+   of the width lands a third of a gap short. That is the seam correction. */
+@keyframes assurance-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(calc(-100% / 3 - var(--assurance-gap) / 3), 0, 0);
+  }
+}
+
+/* Hovering holds the rail still so a claim can actually be finished. The
+   pause button is the accessible control; this is the convenience. */
+.assurance__viewport:hover .assurance__track,
+.assurance.is-paused .assurance__track {
+  animation-play-state: paused;
+}
+
+/* Hairline between claims, the same separator the ethos band uses. Every item
+   carries its own leading rule — in an endless loop there is no first item,
+   so clearing one would put a visible break in the cycle. The left padding
+   matches the track gap exactly, which is what lands the rule midway between
+   two claims rather than hard against the one that owns it. */
+.assurance__item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 0.7vw, 11px);
+  padding-left: var(--assurance-gap);
+  border-left: 1px solid var(--rule-on-dark);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.assurance__icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+/* The stock .icon-button is drawn for pale chrome; on the brown bar it needs
+   the light ink and a light hover disc. Shrunk to 34px so it sits inside the
+   bar's height instead of setting it. */
+.assurance__pause {
+  width: 34px;
+  height: 34px;
+  justify-self: end;
+  margin-right: clamp(6px, 1vw, 14px);
+  color: var(--on-chocolate);
+}
+
+.assurance__pause svg {
+  width: 18px;
+  height: 18px;
+}
+
+.assurance__pause::before {
+  background: var(--rule-on-dark);
+}
+
+/* No focus rule of its own: `.footer button:focus-visible` already draws a
+   currentColor outline, which on this bar is the light ink. */
+
+.assurance__pause-icon {
+  grid-area: 1 / 1;
+  display: grid;
+  place-items: center;
+}
+
+.assurance__pause-icon--play,
+.assurance__pause[aria-pressed="true"] .assurance__pause-icon--pause {
+  display: none;
+}
+
+.assurance__pause[aria-pressed="true"] .assurance__pause-icon--play {
+  display: grid;
+}
+
+/* 12px is the floor of the ramp, so a phone keeps the size and gives back the
+   space instead. */
+@media (max-width: 620px) {
+  .assurance {
+    --assurance-gap: clamp(16px, 5vw, 26px);
+  }
+
+  .assurance__icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* Reduced motion turns the rail into an ordinary swipeable row: the extra
+   copies and the pause button both stop having a job, and the leading hairline
+   is cleared because there is a real first item again. */
+@media (prefers-reduced-motion: reduce) {
+  .assurance__track {
+    animation: none;
+    padding-right: var(--gutter);
+  }
+
+  .assurance__viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .assurance__item:first-child {
+    padding-left: var(--gutter);
+    border-left: 0;
+  }
+
+  .assurance__item--clone,
+  .assurance__pause {
+    display: none;
+  }
+}
+
+/* ==========================================================================
    Site footer — "Last serving" split layout
    Full-bleed photo on the left, lead + links + newsletter stacked on the
    right, and a single legal bar spanning both columns.
@@ -2522,7 +3358,7 @@ a {
   color: var(--lamplight);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--track-15);
   text-transform: uppercase;
 }
 
@@ -2536,7 +3372,7 @@ a {
   min-height: 255px;
   padding: 34px var(--gutter) 28px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.62fr);
+  grid-template-columns: minmax(0, 1fr);
   align-items: end;
   gap: 44px;
   border-bottom: 1px solid var(--hairline);
@@ -2544,7 +3380,7 @@ a {
 
 .split-lead h2 {
   margin: 0;
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: clamp(48px, 5vw, 78px);
   font-weight: 400;
   line-height: 1.02;
@@ -2560,7 +3396,7 @@ a {
   gap: 20px;
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.11em;
+  letter-spacing: var(--track-14);
   text-decoration: none;
   text-transform: uppercase;
   border: 1px solid var(--chocolate-deep);
@@ -2598,7 +3434,7 @@ a {
   font-size: 12px;
   font-weight: 600;
   line-height: 1.2;
-  letter-spacing: 0.11em;
+  letter-spacing: var(--track-14);
   text-transform: uppercase;
 }
 
@@ -2690,7 +3526,7 @@ a {
 }
 
 .newsletter input::placeholder {
-  color: rgba(45, 21, 15, 0.65);
+  color: var(--ink-soft);
   opacity: 1;
 }
 
@@ -2818,8 +3654,11 @@ a {
 }
 
 @media (max-width: 620px) {
+  /* On a phone the footer photograph costs a full screen of scroll before the
+     links the shopper actually came down here for. The caption rides on top of
+     the image, so it goes with it. */
   .split-image {
-    min-height: 300px;
+    display: none;
   }
 
   /* Too narrow for one row — let social drop below and stay left-aligned. */
