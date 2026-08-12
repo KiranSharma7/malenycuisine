@@ -3161,10 +3161,12 @@ body.promotion-open {
   will-change: transform;
 }
 
-/* The track holds three identical copies of the six claims, so a wide monitor
+/* The track holds three identical copies of the seven claims, so a wide monitor
    never sees the rail run out. Shifting by one copy is a third of the track,
-   but flex `gap` sits between copies too: 18 claims share 17 gaps, so a third
-   of the width lands a third of a gap short. That is the seam correction. */
+   but flex `gap` sits between copies too: 21 claims share 20 gaps, so a third
+   of the width lands a third of a gap short. That is the seam correction. It
+   holds for any claim count, so adding a claim only means adding it to all
+   three copies. */
 @keyframes assurance-drift {
   from {
     transform: translate3d(0, 0, 0);
