@@ -7,9 +7,11 @@
 *
 
 # 2. Let the site code back in.
-!index2.html
+!index.html
 !styles.css
 !script.js
+!testimonials.css
+!testimonials.js
 
 # 3. Let the assets folder and everything inside it back in.
 !assets/

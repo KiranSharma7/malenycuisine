@@ -1,0 +1,339 @@
+/* ===========================================================================
+   MALENY CUISINE — CUSTOMER REVIEW BAND
+   Used by index.html. Loaded after styles.css; everything here is built from
+   the existing tokens, so no raw colour, duration or radius is re-typed.
+
+   Two blocks:
+     1. SHARED   — carousel mechanics, the gold star mark, arrows and dots.
+     2. CENTRED  — the band itself: no visible heading, stars first, one
+                   review at a time, centred on the ivory ground.
+
+   An earlier image-led variation ("At the table", photograph left / review
+   right) was built alongside this one and rejected; its markup and CSS were
+   removed rather than left as dead code. It is recoverable from the session
+   record if it is ever wanted back.
+   =========================================================================== */
+
+/* ===========================================================================
+   1. SHARED
+   =========================================================================== */
+
+/* The two type steps this band introduces, both recorded in DESIGN.md.
+
+   A customer review is three or four sentences, so it cannot take the
+   Statement step (caps at 50px) without becoming a wall of serif — but it is
+   still the brand's voice speaking, so it cannot drop to Body either.
+
+   --type-review is tuned to a hard brief: the review must land in three lines
+   or fewer on a wide band. That target sets the size, measured against the
+   longest of the four reviews (~255 characters) at 1440, 1280, 1100 and 940px.
+   The 21px floor is the other half of the tuning — without it the quote keeps
+   shrinking towards body size on a small laptop just to save a line.
+
+   --type-review-stacked takes over below 900px, where no phone can hold ~85
+   characters on a line and the three-line target stops being reachable. It
+   trades the target for a size that still reads as a quote rather than a
+   column of two-word lines. */
+:root {
+  --type-review: clamp(21px, 2.2vw, 28px);
+  --type-review-stacked: clamp(19px, 3.4vw, 24px);
+
+  /* The single sanctioned exception to the One Family Rule. The client asked
+     for a gold rating mark from a supplied reference. This is a warm gold
+     rather than a pure yellow so it sits with the fig-brown ink instead of
+     shouting over it, and it is used for the star shape only — never for text,
+     a border, a fill or any other element. */
+  --star-gold: #f0af1e;
+}
+
+/* The viewport stacks every review in one grid cell. The band therefore sizes
+   itself to the LONGEST review and never changes height as you page through —
+   which matters here, because the four reviews differ by two lines. Only the
+   active one is visible; `visibility: hidden` also takes the rest out of the
+   accessibility tree, so a screen reader hears one review, not four. */
+.review__viewport {
+  display: grid;
+}
+
+.review__viewport:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 6px;
+}
+
+/* Each slide is a <figure>: quote plus its caption. Reset the UA margin. */
+.review__slide {
+  grid-area: 1 / 1;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.review__slide.is-active {
+  visibility: visible;
+  opacity: 1;
+  animation: review-arrive var(--dur-slow) ease both;
+}
+
+@keyframes review-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* --- The rating mark ------------------------------------------------------
+   Drawn stars, not a glyph, and set in the brand's own brown rather than the
+   category's gold — the One Family Rule holds even for a rating. The group
+   carries the score as text for assistive technology. */
+.review__stars {
+  display: flex;
+  gap: 7px;
+  margin: 0;
+}
+
+.review__stars svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: var(--chocolate-deep);
+}
+
+/* --- The review itself ---------------------------------------------------- */
+.review__quote {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.34;
+  text-wrap: pretty;
+}
+
+.review__quote p {
+  margin: 0;
+}
+
+/* Name, then the product the review is about. The product line is the useful
+   half — it tells a shopper which jar the words belong to. */
+.review__attribution {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.review__customer {
+  color: var(--ink);
+}
+
+.review__product {
+  display: block;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* --- Controls -------------------------------------------------------------
+   Circular arrows on either side of a row of dots, as in the reference. The
+   arrows wrap in both directions, so neither is ever disabled. */
+.review__controls {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 22px);
+}
+
+.review-arrow {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  flex: none;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--chocolate-deep);
+  border-radius: var(--radius-pill);
+  color: var(--chocolate-deep);
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--dur) ease, background var(--dur) ease;
+}
+
+.review-arrow svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.5;
+}
+
+.review-arrow:hover,
+.review-arrow:focus-visible {
+  color: var(--ivory);
+  background: var(--chocolate-deep);
+}
+
+.review-arrow:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.review__dots {
+  display: flex;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A 24px hit box around a 7px mark: the dot stays as quiet as the reference
+   while the target still clears the minimum. */
+.review-dot {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+}
+
+.review-dot::before {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--chocolate-deep);
+  content: "";
+  opacity: 0.28;
+  transition: opacity var(--dur) ease, transform var(--dur) ease;
+}
+
+.review-dot:hover::before {
+  opacity: 0.6;
+}
+
+.review-dot[aria-current="true"]::before {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.review-dot:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 2px;
+}
+
+/* ===========================================================================
+   2. CENTRED
+   One review at a time on the ivory chrome ground, centred, with nothing else
+   on the band. Ivory because both neighbours — "Shop by category" above and
+   Recipes below — sit on Paper, and ivory is how two paper bands are kept
+   apart. See NEIGHBOURS at the foot of this file for what that costs.
+   =========================================================================== */
+
+/* No visible heading: the gold stars open the band and the review is the only
+   thing said. That is also why the padding is well below --section-y — with
+   nothing but a rating, a quote and a name, a full band break would leave the
+   review floating in a field of ivory. */
+.reviews-centred {
+  padding: clamp(46px, 4.6vw, 74px) var(--gutter) clamp(40px, 4.2vw, 66px);
+  background: var(--ivory);
+  text-align: center;
+}
+
+/* Wide. The review has to land in three lines at desktop, which needs roughly
+   85 characters a line, and 1240px is what that costs at this type size. */
+.reviews-centred__inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 1.9vw, 28px);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.reviews-centred .review__viewport {
+  justify-items: center;
+  width: 100%;
+}
+
+.reviews-centred .review__slide {
+  display: grid;
+  justify-items: center;
+  gap: clamp(18px, 1.9vw, 28px);
+}
+
+/* The gold rating mark. This is the one place in the system carrying a colour
+   outside the brown family — the client asked for it directly, from a supplied
+   reference. It is a mark, never a score: no number, no total, no average.
+   Sized to open the band on its own now that the heading is gone. */
+.reviews-centred .review__stars {
+  gap: clamp(5px, 0.5vw, 8px);
+}
+
+.reviews-centred .review__stars svg {
+  width: clamp(24px, 2.1vw, 31px);
+  height: clamp(24px, 2.1vw, 31px);
+  fill: var(--star-gold);
+}
+
+/* Sized against the container, not the viewport, so the three-line target does
+   not drift as the window changes. */
+/* Re-check the three-line target if a review longer than ~255 characters is
+   ever added. */
+.reviews-centred .review__quote {
+  max-width: 100%;
+  font-size: var(--type-review);
+  line-height: 1.36;
+}
+
+.reviews-centred .review__product {
+  margin-top: 3px;
+}
+
+/* Below the container's own width the quote can no longer hold three lines —
+   no phone fits 85 characters on a line. Let it wrap and drop the size a step
+   so it does not become a column of two-word lines. */
+@media (max-width: 900px) {
+  .reviews-centred .review__quote {
+    max-width: 34ch;
+    font-size: var(--type-review-stacked);
+  }
+}
+
+@media (max-width: 620px) {
+  .reviews-centred .review-arrow {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ===========================================================================
+   NEIGHBOURS
+   The band lands between "Shop by category" and Recipes. Those two were built
+   to touch: they share the Paper ground, so each pays only half the standard
+   section break. An Ivory band now sits between them and that reasoning no
+   longer holds, so both neighbours get their full break back. Without this the
+   Recipes heading sits jammed against the review band's bottom edge.
+   =========================================================================== */
+
+.range:has(+ .reviews-centred) {
+  padding-bottom: var(--section-y-end);
+}
+
+.reviews-centred + .recipes {
+  padding-top: var(--section-y);
+}
+
+/* ===========================================================================
+   REDUCED MOTION
+   The band must survive the global reduced-motion rule in styles.css; the
+   arrival animation is the one thing here that is not a state change.
+   =========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .review__slide.is-active {
+    animation: none;
+  }
+}
