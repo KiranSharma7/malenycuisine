@@ -17,6 +17,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="testimonials.css" />
+    <link rel="stylesheet" href="cart.css" />
   </head>
 
   <body>
@@ -127,7 +128,10 @@
               </svg>
             </a>
 
-            <a class="icon-button bag-link" href="#bag" aria-label="Shopping bag, 0 items">
+            <!-- A real link to the bag page, not a placeholder anchor: cart.js
+                 takes the click over and opens the slide-out instead, so the
+                 icon still leads somewhere with JavaScript off. -->
+            <a class="icon-button bag-link" href="cart-b.html" aria-label="Shopping bag, 0 items">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path>
                 <path d="M8.9 9.6V6.9a3.1 3.1 0 0 1 6.2 0v2.7"></path>
@@ -603,7 +607,7 @@
 
         <li class="collection__item" data-category="chutneys" data-bestseller>
           <article class="product-card product-card--rail" aria-labelledby="product-3-name">
-            <div class="product-card__media">
+            <a class="product-card__media product-card__media-link" href="product.html" aria-label="View Spicy Tomato Relish">
               <span class="product-card__flag">Best seller</span>
               <img
                 class="product-card__image"
@@ -622,7 +626,7 @@
                 loading="lazy"
                 decoding="async"
               />
-            </div>
+            </a>
 
             <div class="product-card__content">
               <div class="product-card__meta">
@@ -630,7 +634,7 @@
                 <p class="product-card__price">$10.50</p>
               </div>
 
-              <h3 class="product-card__title" id="product-3-name">Spicy Tomato Relish</h3>
+              <h3 class="product-card__title" id="product-3-name"><a class="product-card__title-link" href="product.html">Spicy Tomato Relish</a></h3>
               <p class="product-card__description">For sandwiches, cold meats and eggs</p>
 
               <div class="purchase-row">
@@ -2438,8 +2442,81 @@
       </div>
     </footer>
 
+    <!-- ==================================================================
+         THE BAG — site chrome for any page that sells.
+
+         Two parts. First the record: an empty list that cart.js appends a line
+         to each time a jar is added. It is markup rather than script state for
+         the same reason the bag page's list is, and it is hidden because this
+         page has no room to show a bag — the panel below is its only view.
+
+         Then the panel itself, copied whole from cart-b.html. The header's bag
+         icon is a real link to that page, so with JavaScript off the bag still
+         works; with it, the link opens this instead, and so does Add to cart.
+         ================================================================== -->
+    <ul class="bag-store" data-cart hidden></ul>
+    <p class="visually-hidden" data-cart-status role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <div class="mini-bag" id="mini-bag" data-mini-bag aria-hidden="true">
+      <div class="mini-bag__scrim" data-mini-scrim></div>
+
+      <section class="mini-bag__panel" role="dialog" aria-modal="true" aria-labelledby="mini-bag-title">
+        <header class="mini-bag__head">
+          <h2 class="mini-bag__title" id="mini-bag-title">Your bag</h2>
+          <button class="icon-button" type="button" data-mini-close aria-label="Close bag">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="mini-bag__body">
+          <ul class="mini-bag__list" data-mini-list hidden></ul>
+
+          <!-- The bag starts empty on this page, so this is the state that
+               ships visible and the foot below it ships hidden. -->
+          <div class="mini-bag__empty" data-mini-empty>
+            <p>Your bag is empty. The whole range is one tap away.</p>
+            <a class="outline-button" href="archive-a.html">
+              Shop all products <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mini-bag__foot" data-mini-foot hidden>
+          <div class="delivery-meter" data-delivery-meter>
+            <p class="delivery-meter__text" data-meter-text>
+              <span class="delivery-meter__amount">$60.00</span> more and delivery is free — the offer
+              applies to orders over $60.
+            </p>
+            <div class="delivery-meter__track" aria-hidden="true">
+              <div class="delivery-meter__fill" data-meter-fill style="--meter-progress: 0"></div>
+            </div>
+          </div>
+
+          <dl class="mini-bag__subtotal">
+            <dt>Subtotal</dt>
+            <dd data-subtotal>$0.00</dd>
+          </dl>
+
+          <!-- Two routes to the same money: the full checkout, and the direct
+               one that skips it. Both are dead anchors in this prototype until
+               a payment provider exists. -->
+          <div class="mini-bag__actions">
+            <a class="button cart-checkout" href="checkout.html">Proceed to checkout</a>
+            <a class="button cart-checkout cart-pay" href="#payment">
+              <svg class="cart-pay__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="4" y="10.5" width="16" height="9.5" rx="1.5" />
+                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+              </svg>
+              Pay now
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <script src="script.js"></script>
     <script src="testimonials.js"></script>
+    <script src="cart.js"></script>
 
   </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "asset": "testimonial-table-products.png",
+  "useCase": "product-mockup",
+  "variant": "Sunlit testimonial table products",
+  "approvedComp": ".impeccable/mocks/testimonial-variation-3-image-led-v2.png",
+  "tool": "built-in image generation",
+  "sourceDimensions": {
+    "width": 1353,
+    "height": 1163
+  },
+  "deliveryDimensions": {
+    "width": 1440,
+    "height": 1238
+  },
+  "referenceImages": [
+    "assets/images/Apple-Fig-And-Ginger-hutney.jpg",
+    "assets/images/Caramelised-Onion.jpg",
+    "assets/images/Chilli-Jam.jpg"
+  ],
+  "prompt": "Use case: product-mockup\nAsset type: standalone photographic asset for the left image frame of the Maleny Cuisine testimonial section\nPrimary request: Create a fresh, photorealistic editorial food still life featuring exactly the three supplied Maleny Cuisine jars, using the three reference images as strict product-identity references. The jar packaging, black lids, glass proportions, label artwork, logo, spelling, and visible product names must remain accurate and recognisable.\nInput images: Image 1 is the strict product reference for \"APPLE FIG & GINGER Chutney\" 280g; Image 2 is the strict product reference for \"CARAMELISED ONION Marmalade\" 300g; Image 3 is the strict product reference for \"CHILLI Jam\" 300g. Preserve their actual labels; do not redesign or paraphrase them.\nScene/backdrop: a warm sunlit Australian kitchen table beside a bright window, natural ivory woven linen tablecloth, softly blurred pale ceramics and green leaves in the distance\nSubject: exactly three supplied jars standing upright as the focal row, all fully visible and label-forward; natural accompaniment of red/purple grapes, halved ripe figs, and a wedge of firm pale cheese on a simple wooden board\nStyle/medium: premium natural editorial food photography, believable glass, preserve the supplied real labels with high fidelity, settled and unhurried rather than rustic-market styling\nComposition/framing: horizontal landscape image, approximately 7:6 ratio, three jars across the middle with breathing room at all edges; apple fig ginger left, caramelised onion centre, chilli jam right; slightly eye-level tabletop view, clear front labels, subtle foreground ingredients, no text overlay\nLighting/mood: warm late-morning sunlight, soft side/back light through glass, gentle realistic shadows, bright cream and fig-brown world, appetising but not glossy or over-styled\nColor palette: ivory linen, warm amber preserves, burgundy grapes and figs, pale cheese, quiet leafy green bokeh\nMaterials/textures: real woven linen, transparent glass, black metal lids, fruit skin, crumbly cheese, lightly worn wood\nText (verbatim on product labels only): \"MALENY CUISINE\"; \"APPLE FIG & GINGER\"; \"Chutney\"; \"280g\"; \"CARAMELISED ONION\"; \"Marmalade\"; \"300g\"; \"CHILLI\"; \"Jam\"; \"300g\"\nConstraints: use only the three supplied products; labels must be accurate and front-facing; no people; no hands; no review copy; no headline; no buttons; no arrows; no carousel controls; no invented products; no extra jars; no watermark\nAvoid: altered logos, fake label claims, malformed jars, duplicate jars, unreadable or misspelled labels, excessive flowers, dark moody lighting, rustic burlap, visual clutter, footer-style dark photography"
+}

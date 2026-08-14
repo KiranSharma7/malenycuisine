@@ -556,6 +556,74 @@ armMarquee(document.querySelector(".assurance"), {
    Footer — keep the copyright year current without editing the markup.
    --------------------------------------------------------------------------- */
 
+/* ---------------------------------------------------------------
+   Single product purchase - quantity, bag count and live feedback
+   --------------------------------------------------------------- */
+
+const productPurchase = document.querySelector("[data-product-purchase]");
+
+if (productPurchase) {
+  const quantity = productPurchase.querySelector("[data-single-quantity]");
+  const decrease = productPurchase.querySelector("[data-single-decrease]");
+  const increase = productPurchase.querySelector("[data-single-increase]");
+  const addButton = productPurchase.querySelector("[data-single-add]");
+  const addLabel = productPurchase.querySelector("[data-single-add-label]");
+  const status = productPurchase.querySelector("[data-single-status]");
+  const bagLink = document.querySelector(".bag-link");
+  const bagCount = document.querySelector(".bag-count");
+  const productName = productPurchase.dataset.product;
+  const minimum = 1;
+  const maximum = 99;
+  let confirmationTimer;
+
+  function readQuantity() {
+    return Number.parseInt(quantity.textContent, 10) || minimum;
+  }
+
+  function announce(message) {
+    if (!status) return;
+    status.textContent = "";
+    window.requestAnimationFrame(() => {
+      status.textContent = message;
+    });
+  }
+
+  function setQuantity(next) {
+    const value = Math.min(maximum, Math.max(minimum, next));
+    quantity.value = value;
+    quantity.textContent = value;
+    decrease.disabled = value <= minimum;
+    increase.disabled = value >= maximum;
+    announce(`${productName} quantity ${value}.`);
+    return value;
+  }
+
+  function bumpBagCount(amount) {
+    if (!bagCount || !bagLink) return;
+    const total = (Number.parseInt(bagCount.textContent, 10) || 0) + amount;
+    bagCount.textContent = total;
+    bagLink.setAttribute("aria-label", `Shopping bag, ${total} ${total === 1 ? "item" : "items"}`);
+  }
+
+  decrease.addEventListener("click", () => setQuantity(readQuantity() - 1));
+  increase.addEventListener("click", () => setQuantity(readQuantity() + 1));
+
+  addButton.addEventListener("click", () => {
+    const amount = readQuantity();
+    addLabel.textContent = "Added";
+    addButton.classList.add("is-added");
+    bumpBagCount(amount);
+    announce(`${productName} added to cart. ${amount} ${amount === 1 ? "item" : "items"}.`);
+
+    window.clearTimeout(confirmationTimer);
+    confirmationTimer = window.setTimeout(() => {
+      addLabel.textContent = "Add to cart";
+      addButton.classList.remove("is-added");
+    }, 1600);
+  });
+}
+
+
 document.querySelectorAll("[data-year]").forEach((slot) => {
   slot.textContent = String(new Date().getFullYear());
 });
