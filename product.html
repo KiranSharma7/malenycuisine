@@ -15,7 +15,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport-fit=cover so the phone purchase dock can sit on the true bottom
+         edge and pad itself back off the home indicator with env(safe-area-inset-bottom). -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
     <meta
@@ -31,16 +33,16 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&family=Mrs+Saint+Delafield&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=serve-first-3" />
   </head>
 
   <body class="product-page">
     <!--
       DIRECTION CONTRACT: SERVE FIRST
-      THESIS: Sell the condiment through the table it completes, refusing the isolated packshot card.
-      OWN-WORLD: Sunlit linen photography and Ivory purchase space meet at one seam; Chocolate Deep rules, near-square controls and flat surfaces keep the existing Maleny grammar.
-      STORY: See the jar in use, confirm price and dietary facts, choose quantity, add it, then open ingredients and serving ideas.
-      FIRST VIEWPORT: Existing masthead above a 60/40 split; a near life-size jar anchors the food image, purchase controls sit right, and a Chocolate Deep information band breaks the fold.
+      THESIS: Sell the condiment on the truth of its own label — the real jar, lit and standing, with every fact it carries reachable beside the price.
+      OWN-WORLD: One flat Paper ground across both columns, the supplied packshot cut out and grounded on a drawn horizon, and the purchase ledger across a single hairline seam. Chocolate Deep rules, near-square controls and flat surfaces keep the existing Maleny grammar.
+      STORY: See the jar, read the sentence, confirm price and dietary facts, choose quantity, then add it or go straight to checkout — opening ingredients, serving ideas or the maker without leaving the column.
+      FIRST VIEWPORT: Existing masthead above a 60/40 split; a near life-size jar stands left, the whole purchase decision and every fact sit right in one ledger.
       FORM: Serve First, grounded surface candidate 7, seed fa6aac58.
       FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
     -->
@@ -439,16 +441,25 @@
          ================================================================== -->
     <main id="main-content">
       <section class="product-stage" aria-labelledby="product-title">
+        <!-- The supplied packshot, background removed, is the only photograph of
+             this jar we can call true. A cut-out with nothing under it reads as a
+             sticker, so the ground gives it a light wash, a horizon hairline and a
+             drawn contact shadow — the jar stands, and no surface carries a
+             resting box-shadow. -->
         <div class="product-stage__media">
-          <img
-            class="product-stage__image"
-            src="assets/images/generated/product-page/serve-first-product-composite.webp"
-            alt="Maleny Cuisine Spicy Tomato Relish served at a grazing table"
-            width="1448"
-            height="1086"
-            fetchpriority="high"
-            decoding="async"
-          />
+          <div class="product-plinth">
+            <span class="product-plinth__stand">
+              <img
+                class="product-plinth__jar"
+                src="assets/images/generated/product-page/spicy-tomato-relish-cutout.png"
+                alt="A 275g jar of Maleny Cuisine Spicy Tomato Relish"
+                width="1254"
+                height="1254"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </span>
+          </div>
         </div>
 
         <div class="product-stage__purchase" data-product-purchase data-product="Spicy Tomato Relish">
@@ -465,7 +476,8 @@
           <p class="product-stage__price">$10.50</p>
 
           <p class="product-stage__summary">
-            Great with cheese, cold meats or vegetables, in sandwiches or served with eggs.
+            This popular relish combines tomatoes, onions, chilli and sultanas together with a blend of herbs and
+            spices.
           </p>
 
           <ul class="product-claims" aria-label="Dietary information">
@@ -506,99 +518,394 @@
               <button class="add-button product-stage__add" type="button" data-single-add>
                 <span data-single-add-label>Add to cart</span>
               </button>
+
+              <a class="outline-button product-stage__buynow" href="checkout.html" data-single-buynow>
+                <span>Buy now</span>
+              </a>
             </div>
           </div>
 
           <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-single-status></p>
+
+          <!--
+            The label is the law. Disclosure is not clipping: every panel opens to
+            full-strength ink at body size on solid Paper, nothing is truncated,
+            and the three dietary claims stay in the open above as .product-claims
+            so a shopper never has to click to read them. Native <details> keeps
+            this keyboard-operable and readable with script disabled; the shared
+            name attribute is what makes the group an accordion.
+          -->
+          <div class="product-facts">
+            <details class="product-fact" name="product-facts">
+              <summary>
+                Ingredients
+                <span class="product-fact__mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M5 12h14" />
+                    <path class="product-fact__mark-bar" d="M12 5v14" />
+                  </svg>
+                </span>
+              </summary>
+
+              <div class="product-fact__body">
+                <p>
+                  Tomatoes 40%, Onions, Vinegar, Sugar, Chilli (Acetic Acid), Sultanas and a blend of herbs and spices
+                </p>
+                <p class="product-fact__note">
+                  Made in Queensland with the product label treated as the source of truth.
+                </p>
+                <dl class="product-fact__rows">
+                  <div>
+                    <dt>Dietary</dt>
+                    <dd>Gluten free &middot; Low sodium &middot; Vegan-suitable</dd>
+                  </div>
+                </dl>
+              </div>
+            </details>
+
+            <details class="product-fact" name="product-facts">
+              <summary>
+                Serving ideas
+                <span class="product-fact__mark" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M5 12h14" />
+                    <path class="product-fact__mark-bar" d="M12 5v14" />
+                  </svg>
+                </span>
+              </summary>
+
+              <div class="product-fact__body">
+                <p class="product-fact__lead">Made to pass around.</p>
+                <p>
+                  Great with cheese, cold meats or vegetables, in sandwiches or served with an omelette or scrambled
+                  eggs.
+                </p>
+              </div>
+            </details>
+
+          </div>
         </div>
       </section>
 
-      <section class="product-portals" aria-labelledby="product-portals-title">
-        <div class="product-portals__statement">
-          <h2 id="product-portals-title">A jar that earns its<br />place at the table.</h2>
-        </div>
+      <!--
+        Phone only, and hidden until the ledger's buy row has scrolled away. One
+        button, no stepper: the quantity stays in the ledger above so there is a
+        single source of truth for how many jars go in the bag. Parked, it is
+        visibility: hidden — out of the tab order and out of the accessibility
+        tree — so a keyboard user never lands on an invisible control.
+      -->
+      <div class="product-dock" data-product-dock>
+        <p class="product-dock__summary">
+          <span class="product-dock__name">Spicy Tomato Relish</span>
+          <span class="product-dock__price">$10.50</span>
+        </p>
 
-        <nav class="product-portals__links" aria-label="Product information">
-          <a href="#ingredients">
-            <span>Ingredients</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-              <path d="M5 16h20M19 9l7 7-7 7" />
-            </svg>
-          </a>
-          <a href="#serving-ideas">
-            <span>Serving ideas</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-              <path d="M5 16h20M19 9l7 7-7 7" />
-            </svg>
-          </a>
-        </nav>
-      </section>
+        <!-- No aria-label: the visible label has to be the accessible name so the
+             "Added" confirmation is announced, and the two Add to cart buttons are
+             never exposed at once — this one is visibility: hidden until it docks,
+             and display: none above 620px. -->
+        <button class="add-button product-dock__add" type="button" data-dock-add>
+          <span data-dock-add-label>Add to cart</span>
+        </button>
+      </div>
 
-      <section class="product-serving" id="serving-ideas" aria-labelledby="serving-title">
-        <div class="product-serving__copy">
-          <h2 id="serving-title">Made to pass around.</h2>
-          <p>
-            This popular relish combines tomatoes, onions, chilli and sultanas together with a blend of herbs and spices.
-            Great with cheese, cold meats or vegetables, in sandwiches or served with an omelette or scrambled eggs.
-          </p>
+      <!--
+        The stage settles one decision; this band offers the next one. The four
+        jars are the rest of the Chutneys &amp; Relishes shelf, so the swap between
+        product pages is only this list.
 
-          <ul class="product-serving__list" aria-label="Serving suggestions">
-            <li>Cheese and crackers</li>
-            <li>Cold meats and vegetables</li>
-            <li>Sandwiches and burgers</li>
-            <li>Omelettes and scrambled eggs</li>
-          </ul>
-        </div>
+        The card is the home page's card unchanged, stepper and Add to cart
+        included, so a shopper meets the same card wherever they meet a jar. The
+        shared bindProductCommerce() block in script.js wires both.
 
-        <figure class="product-serving__figure">
-          <img
-            src="assets/images/hover/Recipes-Home-Page-Image.jpg"
-            alt="Spicy Tomato Relish beside an open cookbook, pasta and fresh coriander"
-            width="1066"
-            height="800"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>From the pantry to the everyday table.</figcaption>
-        </figure>
-      </section>
-
-      <section class="product-ingredients" id="ingredients" aria-labelledby="ingredients-title">
-        <div class="product-ingredients__title">
-          <h2 id="ingredients-title">What goes into the jar.</h2>
-          <p>Made in Queensland with the product label treated as the source of truth.</p>
-        </div>
-
-        <div class="product-ingredients__facts">
-          <div class="product-ingredients__block">
-            <h3>Ingredients</h3>
-            <p>
-              Tomatoes 40%, Onions, Vinegar, Sugar, Chilli (Acetic Acid), Sultanas and a blend of herbs and spices
-            </p>
+        A static grid, not a rail — four cards fit without paging, so there is
+        no scroller, no arrows and no need for the contain: paint rule.
+      -->
+      <section class="related" aria-labelledby="related-title">
+        <div class="related__head">
+          <div class="related__intro">
+            <h2 class="related__title" id="related-title">You may also like</h2>
+            <p class="related__lede">The rest of the chutneys and relishes, made in the same kitchen.</p>
           </div>
 
-          <dl class="product-ingredients__claims">
-            <div>
-              <dt>Dietary</dt>
-              <dd>Gluten free · Low sodium · Vegan-suitable</dd>
-            </div>
-            <div>
-              <dt>Made by</dt>
-              <dd>Maleny Cuisine, Marcoola, Queensland</dd>
-            </div>
-            <div>
-              <dt>Family owned</dt>
-              <dd>Since 1988</dd>
-            </div>
-          </dl>
-
-          <a class="outline-button product-ingredients__back" href="index.html#shop">
-            <span>Shop the full range</span>
-            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-              <path d="M5 16h20M19 9l7 7-7 7" />
-            </svg>
-          </a>
+          <a class="button related__all" href="index.html#shop">Shop all products</a>
         </div>
+
+        <ul class="related__grid">
+          <li>
+            <article class="product-card" aria-labelledby="related-1-name">
+              <a
+                class="product-card__media product-card__media-link"
+                href="product.html"
+                aria-label="View Apple Fig and Ginger Chutney"
+              >
+                <img
+                  class="product-card__image"
+                  src="assets/images/Apple-Fig-And-Ginger-hutney.jpg"
+                  alt="Maleny Cuisine Apple Fig and Ginger Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/AppleFigGinger_219895.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price product-card__price--sale">
+                    <span class="visually-hidden">Was</span>
+                    <s class="price-was">$10.50</s>
+                    <span class="visually-hidden">now</span>
+                    <span class="price-now">$8.95</span>
+                  </p>
+                </div>
+
+                <h3 class="product-card__title" id="related-1-name">
+                  <a class="product-card__title-link" href="product.html">Apple Fig and Ginger Chutney</a>
+                </h3>
+                <p class="product-card__description">With cheese, curries or cold meats</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="related-1-qty">
+                    <span class="visually-hidden" id="related-1-qty">Quantity of Apple Fig and Ginger Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Apple Fig and Ginger Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Apple Fig and Ginger Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Apple Fig and Ginger Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="product-card" aria-labelledby="related-2-name">
+              <a
+                class="product-card__media product-card__media-link"
+                href="product.html"
+                aria-label="View Homestyle Tomato Chutney"
+              >
+                <img
+                  class="product-card__image"
+                  src="assets/images/Homestyle-Tomato-Chutney_.png"
+                  alt="Maleny Cuisine Homestyle Tomato Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/CHUTNEY_IMAGE.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="related-2-name">
+                  <a class="product-card__title-link" href="product.html">Homestyle Tomato Chutney</a>
+                </h3>
+                <p class="product-card__description">For all-day breakfasts, sausages and burgers</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="related-2-qty">
+                    <span class="visually-hidden" id="related-2-qty">Quantity of Homestyle Tomato Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Homestyle Tomato Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Homestyle Tomato Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Homestyle Tomato Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="product-card" aria-labelledby="related-3-name">
+              <a
+                class="product-card__media product-card__media-link"
+                href="product.html"
+                aria-label="View Mediterranean Eggplant Relish"
+              >
+                <img
+                  class="product-card__image"
+                  src="assets/images/Mediterranean-Eggplant-Relish.png"
+                  alt="Maleny Cuisine Mediterranean Eggplant Relish"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/lamb-savoury-eggplant-chutney-pizza.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="related-3-name">
+                  <a class="product-card__title-link" href="product.html">Mediterranean Eggplant Relish</a>
+                </h3>
+                <p class="product-card__description">For lamb, cheese and antipasto platters</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="related-3-qty">
+                    <span class="visually-hidden" id="related-3-qty">Quantity of Mediterranean Eggplant Relish</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Mediterranean Eggplant Relish"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Mediterranean Eggplant Relish"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Mediterranean Eggplant Relish"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li>
+            <article class="product-card" aria-labelledby="related-4-name">
+              <a
+                class="product-card__media product-card__media-link"
+                href="product.html"
+                aria-label="View Tropical Mango and Apple Chutney"
+              >
+                <img
+                  class="product-card__image"
+                  src="assets/images/Tropical-Mango-and-Apple-Chutney.png"
+                  alt="Maleny Cuisine Tropical Mango and Apple Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <!-- Not the BANNERFINAL crop the rail uses for this jar: the alt layer
+                     is object-fit: cover, and that file is a wide banner with marketing
+                     type baked in, so a square crop lands on giant text. -->
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Grazing-Platter-1.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="related-4-name">
+                  <a class="product-card__title-link" href="product.html">Tropical Mango and Apple Chutney</a>
+                </h3>
+                <p class="product-card__description">For chicken and summer salads</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="related-4-qty">
+                    <span class="visually-hidden" id="related-4-qty">Quantity of Tropical Mango and Apple Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Tropical Mango and Apple Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Tropical Mango and Apple Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Tropical Mango and Apple Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-related-status></p>
       </section>
     </main>
 
@@ -894,6 +1201,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=serve-first-1"></script>
+    <script src="script.js?v=serve-first-3"></script>
   </body>
 </html>

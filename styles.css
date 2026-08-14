@@ -64,6 +64,7 @@
   --type-body: 16px;
   --type-product-title: clamp(46px, 4.3vw, 68px); /* single-product h1: below the home hero, above a band heading */
   --type-product-price: clamp(28px, 2.1vw, 34px); /* one quiet commerce figure under the product name */
+  --type-panel-statement: clamp(22px, 1.7vw, 27px); /* a display line inside a narrow panel, where --type-statement would overrun the column */
 
   /* Uppercase tracking ladder — the smaller the type, the wider the track. */
   --track-15: 0.12em;
@@ -80,6 +81,7 @@
   --shadow-lift: 0 16px 26px -20px rgba(45, 21, 15, 0.6); /* hover on a card or tile */
   --shadow-panel: 0 24px 40px -28px rgba(45, 21, 15, 0.45); /* a panel over the page */
   --shadow-hero-text: 0 2px 24px rgba(0, 0, 0, 0.45); /* legibility over photography */
+  --shadow-dock: 0 -12px 28px -22px rgba(45, 21, 15, 0.55); /* a bar the page scrolls underneath; the only shadow that casts upward */
   --lift: -3px; /* how far an interactive card rises */
   --lift-button: -2px; /* how far a button rises */
 
@@ -111,8 +113,14 @@
   --z-mega: 6;
   --z-search: 5;
   --z-drawer: 4;
+  --z-dock: 3; /* the phone purchase dock: above the page, below every overlay that covers it */
 
   color-scheme: light;
+
+  /* Only has an effect where a transition actually targets an intrinsic keyword.
+     The single place that does today is the product facts accordion, which needs
+     `height: auto` to be interpolable; everything else is unaffected. */
+  interpolate-size: allow-keywords;
 }
 
 * {
@@ -3318,6 +3326,12 @@ body.promotion-open {
 
 /* ===========================================================================
    Single product - "Serve First"
+
+   The whole page is now one band: the real jar on a lit ground at the left, and
+   at the right a single Paper ledger that carries the argument, the purchase
+   controls and every fact about the jar. There is no second band, because the
+   facts no longer live further down the page — they live one click away from
+   the price, which is where a shopper asks for them.
    =========================================================================== */
 
 .product-page main {
@@ -3327,8 +3341,11 @@ body.promotion-open {
 .product-stage {
   min-height: var(--product-stage-height);
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(500px, 2fr);
-  background: var(--ivory);
+  /* The ledger track is generous on purpose: quantity, Add to cart and Buy now
+     share one line, and that line needs ~480px before either label would wrap. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(540px, 1fr);
+  align-items: stretch;
+  background: var(--paper);
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -3343,42 +3360,125 @@ body.promotion-open {
   outline-offset: -5px;
 }
 
+/* --- The plinth ----------------------------------------------------------- */
+
+/* One flat Paper ground across both columns; the packshot was shot on white, so
+   white is the only ground that leaves no seam around the cut-out. All the depth
+   in this frame is the drawn horizon and the contact shadow under the glass.
+   `overflow: hidden` keeps the horizon, drawn wider than the jar, in the column. */
 .product-stage__media {
   position: relative;
   min-width: 0;
   min-height: var(--product-stage-height);
+  padding: clamp(44px, 5.5vw, 84px) clamp(28px, 5vw, 76px);
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  background: var(--cream);
+  background: var(--paper);
 }
 
-.product-stage__image {
-  width: 100%;
-  height: 100%;
+.product-plinth {
+  margin: 0;
   display: block;
-  object-fit: cover;
-  object-position: center;
-  transition: transform var(--dur-image) ease;
 }
 
-@media (hover: hover) {
-  .product-stage__media:hover .product-stage__image {
-    transform: scale(1.018);
+/* The cut-out has transparent air around the jar, so every offset below is a
+   percentage of the frame rather than a guess: the glass base sits at 92.5% of
+   the frame height, and the jar spans 31%-68% of its width. The horizon and the
+   contact shadow are keyed to those numbers. Re-cut the PNG and they move. */
+.product-plinth__stand {
+  position: relative;
+  display: block;
+}
+
+.product-plinth__stand::before {
+  content: "";
+  position: absolute;
+  right: -150%;
+  bottom: 7.1%;
+  left: -150%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(74, 38, 28, 0) 0%,
+    var(--hairline) 16%,
+    var(--hairline) 84%,
+    rgba(74, 38, 28, 0) 100%
+  );
+}
+
+.product-plinth__stand::after {
+  content: "";
+  position: absolute;
+  bottom: 4.9%;
+  left: 25%;
+  width: 49%;
+  height: 4.4%;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(45, 21, 15, 0.3) 0%,
+    rgba(45, 21, 15, 0.14) 40%,
+    rgba(45, 21, 15, 0.04) 70%,
+    rgba(45, 21, 15, 0) 100%
+  );
+}
+
+.product-plinth__jar {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: clamp(390px, calc(var(--product-stage-height) - 110px), 610px);
+  max-width: 100%;
+  display: block;
+}
+
+/* The one authored moment on this page: the jar lands. Its contact shadow
+   tightens as it arrives, which is the only reason the movement reads as weight
+   rather than as a slide. Both halves share one curve and one duration. */
+@media (prefers-reduced-motion: no-preference) {
+  .product-plinth__jar {
+    animation: jar-land var(--dur-reveal) cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .product-plinth__stand::after {
+    animation: jar-land-shadow var(--dur-reveal) cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
+@keyframes jar-land {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes jar-land-shadow {
+  from {
+    opacity: 0;
+    transform: scaleX(1.14);
+  }
+}
+
+/* --- The purchase ledger -------------------------------------------------- */
+
+/* The ledger is the container the purchase row measures against. It has to be
+   this element and not the row itself: the row's own width depends on the rules
+   the query would change, and a container that queries its own layout settles
+   inconsistently. The ledger's width comes from the stage grid, so it is stable. */
 .product-stage__purchase {
+  container-type: inline-size;
   min-width: 0;
-  padding: clamp(34px, 4vh, 50px) var(--product-panel-inline);
+  padding: clamp(34px, 4vh, 50px) var(--product-panel-inline) clamp(44px, 5vh, 64px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: var(--ink);
-  background: var(--ivory);
+  background: var(--paper);
   border-left: 1px solid var(--hairline);
 }
 
 .product-breadcrumb {
-  margin-bottom: clamp(30px, 4vh, 44px);
+  margin-bottom: clamp(26px, 3.4vh, 40px);
 }
 
 .product-breadcrumb a {
@@ -3443,7 +3543,7 @@ body.promotion-open {
 }
 
 .product-stage__price {
-  margin: 28px 0 22px;
+  margin: 24px 0 20px;
   font-size: var(--type-product-price);
   font-weight: 400;
   line-height: 1;
@@ -3453,7 +3553,7 @@ body.promotion-open {
 .product-stage__summary {
   max-width: 50ch;
   margin: 0;
-  padding: 24px 0;
+  padding: 22px 0;
   font-size: var(--type-lede);
   line-height: 1.65;
   border-top: 1px solid var(--hairline-strong);
@@ -3462,13 +3562,15 @@ body.promotion-open {
 
 .product-claims {
   margin: 0;
-  padding: 24px 0;
+  padding: 22px 0;
   display: flex;
   align-items: center;
   list-style: none;
   border-bottom: 1px solid var(--hairline-strong);
 }
 
+/* Regulated text. Full-strength ink on solid Paper, in the open, never behind a
+   disclosure and never clipped. */
 .product-claims li {
   padding: 0 clamp(14px, 1.7vw, 24px);
   color: var(--ink);
@@ -3489,7 +3591,7 @@ body.promotion-open {
 }
 
 .product-stage__buy {
-  padding-top: 24px;
+  padding-top: 22px;
 }
 
 .product-stage__label {
@@ -3501,243 +3603,258 @@ body.promotion-open {
   text-transform: uppercase;
 }
 
+/* Quantity, Add to cart and Buy now on one line: the whole decision is a single
+   gesture left to right. The stepper takes a fixed track and the two buttons
+   split the rest evenly, so they stay the same width as the label lengths differ.
+   The row only holds three abreast while both buttons clear their uppercase
+   labels; the container queries below break it before either one wraps. */
 .product-stage__controls {
   display: grid;
-  gap: 24px;
+  grid-template-columns: 124px minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 10px;
 }
 
 .product-stage__controls .quantity-control {
-  width: 188px;
-  min-height: 54px;
+  width: 100%;
+  min-height: 64px;
 }
 
 .product-stage__controls .quantity-control__button,
 .product-stage__controls .quantity-control__value {
-  min-height: 52px;
+  min-height: 62px;
   font-size: 16px;
   font-weight: 400;
 }
 
 .product-stage__add {
   width: 100%;
-  min-height: 66px;
-  font-size: 15px;
-  letter-spacing: var(--track-15);
-}
-
-.product-portals {
-  min-height: 220px;
-  padding: clamp(44px, 5vw, 70px) var(--gutter);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(420px, 1fr);
-  align-items: stretch;
-  color: var(--lamplight);
-  background: var(--chocolate-deep);
-}
-
-.product-portals__statement {
-  padding-right: clamp(44px, 6vw, 92px);
-  display: flex;
-  align-items: center;
-}
-
-.product-portals h2 {
-  max-width: 14ch;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--type-section);
-  font-weight: 400;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-}
-
-.product-portals__links {
-  padding-left: clamp(44px, 6vw, 92px);
-  display: grid;
-  align-content: center;
-  border-left: 1px solid var(--rule-on-dark);
-}
-
-.product-portals__links a {
-  min-height: 62px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  color: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  min-height: 64px;
+  font-size: 13px;
   letter-spacing: var(--track-14);
-  text-decoration: none;
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--rule-on-dark);
 }
 
-.product-portals__links svg,
-.product-ingredients__back svg {
-  width: 28px;
-  height: 28px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: square;
-  stroke-linejoin: miter;
-  stroke-width: 1.35;
-  transition: transform var(--dur) ease;
-}
-
-.product-portals__links a:hover svg,
-.product-portals__links a:focus-visible svg,
-.product-ingredients__back:hover svg,
-.product-ingredients__back:focus-visible svg {
-  transform: translateX(5px);
-}
-
-.product-portals__links a:focus-visible {
-  outline: 2px solid var(--lamplight);
-  outline-offset: 5px;
-}
-
-.product-serving {
-  padding: var(--section-y) var(--gutter) var(--section-y-end);
-  display: grid;
-  grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
-  align-items: center;
-  gap: clamp(56px, 8vw, 132px);
+/* The site-wide button inverts to Ivory, which on a Paper ledger is almost no
+   change at all. On this page it inverts to Paper so the border does the work
+   and hover reads as a clean flip rather than a faint tint. */
+.product-stage__add:hover,
+.product-stage__add.is-added {
   background: var(--paper);
 }
 
-.product-serving__copy h2,
-.product-ingredients__title h2 {
-  max-width: 11ch;
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--type-section);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.028em;
-  text-wrap: balance;
-}
-
-.product-serving__copy > p {
-  max-width: var(--measure-tight);
-  margin: 32px 0 0;
-  font-size: var(--type-lede);
-  line-height: 1.72;
-}
-
-.product-serving__list {
-  margin: 38px 0 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--hairline);
-}
-
-.product-serving__list li {
-  padding: 16px 0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: var(--track-14);
-  text-transform: uppercase;
-  border-bottom: 1px solid var(--hairline);
-}
-
-.product-serving__figure {
-  margin: 0;
-}
-
-.product-serving__figure img {
+/* Two actions, one weight apart. Add to cart is the filled site-wide control;
+   Buy now is the same size in outline, so a shopper who wants to leave now can
+   see the door without the two buttons competing to be primary.
+   Scoped through .product-stage__buy because .outline-button is declared later in
+   this file — the extra class is what wins the cascade, not !important. */
+.product-stage__buy .product-stage__buynow {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  display: block;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-}
-
-.product-serving__figure figcaption {
-  margin-top: 14px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: var(--track-12);
-  text-transform: uppercase;
-}
-
-.product-ingredients {
-  padding: var(--section-y) var(--gutter) var(--section-y-end);
-  display: grid;
-  grid-template-columns: minmax(300px, 0.76fr) minmax(0, 1.24fr);
-  gap: clamp(56px, 9vw, 148px);
+  min-height: 64px;
+  padding: 0 14px;
+  justify-content: center;
   color: var(--ink);
-  background: var(--cream);
+  background: transparent;
 }
 
-.product-ingredients__title p {
-  max-width: 42ch;
-  margin: 28px 0 0;
-  font-size: var(--type-body);
-  line-height: 1.7;
+.product-stage__buy .product-stage__buynow span {
+  font-size: 13px;
+  letter-spacing: var(--track-14);
+  transform: none;
 }
 
-.product-ingredients__facts {
-  display: grid;
-  align-content: start;
+/* The three controls sit on one line; a lift on one of them would break the
+   line they share. Depress on press instead, like every other control here. */
+.product-stage__buy .product-stage__buynow:hover,
+.product-stage__buy .product-stage__buynow:focus-visible {
+  transform: none;
 }
 
-.product-ingredients__block {
-  padding-bottom: 34px;
+.product-stage__buy .product-stage__buynow:active {
+  transform: translateY(1px);
+}
+
+.product-stage__buy .product-stage__buynow:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Below ~488px of row there is no honest way to fit "ADD TO CART" and "BUY NOW"
+   beside a stepper, so the stepper takes its own line and the two buttons split
+   the next one; below ~356px the buttons stack too. These query the ledger, and a
+   size container is measured on its CONTENT box — so the numbers here are the row
+   width, already net of the ledger's inline padding, not the ledger's own width. */
+@container (max-width: 488px) {
+  .product-stage__controls {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .product-stage__controls .quantity-control {
+    grid-column: 1 / -1;
+    width: 188px;
+  }
+}
+
+@container (max-width: 356px) {
+  .product-stage__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .product-stage__controls .quantity-control {
+    width: 100%;
+  }
+}
+
+/* --- The facts accordion -------------------------------------------------- */
+
+.product-facts {
+  margin-top: clamp(28px, 3.6vh, 42px);
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.product-fact {
   border-bottom: 1px solid var(--hairline-strong);
 }
 
-.product-ingredients__block h3 {
-  margin: 0 0 18px;
-  font-size: 15px;
+.product-fact summary {
+  padding: 19px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: var(--track-15);
+  letter-spacing: var(--track-14);
   text-transform: uppercase;
+  list-style: none;
 }
 
-.product-ingredients__block p {
-  max-width: var(--measure);
+.product-fact summary::-webkit-details-marker {
+  display: none;
+}
+
+.product-fact summary:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.product-fact__mark {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.product-fact__mark svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-width: 1.5;
+}
+
+/* Plus becomes minus: the upright stroke collapses about its own centre, so the
+   two states are one drawing rather than two icons. */
+.product-fact__mark-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--dur) ease;
+}
+
+.product-fact[open] .product-fact__mark-bar {
+  transform: scaleY(0);
+}
+
+@media (hover: hover) {
+  .product-fact summary:hover .product-fact__mark {
+    color: var(--chocolate);
+  }
+}
+
+.product-fact__body {
+  padding-bottom: 26px;
+}
+
+.product-fact__body p {
+  max-width: var(--measure-tight);
   margin: 0;
   color: var(--ink);
-  font-size: var(--type-lede);
+  font-size: var(--type-body);
   line-height: 1.72;
 }
 
-.product-ingredients__claims {
-  margin: 0 0 36px;
+/* The second and last use of the display face on this screen; the h1 is the
+   first. It keeps the brand's voice inside a panel that is otherwise all facts. */
+.product-fact__body .product-fact__lead {
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+  font-size: var(--type-panel-statement);
+  line-height: 1.12;
+  letter-spacing: -0.026em;
 }
 
-.product-ingredients__claims div {
-  padding: 18px 0;
+.product-fact__body .product-fact__note {
+  margin-top: 16px;
+  color: var(--ink-muted);
+}
+
+.product-fact__rows {
+  margin: 18px 0 0;
+}
+
+.product-fact__rows div {
+  padding: 14px 0;
   display: grid;
-  grid-template-columns: minmax(112px, 0.32fr) minmax(0, 1fr);
-  gap: 24px;
-  border-bottom: 1px solid var(--hairline);
+  grid-template-columns: minmax(108px, 0.3fr) minmax(0, 1fr);
+  gap: 20px;
+  border-top: 1px solid var(--hairline);
 }
 
-.product-ingredients__claims dt,
-.product-ingredients__claims dd {
+.product-fact__rows dt,
+.product-fact__rows dd {
   margin: 0;
   color: var(--ink);
   font-size: 15px;
   line-height: 1.6;
 }
 
-.product-ingredients__claims dt {
+.product-fact__rows dt {
   font-weight: 600;
 }
 
-.product-ingredients__back {
-  width: 100%;
-}
+/* The panels open and close on a real transition. `interpolate-size` on :root is
+   what lets `height: auto` be interpolated at all; without support the panel
+   simply snaps, which is the native behaviour.
 
-.product-ingredients__back span {
-  font-size: 14px;
+   Yes, this animates height, which is normally a defect. It is the exception on
+   purpose: a disclosure has to reveal content that changes the page's flow, so
+   there is no transform or clip-path version of this — the alternative trick,
+   animating grid-template-rows, costs exactly the same layout work with more
+   markup. What keeps it cheap is that it is user-triggered, runs once over
+   --dur-slow, only one panel can be open at a time, and `content-visibility`
+   transitioning discretely means a closed panel is not laid out at all. Do not
+   "fix" this into a snap. */
+@media (prefers-reduced-motion: no-preference) {
+  .product-fact::details-content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height var(--dur-slow) ease, opacity var(--dur-slow) ease, content-visibility var(--dur-slow);
+    transition-behavior: allow-discrete;
+  }
+
+  .product-fact[open]::details-content {
+    height: auto;
+    opacity: 1;
+  }
 }
 
 @media (max-width: 1180px) {
   .product-stage {
-    grid-template-columns: minmax(0, 1.12fr) minmax(460px, 0.88fr);
+    grid-template-columns: minmax(0, 1fr) minmax(470px, 1fr);
   }
 
   .product-stage__purchase {
@@ -3760,138 +3877,405 @@ body.promotion-open {
 
   .product-stage__media {
     min-height: 0;
-    aspect-ratio: 4 / 3;
+    padding: clamp(40px, 8vw, 68px) var(--gutter);
   }
 
   .product-stage__purchase {
-    min-height: 620px;
     border-top: 1px solid var(--hairline);
     border-left: 0;
   }
 
-  .product-portals {
-    grid-template-columns: 1fr;
-  }
-
-  .product-portals__statement {
-    padding-right: 0;
-    padding-bottom: 38px;
-  }
-
-  .product-portals__links {
-    padding-top: 16px;
-    padding-left: 0;
-    border-top: 1px solid var(--rule-on-dark);
-    border-left: 0;
-  }
-
-  .product-serving,
-  .product-ingredients {
-    grid-template-columns: 1fr;
-  }
-
-  .product-serving__figure {
-    grid-row: 1;
-  }
-
-  .product-serving__figure img {
-    aspect-ratio: 16 / 10;
+  .product-plinth__jar {
+    height: clamp(340px, 52vw, 460px);
   }
 }
 
+/* On a phone the whole decision has to land in the first screen: the jar, the
+   name, the price and the buy row, with nothing that matters left below the
+   fold. Every number in this block is vertical space bought back from the
+   desktop stage — the measured cost of the old stage was 974px to the bottom of
+   the buy row on a 390x844 phone, which put the primary action out of sight. */
 @media (max-width: 620px) {
   .product-stage__media {
-    aspect-ratio: 4 / 3;
+    padding: 20px var(--gutter) 24px;
   }
 
-  .product-stage__image {
-    object-position: 48% center;
+  /* Still the largest single thing on the screen, and still standing on its own
+     horizon — just no longer eating the half of the viewport that the price and
+     the buy row need. */
+  .product-plinth__jar {
+    height: clamp(226px, 62vw, 290px);
   }
 
   .product-stage__purchase {
-    min-height: 0;
-    padding: 32px var(--gutter) 52px;
+    padding: 26px var(--gutter) 40px;
   }
 
+  .product-breadcrumb {
+    margin-bottom: 16px;
+  }
+
+  /* The only way back to the category on a phone, so it gets a real target
+     rather than the height its text happens to occupy. */
+  .product-breadcrumb a {
+    padding-top: 8px;
+  }
+
+  .product-stage h1 {
+    font-size: clamp(38px, 10.6vw, 48px);
+  }
+
+  .product-stage__price {
+    margin: 22px 0 12px;
+  }
+
+  /* On a phone the purchase decision comes before the reading: quantity and the
+     two buttons sit directly under the price, then the sentence, then the
+     claims, then the facts. */
   .product-stage__buy {
     order: 1;
+    padding-top: 14px;
+  }
+
+  .product-stage__label {
+    margin-bottom: 10px;
+  }
+
+  /* The ledger's content box on a 390px phone is 334px, which trips the 356px
+     container query above and stacks all three controls into 262px. That is the
+     single most expensive block on the screen and it buys nothing: a 134px
+     stepper and "ADD TO CART" fit side by side with room to spare. This rule is
+     later in the file than the container queries, so it wins on order, not on
+     specificity — keep it below them. */
+  .product-stage__controls {
+    grid-template-columns: 134px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .product-stage__controls .quantity-control {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  /* Buy now takes the full width underneath. It is the second-choice action, so
+     it reads as the wider, quieter door rather than as half of a split. */
+  .product-stage__buy .product-stage__buynow {
+    grid-column: 1 / -1;
+    min-height: 56px;
   }
 
   .product-stage__summary {
     order: 2;
-    margin-top: 32px;
+    margin-top: 26px;
+    padding: 18px 0;
+    /* The buy row above already ends the purchase block; a rule here only added
+       a second edge to the same seam. */
+    border-top: 0;
   }
 
+  /* Three claims on one line instead of three stacked rows. Equal thirds forced
+     "VEGAN-SUITABLE" onto a second line while its neighbours sat on one, so the
+     items size to their own text and share the slack instead. They wrap as a
+     group on a narrow phone rather than one item breaking mid-phrase.
+
+     Still regulated text: full-strength ink, solid Paper, in the open, nothing
+     clipped and nothing truncated — only the arrangement changed. The dividing
+     rules go because at this size they crowd the words more than they separate
+     them; the gap does that work. */
   .product-claims {
     order: 3;
+    padding: 16px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px clamp(12px, 4vw, 22px);
+    align-items: baseline;
+    /* The facts accordion below opens with its own rule, so the claims' closing
+       border only doubled it up. */
+    border-bottom: 0;
   }
 
-  .product-breadcrumb {
-    margin-bottom: 22px;
-  }
-
-  .product-stage h1 {
-    font-size: clamp(42px, 12.5vw, 56px);
-  }
-
-  .product-stage__price {
-    margin: 18px 0 14px;
-  }
-
-  .product-stage__buy {
-    padding-top: 18px;
-  }
-
-  .product-claims {
-    padding: 12px 0 0;
-    display: grid;
+  .product-facts {
+    order: 4;
+    margin-top: 24px;
   }
 
   .product-claims li,
   .product-claims li:first-child {
-    padding: 12px 0;
+    padding: 0;
     text-align: left;
+    white-space: nowrap;
   }
 
   .product-claims li + li {
-    border-top: 1px solid var(--hairline);
     border-left: 0;
+  }
+
+  .product-fact__rows div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+/* Below 360px the two-abreast row runs out of honest room: a stepper narrow
+   enough to leave "ADD TO CART" on one line puts its own minus and plus keys at
+   34px, under the 44px touch floor. Nothing is worth a control you cannot hit,
+   so the stepper takes its own full-width line and every key gets ~88px.
+
+   This costs about 74px of height, which on a 320x720 phone pushes Buy now — the
+   secondary action — just under the fold. That is the trade being made
+   deliberately: the dock brings Add to cart back within reach the moment the
+   shopper scrolls. */
+@media (max-width: 360px) {
+  .product-stage__controls {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .product-stage__controls .quantity-control {
     width: 100%;
   }
 
-  .product-portals {
-    padding-top: 48px;
-    padding-bottom: 48px;
+  /* The row the stepper just took back has to come from somewhere, and the jar
+     is the only element on this screen with height to spare. Trimming it here
+     keeps Add to cart above the fold on a 320x720 phone. */
+  .product-plinth__jar {
+    height: clamp(190px, 58vw, 230px);
   }
 
-  .product-portals h2 {
-    font-size: clamp(38px, 12vw, 50px);
+  .product-stage__media {
+    padding-top: 16px;
+    padding-bottom: 20px;
+  }
+}
+
+/* --- The phone purchase dock ---------------------------------------------- */
+
+/* On a phone the buy row leaves the screen within one flick, and everything past
+   it — the facts, the four related jars, the whole footer — is reading, not
+   deciding. The dock keeps the one action inside thumb reach for the remaining
+   ~2,400px of page.
+
+   It deliberately carries no stepper. The quantity lives in the ledger above,
+   and a second copy of it would be a second source of truth; the dock's button
+   reads the ledger's value and calls the same handler, so there is exactly one
+   number going into the bag. See bindProductDock() in script.js.
+
+   Phone only: on a wider screen the ledger is never far enough away to need it. */
+.product-dock {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .product-dock {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-dock);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    background: var(--paper);
+    border-top: 1px solid var(--hairline-strong);
+    /* The one place in the system where a resting surface carries a shadow: the
+       page scrolls underneath this bar on the same Paper ground, and a hairline
+       alone leaves nothing to tell the two apart. */
+    box-shadow: var(--shadow-dock);
+    /* `visibility` and not `display`, so the bar is out of the tab order and out
+       of the accessibility tree while it is parked, and still transitions. */
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: transform var(--dur-slow) cubic-bezier(0.16, 1, 0.3, 1), visibility var(--dur-slow);
   }
 
-  .product-serving,
-  .product-ingredients {
-    gap: 44px;
+  .product-dock.is-docked {
+    visibility: visible;
+    transform: none;
   }
 
-  .product-serving__figure img {
-    aspect-ratio: 4 / 3;
+  /* Any overlay that owns the screen owns the bottom edge too. */
+  body.menu-open .product-dock,
+  body.promotion-open .product-dock {
+    visibility: hidden;
+    transform: translateY(100%);
   }
 
-  .product-ingredients__claims div {
-    grid-template-columns: 1fr;
-    gap: 6px;
+  .product-dock__summary {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .product-dock__name {
+    display: block;
+    overflow: hidden;
+    color: var(--ink-muted);
+    font-size: 12px;
+    letter-spacing: var(--track-12);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .product-dock__price {
+    display: block;
+    margin-top: 3px;
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .product-dock__add {
+    flex: none;
+    /* 150px, not more: the name beside it has to clear "Spicy Tomato Relish"
+       without ellipsis on a 390px phone. The button is still far past the 44px
+       touch floor. */
+    min-width: 150px;
+    min-height: 52px;
+    margin-left: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 13px;
+    letter-spacing: var(--track-12);
+  }
+
+  /* Same flip as the ledger's button: on a Paper bar, inverting to Ivory would
+     read as no change at all. */
+  .product-dock__add:hover,
+  .product-dock__add.is-added {
+    background: var(--paper);
+  }
+
+  /* The dock floats over the last of the page, so the footer ends above it
+     rather than behind it. The reserve is unconditional, not toggled with the
+     bar — changing the document height mid-scroll would jump the page. */
+  .product-page .footer-base--split {
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .product-stage__image,
   .product-breadcrumb svg,
-  .product-portals__links svg,
-  .product-ingredients__back svg {
+  .product-fact__mark-bar {
     transition-duration: 0.01ms;
+  }
+
+  /* The dock still appears and still parks; it just stops sliding. */
+  .product-dock {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* --- Related products ----------------------------------------------------- */
+
+/* Paper, the same ground as the stage above and as every card in it. The two
+   bands are told apart by the stage's closing hairline and by the card borders,
+   not by a change of ground. */
+.related {
+  padding: clamp(56px, 6.5vw, 100px) 0 clamp(56px, 6vw, 96px);
+  background: var(--paper);
+}
+
+.related__head,
+.related__grid {
+  padding-right: var(--gutter);
+  padding-left: var(--gutter);
+}
+
+/* Title and lede on the left, the band's one link on the right — the same head
+   shape the collection band uses, so a heading row reads alike on both pages. */
+.related__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px clamp(24px, 4vw, 64px);
+}
+
+.related__intro {
+  min-width: 0;
+}
+
+.related__title {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.related__lede {
+  max-width: var(--measure-tight);
+  margin: 14px 0 0;
+  color: var(--ink-muted);
+  font-size: var(--type-body);
+  line-height: 1.7;
+}
+
+.related__grid {
+  margin: clamp(28px, 3vw, 44px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 1.6vw, 24px);
+  list-style: none;
+}
+
+.related__grid > li {
+  display: flex;
+}
+
+/* .button carries a 30px top margin for the stacked case it was drawn for; in a
+   heading row it is aligned by the flex baseline instead. */
+.related__all {
+  flex: none;
+  margin-top: 0;
+}
+
+/* Four to two, then two to one. Three-up is skipped on purpose: with exactly
+   four cards it would leave one stranded on its own row. */
+@media (max-width: 1000px) {
+  .related__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Stacked, the four cards measured 2,187px on a 390px phone — more scroll than
+   the product they support, and all of it after the shopper has already decided.
+   As a rail they cost one card, and the next jar peeking past the right edge is
+   the only affordance a swipe needs, so no arrows come with it. Same card, same
+   stepper, same Add to cart as everywhere else; only the track changed. */
+@media (max-width: 620px) {
+  .related__grid {
+    --rail-gap: 14px;
+    display: flex;
+    grid-template-columns: none;
+    gap: var(--rail-gap);
+    padding-bottom: 6px;
+    overflow-x: auto;
+    /* Same reason as .collection__rail: without it the off-screen cards still
+       count towards the document width and iOS Safari drags the whole page
+       sideways, ignoring overflow-x: hidden on the root. */
+    contain: paint;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--gutter);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  /* The rail's own scrollbar spans the full window and reads as a page-level
+     bar, exactly as on the home page rail, so it stays hidden. */
+  .related__grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .related__grid > li {
+    flex: 0 0 min(78vw, 300px);
+    scroll-snap-align: start;
   }
 }
 

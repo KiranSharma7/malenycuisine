@@ -225,6 +225,90 @@ window.addEventListener("resize", () => {
 });
 
 /* ---------------------------------------------------------------
+   Card commerce — the stepper and Add to cart inside a .product-card
+   --------------------------------------------------------------- */
+
+/* The same card appears in the home page's rail and in the product page's
+   "You may also like" grid, so the behaviour lives here once rather than being
+   copied per band. Each band owns its own live region, so it passes its own
+   announce() in. Delegation means a band can add or hide cards freely. */
+
+const MIN_QUANTITY = 1;
+const MAX_QUANTITY = 99;
+const ADD_CONFIRM_MS = 1600;
+
+const addConfirmTimers = new WeakMap();
+
+function readCardQuantity(card) {
+  return Number.parseInt(card.querySelector("[data-quantity]").textContent, 10) || MIN_QUANTITY;
+}
+
+function setCardQuantity(card, next) {
+  const output = card.querySelector("[data-quantity]");
+  const decrease = card.querySelector("[data-decrease]");
+  const increase = card.querySelector("[data-increase]");
+  const clamped = Math.min(MAX_QUANTITY, Math.max(MIN_QUANTITY, next));
+
+  output.value = clamped;
+  output.textContent = clamped;
+  decrease.disabled = clamped <= MIN_QUANTITY;
+  increase.disabled = clamped >= MAX_QUANTITY;
+
+  return clamped;
+}
+
+function bumpBagCount(quantity) {
+  const bagLink = document.querySelector(".bag-link");
+  const bagCount = document.querySelector(".bag-count");
+  if (!bagCount || !bagLink) return;
+
+  const total = (Number.parseInt(bagCount.textContent, 10) || 0) + quantity;
+  bagCount.textContent = total;
+  bagLink.setAttribute("aria-label", `Shopping bag, ${total} ${total === 1 ? "item" : "items"}`);
+}
+
+function bindCardCommerce(root, announce) {
+  root.addEventListener("click", (event) => {
+    const button = event.target.closest("button");
+    if (!button) return;
+
+    const card = button.closest(".product-card");
+    if (!card) return;
+
+    if (button.hasAttribute("data-decrease") || button.hasAttribute("data-increase")) {
+      const step = button.hasAttribute("data-increase") ? 1 : -1;
+      const name = card.querySelector(".product-card__title").textContent.trim();
+      announce(`${name} quantity ${setCardQuantity(card, readCardQuantity(card) + step)}.`);
+      return;
+    }
+
+    if (button.hasAttribute("data-add-to-cart")) {
+      const label = button.querySelector("[data-add-label]");
+      const quantity = readCardQuantity(card);
+      const name = button.dataset.product;
+
+      label.textContent = "Added";
+      button.classList.add("is-added");
+      bumpBagCount(quantity);
+      announce(`${name} added to cart. ${quantity} ${quantity === 1 ? "item" : "items"}.`);
+
+      window.clearTimeout(addConfirmTimers.get(button));
+      addConfirmTimers.set(
+        button,
+        window.setTimeout(() => {
+          label.textContent = "Add to cart";
+          button.classList.remove("is-added");
+        }, ADD_CONFIRM_MS)
+      );
+    }
+  });
+
+  /* Every stepper starts at one with its minus already disabled, so the control
+     never opens in a state the buttons cannot produce. */
+  root.querySelectorAll(".product-card").forEach((card) => setCardQuantity(card, MIN_QUANTITY));
+}
+
+/* ---------------------------------------------------------------
    Shop the collection — category filter, rail paging, add to cart
    --------------------------------------------------------------- */
 
@@ -239,18 +323,11 @@ if (collection) {
   const emptyMessage = collection.querySelector("[data-collection-empty]");
   const status = collection.querySelector("[data-collection-status]");
   const shopAll = collection.querySelector("[data-shop-all]");
-  const bagLink = document.querySelector(".bag-link");
-  const bagCount = document.querySelector(".bag-count");
-
-  const MIN_QUANTITY = 1;
-  const MAX_QUANTITY = 99;
-  const CONFIRM_MS = 1600;
 
   /* The band opens on the best sellers rather than the whole catalogue: six
      jars is a choice a visitor can make, sixteen is a list they have to read. */
   const DEFAULT_FILTER = "best";
 
-  const confirmTimers = new WeakMap();
   let statusTimer;
 
   function announce(message) {
@@ -334,34 +411,6 @@ if (collection) {
     }, 120);
   }
 
-  /* Quantity and add to cart */
-
-  function readQuantity(card) {
-    return Number.parseInt(card.querySelector("[data-quantity]").textContent, 10) || MIN_QUANTITY;
-  }
-
-  function setQuantity(card, next) {
-    const output = card.querySelector("[data-quantity]");
-    const decrease = card.querySelector("[data-decrease]");
-    const increase = card.querySelector("[data-increase]");
-    const clamped = Math.min(MAX_QUANTITY, Math.max(MIN_QUANTITY, next));
-
-    output.value = clamped;
-    output.textContent = clamped;
-    decrease.disabled = clamped <= MIN_QUANTITY;
-    increase.disabled = clamped >= MAX_QUANTITY;
-
-    return clamped;
-  }
-
-  function bumpBagCount(quantity) {
-    if (!bagCount || !bagLink) return;
-
-    const total = (Number.parseInt(bagCount.textContent, 10) || 0) + quantity;
-    bagCount.textContent = total;
-    bagLink.setAttribute("aria-label", `Shopping bag, ${total} ${total === 1 ? "item" : "items"}`);
-  }
-
   chips.forEach((chip) => {
     chip.addEventListener("click", () => {
       // Clicking the active chip clears the filter and shows everything again.
@@ -375,40 +424,7 @@ if (collection) {
   rail.addEventListener("scroll", updateArrows, { passive: true });
   window.addEventListener("resize", updateArrows);
 
-  collection.addEventListener("click", (event) => {
-    const button = event.target.closest("button");
-    if (!button) return;
-
-    const card = button.closest(".product-card");
-    if (!card) return;
-
-    if (button.hasAttribute("data-decrease") || button.hasAttribute("data-increase")) {
-      const step = button.hasAttribute("data-increase") ? 1 : -1;
-      const name = card.querySelector(".product-card__title").textContent.trim();
-      announce(`${name} quantity ${setQuantity(card, readQuantity(card) + step)}.`);
-      return;
-    }
-
-    if (button.hasAttribute("data-add-to-cart")) {
-      const label = button.querySelector("[data-add-label]");
-      const quantity = readQuantity(card);
-      const name = button.dataset.product;
-
-      label.textContent = "Added";
-      button.classList.add("is-added");
-      bumpBagCount(quantity);
-      announce(`${name} added to cart. ${quantity} ${quantity === 1 ? "item" : "items"}.`);
-
-      window.clearTimeout(confirmTimers.get(button));
-      confirmTimers.set(
-        button,
-        window.setTimeout(() => {
-          label.textContent = "Add to cart";
-          button.classList.remove("is-added");
-        }, CONFIRM_MS)
-      );
-    }
-  });
+  bindCardCommerce(collection, announce);
 
   /* Range band tiles jump into this rail with their line already filtered.
      The anchor's own href does the scrolling, so the link still works if this
@@ -427,10 +443,28 @@ if (collection) {
     });
   }
 
-  items.forEach((item) => setQuantity(item.querySelector(".product-card"), MIN_QUANTITY));
-
   /* applyFilter calls updateArrows itself, so this is also the arrows' setup. */
   applyFilter(DEFAULT_FILTER, { silent: true });
+}
+
+/* ---------------------------------------------------------------
+   You may also like — the product page's related grid
+   --------------------------------------------------------------- */
+
+/* Same card, same behaviour as the rail, minus the filtering and paging a grid
+   of four does not need. Guarded, so the home page never enters it. */
+const related = document.querySelector(".related");
+
+if (related) {
+  const relatedStatus = related.querySelector("[data-related-status]");
+
+  bindCardCommerce(related, (message) => {
+    if (!relatedStatus) return;
+    relatedStatus.textContent = "";
+    window.requestAnimationFrame(() => {
+      relatedStatus.textContent = message;
+    });
+  });
 }
 
 /* Band reveal — the content settles upward once, the first time the band
@@ -568,13 +602,14 @@ if (productPurchase) {
   const increase = productPurchase.querySelector("[data-single-increase]");
   const addButton = productPurchase.querySelector("[data-single-add]");
   const addLabel = productPurchase.querySelector("[data-single-add-label]");
+  const buyNow = productPurchase.querySelector("[data-single-buynow]");
   const status = productPurchase.querySelector("[data-single-status]");
   const bagLink = document.querySelector(".bag-link");
   const bagCount = document.querySelector(".bag-count");
   const productName = productPurchase.dataset.product;
   const minimum = 1;
   const maximum = 99;
-  let confirmationTimer;
+  const confirmationTimers = new WeakMap();
 
   function readQuantity() {
     return Number.parseInt(quantity.textContent, 10) || minimum;
@@ -605,22 +640,90 @@ if (productPurchase) {
     bagLink.setAttribute("aria-label", `Shopping bag, ${total} ${total === 1 ? "item" : "items"}`);
   }
 
+  /* The add itself, with no opinion about which button asked for it. The ledger's
+     Add to cart and the phone dock's both call this, so the quantity, the bag
+     count and the announcement have one implementation between them. */
+  function addToCart() {
+    const amount = readQuantity();
+    bumpBagCount(amount);
+    announce(`${productName} added to cart. ${amount} ${amount === 1 ? "item" : "items"}.`);
+  }
+
+  /* The confirmation is per-button: whichever one was pressed says "Added", and
+     the other is either off-screen or on the other side of a breakpoint. */
+  function confirmAdded(button, label) {
+    label.textContent = "Added";
+    button.classList.add("is-added");
+
+    window.clearTimeout(confirmationTimers.get(button));
+    confirmationTimers.set(
+      button,
+      window.setTimeout(() => {
+        label.textContent = "Add to cart";
+        button.classList.remove("is-added");
+      }, 1600)
+    );
+  }
+
   decrease.addEventListener("click", () => setQuantity(readQuantity() - 1));
   increase.addEventListener("click", () => setQuantity(readQuantity() + 1));
 
   addButton.addEventListener("click", () => {
-    const amount = readQuantity();
-    addLabel.textContent = "Added";
-    addButton.classList.add("is-added");
-    bumpBagCount(amount);
-    announce(`${productName} added to cart. ${amount} ${amount === 1 ? "item" : "items"}.`);
-
-    window.clearTimeout(confirmationTimer);
-    confirmationTimer = window.setTimeout(() => {
-      addLabel.textContent = "Add to cart";
-      addButton.classList.remove("is-added");
-    }, 1600);
+    addToCart();
+    confirmAdded(addButton, addLabel);
   });
+
+  /* Buy now is a real link to checkout, so navigation is the browser's job and it
+     keeps working with script off. All this adds is the same bag bump and the
+     same announcement Add to cart makes, so the count the shopper sees on the
+     way out matches what they chose. */
+  if (buyNow) {
+    buyNow.addEventListener("click", () => {
+      const amount = readQuantity();
+      bumpBagCount(amount);
+      announce(`${productName} added to cart. Going to checkout.`);
+    });
+  }
+
+  /* The phone purchase dock. On a phone the ledger's buy row leaves the screen
+     within one flick and roughly 2,400px of page follow it, so the dock keeps
+     the action in thumb reach for the rest of the scroll.
+
+     It owns no state. There is no second stepper and no second quantity: the
+     dock's button calls the same addToCart() the ledger's does, reading the same
+     value. CSS decides whether the bar is ever visible (phone only) — this only
+     decides when.
+
+     The observer watches the buy row and the extra top < 0 test means the bar
+     only arrives once the row has gone UP past the viewport, never while the
+     shopper is still scrolling down towards it. Without the observer — an old
+     browser, or script disabled — the dock simply never docks, and the ledger's
+     own controls are untouched. */
+  const dock = document.querySelector("[data-product-dock]");
+  const buyRow = productPurchase.querySelector(".product-stage__buy");
+
+  if (dock && buyRow) {
+    const dockAdd = dock.querySelector("[data-dock-add]");
+    const dockAddLabel = dock.querySelector("[data-dock-add-label]");
+
+    if (dockAdd && dockAddLabel) {
+      dockAdd.addEventListener("click", () => {
+        addToCart();
+        confirmAdded(dockAdd, dockAddLabel);
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      const dockObserver = new IntersectionObserver(
+        ([entry]) => {
+          dock.classList.toggle("is-docked", !entry.isIntersecting && entry.boundingClientRect.top < 0);
+        },
+        { threshold: 0 }
+      );
+
+      dockObserver.observe(buyRow);
+    }
+  }
 }
 
 
