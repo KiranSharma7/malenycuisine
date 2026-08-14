@@ -1,0 +1,56 @@
+{
+  "id": "8b53c4f0",
+  "phase": "discarded",
+  "pageUrl": "/C:/Users/black/OneDrive/Desktop/Code/Abacus%20Infosys/Malenycuisine/index2.html",
+  "sourceFile": "index2.html",
+  "previewFile": null,
+  "previewMode": null,
+  "expectedVariants": 2,
+  "arrivedVariants": 2,
+  "visibleVariant": 2,
+  "paramValues": {
+    "gap": 12,
+    "pad": 22
+  },
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 34,
+  "browserCheckpointRevision": 34,
+  "publicationCheckpointRevision": 0,
+  "activeOwner": "4f4946d3",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "generationPhase": "generation_ready",
+  "generationCompletedAt": 1786266587160,
+  "generationTimings": {
+    "picked_up": {
+      "at": 1786266519719,
+      "durationMs": null
+    },
+    "scaffolding": {
+      "at": 1786266519720,
+      "durationMs": null
+    },
+    "scaffold_fallback": {
+      "at": 1786266520525,
+      "durationMs": 777.6804999999586
+    },
+    "generation_ready": {
+      "at": 1786266520544,
+      "durationMs": null
+    }
+  },
+  "variantPlan": null,
+  "generationCanceled": true,
+  "generationCanceledAt": 1786266604725,
+  "cancelReason": "discard",
+  "annotationArtifacts": [],
+  "mountedVariants": [],
+  "mountFailures": [],
+  "renderState": "pending",
+  "diagnostics": [],
+  "updatedAt": "2026-08-09T09:10:28.355Z",
+  "__journalBytes": 13681,
+  "__nextSeq": 15
+}

@@ -1,0 +1,1918 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="The Maleny Cuisine design system — every token, component and rule extracted from the home page, ready to build the rest of the site from."
+    />
+    <title>Maleny Cuisine — Design System</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&family=Mrs+Saint+Delafield&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="design-system.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#ds-main">Skip to content</a>
+
+    <div class="ds">
+      <nav class="ds-nav" aria-label="Design system sections">
+        <div class="ds-nav__group">
+          <p class="ds-nav__label">Foundations</p>
+          <ul>
+            <li><a href="#colour">Colour</a></li>
+            <li><a href="#typography">Typography</a></li>
+            <li><a href="#space">Space &amp; layout</a></li>
+            <li><a href="#shape">Shape &amp; edges</a></li>
+            <li><a href="#depth">Depth</a></li>
+            <li><a href="#motion">Motion</a></li>
+            <li><a href="#imagery">Imagery</a></li>
+          </ul>
+        </div>
+
+        <div class="ds-nav__group">
+          <p class="ds-nav__label">Laws</p>
+          <ul>
+            <li><a href="#laws">The named rules</a></li>
+          </ul>
+        </div>
+
+        <div class="ds-nav__group">
+          <p class="ds-nav__label">Components</p>
+          <ul>
+            <li><a href="#buttons">Buttons</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#controls">Chips &amp; controls</a></li>
+            <li><a href="#cards">Cards &amp; tiles</a></li>
+            <li><a href="#forms">Forms &amp; inputs</a></li>
+            <li><a href="#bands">Bands</a></li>
+            <li><a href="#navigation">Navigation</a></li>
+            <li><a href="#footer">Footer</a></li>
+            <li><a href="#overlays">Overlays</a></li>
+            <li><a href="#icons">Icons</a></li>
+          </ul>
+        </div>
+
+        <div class="ds-nav__group">
+          <p class="ds-nav__label">Building</p>
+          <ul>
+            <li><a href="#recipes">Page recipes</a></li>
+            <li><a href="#a11y">Accessibility floor</a></li>
+            <li><a href="#checklist">Ship checklist</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <main class="ds-main" id="ds-main">
+        <h1 class="section-title" style="max-width: 26ch">Maleny Cuisine design system</h1>
+        <p class="ds-lede">
+          Everything below is extracted from <code>index.html</code>, <code>product.html</code> and <code>styles.css</code> — nothing
+          here is invented. Build every new page from these tokens and components and the site will hold
+          together. Start from <a href="page-template.html">page-template.html</a>, which already carries
+          the promotion, header, mega menu, mobile drawer and footer.
+        </p>
+        <p class="ds-note">
+          <strong>The one rule above all the others:</strong> if a value already has a token, use the
+          token. A raw hex, a raw shadow or a fresh <code>rgba()</code> in a new page is how a design
+          system dies.
+        </p>
+
+        <!-- ================================================================
+             FOUNDATIONS
+             ================================================================ -->
+
+        <section class="ds-section" id="colour">
+          <h2>Colour</h2>
+          <p>
+            One warm brown family carried from near-black to pale linen, plus the grounds it sits on.
+            There is no second hue anywhere in the system. Emphasis is made with tone and weight, never
+            with colour.
+          </p>
+
+          <div class="ds-block">
+            <h3>Browns</h3>
+            <ul class="ds-swatches">
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #4a261c"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--chocolate</span>
+                  <span class="ds-swatch__hex">#4a261c</span>
+                  <span class="ds-swatch__use">
+                    The structural brown. Announcement bar, the ground behind the footer photograph, and
+                    the tint under an icon hover.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #32150f"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--chocolate-deep</span>
+                  <span class="ds-swatch__hex">#32150f</span>
+                  <span class="ds-swatch__use">
+                    The closer. Headings, button borders and labels, filled buttons, and every dark band
+                    below the hero.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #2d150f"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--ink</span>
+                  <span class="ds-swatch__hex">#2d150f</span>
+                  <span class="ds-swatch__use">
+                    Body and interface text on pale grounds. Redder and softer than the deep brown, so
+                    long reading never feels stamped on.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #171310"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--night</span>
+                  <span class="ds-swatch__hex">#171310</span>
+                  <span class="ds-swatch__use">
+                    The hero's ground and the fallback behind hero photography. Appears once per page and
+                    never below the fold.
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="ds-block">
+            <h3>Grounds</h3>
+            <ul class="ds-swatches">
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #ffffff"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--paper</span>
+                  <span class="ds-swatch__hex">#ffffff</span>
+                  <span class="ds-swatch__use">
+                    The default ground of every content band below the hero, and of the product card.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #f8f4ec"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--ivory</span>
+                  <span class="ds-swatch__hex">#f8f4ec</span>
+                  <span class="ds-swatch__use">
+                    The chrome ground: header, search panel, mega menu, mobile drawer and footer. Also
+                    the separator ground when two paper bands would otherwise touch.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #eee4d6"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--cream</span>
+                  <span class="ds-swatch__hex">#eee4d6</span>
+                  <span class="ds-swatch__use">
+                    One step down from ivory. Mega-menu cards, drawer thumbs, quiet fills — how a surface
+                    separates without a shadow.
+                  </span>
+                </div>
+              </li>
+              <li class="ds-swatch">
+                <div class="ds-swatch__chip" style="background: #f7ede1"></div>
+                <div class="ds-swatch__body">
+                  <span class="ds-swatch__token">--lamplight</span>
+                  <span class="ds-swatch__hex">#f7ede1</span>
+                  <span class="ds-swatch__use">
+                    Type and strokes on dark grounds <em>only</em>. Ivory warmed and lifted so it
+                    survives against photography.
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="ds-block">
+            <h3>Ink at reduced strength</h3>
+            <p>
+              Three steps, and nothing between them. Reach for these instead of writing a fresh
+              <code>rgba()</code> — a fourth opacity is how the palette starts to blur.
+            </p>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Token</th><th>Value</th><th>Use for</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>--ink-muted</td>
+                    <td><code>rgba(45, 21, 15, 0.72)</code></td>
+                    <td>Supporting copy under a heading; an eyebrow; a credit line.</td>
+                  </tr>
+                  <tr>
+                    <td>--ink-soft</td>
+                    <td><code>rgba(45, 21, 15, 0.65)</code></td>
+                    <td>Sub-labels, placeholders, the resting label of an unselected chip.</td>
+                  </tr>
+                  <tr>
+                    <td>--ink-quiet</td>
+                    <td><code>rgba(45, 21, 15, 0.55)</code></td>
+                    <td>The quietest a control may go while still being readable.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ds-note">
+              Never use a reduced-strength ink for dietary, allergen or ingredient text. That copy is
+              regulated and always runs at full <code>--ink</code> on a solid pale ground.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Rules and edges</h3>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Token</th><th>Value</th><th>Use for</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>--hairline</td>
+                    <td><code>rgba(74, 38, 28, 0.2)</code></td>
+                    <td>The default divider: band separators, footer rules, card media edge.</td>
+                  </tr>
+                  <tr>
+                    <td>--hairline-soft</td>
+                    <td><code>rgba(74, 38, 28, 0.12)</code></td>
+                    <td>An edge that should barely register — a resting chip, a drawer card.</td>
+                  </tr>
+                  <tr>
+                    <td>--hairline-strong</td>
+                    <td><code>rgba(74, 38, 28, 0.45)</code></td>
+                    <td>A card edge answering to hover or focus.</td>
+                  </tr>
+                  <tr>
+                    <td>--rule-on-dark</td>
+                    <td><code>rgba(247, 237, 225, 0.16)</code></td>
+                    <td>Dividers inside a dark band.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="typography">
+          <h2>Typography</h2>
+          <p>
+            A high-contrast Caslon does all the speaking; DM Sans does every job that has to be read
+            quickly and repeatedly. The pairing is deliberately lopsided — the serif is rare and large,
+            the sans is everywhere and quiet.
+          </p>
+
+          <div class="ds-block">
+            <h3>The three faces</h3>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Token</th><th>Stack</th><th>Job</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>--font-display</td>
+                    <td><code>"Libre Caslon Display", Georgia, serif</code></td>
+                    <td>The brand's voice. Headings and one-sentence statements only — never body copy.</td>
+                  </tr>
+                  <tr>
+                    <td>--font-body</td>
+                    <td><code>"DM Sans", Arial, sans-serif</code></td>
+                    <td>Everything operational: nav, copy, labels, prices, buttons, product names.</td>
+                  </tr>
+                  <tr>
+                    <td>--font-script</td>
+                    <td><code>"Mrs Saint Delafield", …, cursive</code></td>
+                    <td>The founders' signed name, once on the site. A drawn mark, not a third text face.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>The ramp</h3>
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Display · <code>--type-display</code> · clamp(60px, 4.8vw, 82px) / 1.055 / -0.033em ·
+                  hero h1 only, once per page
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-family: var(--font-display); font-size: var(--type-display); font-weight: 400; line-height: 1.055; letter-spacing: -0.033em"
+                >
+                  Handcrafted flavour
+                </p>
+              </div>
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Product title · <code>--type-product-title</code> · clamp(46px, 4.3vw, 68px) / 1.02 / -0.034em ·
+                  single-product h1 only
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-family: var(--font-display); font-size: var(--type-product-title); font-weight: 400; line-height: 1.02; letter-spacing: -0.034em"
+                >
+                  Spicy Tomato Relish
+                </p>
+              </div>
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Product price · <code>--type-product-price</code> · clamp(28px, 2.1vw, 34px) / 1 ·
+                  lead price on a single-product page
+                </p>
+                <p class="ds-type__sample" style="font-size: var(--type-product-price); line-height: 1">$10.50</p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Section · <code>--type-section</code> · clamp(38px, 4.2vw, 58px) / 1.06 / -0.028em ·
+                  the h2 that opens a band
+                </p>
+                <p class="ds-type__sample section-title">Shop gourmet condiments</p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Statement · <code>--type-statement</code> · clamp(26px, 3vw, 50px) / 1.1 / -0.028em ·
+                  a sentence inside a band; tops out below the section step
+                </p>
+                <p class="ds-type__sample section-statement">
+                  Proudly 100% Australian owned.
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Panel statement · <code>--type-panel-statement</code> · clamp(22px, 1.7vw, 27px) /
+                  1.12 / -0.026em · the same job as the statement step, but inside a narrow panel or
+                  column where <code>--type-statement</code> would overrun the measure. First used for
+                  the lead line inside the product page's facts accordion.
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="
+                    max-width: 30ch;
+                    font-family: var(--font-display);
+                    font-size: var(--type-panel-statement);
+                    line-height: 1.12;
+                    letter-spacing: -0.026em;
+                  "
+                >
+                  Made to pass around.
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Lede · <code>--type-lede</code> · clamp(16px, 1.15vw, 18px) / 1.72 · standing copy in
+                  a full-width band
+                </p>
+                <p class="ds-type__sample lede" style="color: var(--ink)">
+                  Our delicious products are made using Australian ingredients that are locally sourced.
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Body · <code>--type-body</code> · 16px / 1.5–1.7 · page copy; cap the measure at
+                  <code>--measure</code> (68ch)
+                </p>
+                <p class="ds-type__sample" style="font-size: 16px; font-weight: 400; line-height: 1.7; color: var(--ink)">
+                  Every product is made by hand and all are gluten free, preservative free with no
+                  artificial colours.
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Title · 17px / 600 / 0.02em · navigation links, mega-menu links, section sub-headings
+                </p>
+                <p class="ds-type__sample" style="font-size: 17px; font-weight: 600; letter-spacing: 0.02em">
+                  Chutneys &amp; Relishes
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Tile name · clamp(17px, 1.4vw, 20px) / 600 / -0.01em · the label under a category tile
+                  or dish
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-size: clamp(17px, 1.4vw, 20px); font-weight: 600; letter-spacing: -0.01em"
+                >
+                  Jams &amp; Marmalades
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Product name · 17.5px / 600 / -0.008em / 1.45 · a product title inside a card
+                </p>
+                <p class="ds-type__sample" style="font-size: 17.5px; font-weight: 600; letter-spacing: -0.008em; line-height: 1.45">
+                  Apple Fig and Ginger Chutney
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Label · 15px / 600 / <code>--track-15</code> (0.12em) / uppercase · buttons
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-size: 15px; font-weight: 600; letter-spacing: var(--track-15); text-transform: uppercase"
+                >
+                  Shop the range
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Label small · 14px / 600 / <code>--track-14</code> (0.11em) / uppercase · a control in
+                  a tight row, a footer column heading
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-size: 14px; font-weight: 600; letter-spacing: var(--track-14); text-transform: uppercase"
+                >
+                  Search
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Micro · 12px / 600 / <code>--track-12</code> (0.08em) / uppercase · the floor of the
+                  ramp: announcement bar, card category, allergen note, Add to cart
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-size: 12px; font-weight: 600; letter-spacing: var(--track-12); text-transform: uppercase"
+                >
+                  Contains wheat
+                </p>
+              </div>
+
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Signature · <code>--font-script</code> · clamp(36px, 3.6vw, 52px) / 0.9 · the founders'
+                  signed name, once on the site, always <code>aria-hidden</code> with a plain credit
+                  line beneath it
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-family: var(--font-script); font-size: clamp(36px, 3.6vw, 52px); line-height: 0.9; color: var(--ink)"
+                >
+                  Marina &amp; Will
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>The promotion dialog is off the ramp, on purpose</h3>
+            <p>
+              The promotion is the one component that ignores the page ramp. Its box is aspect-locked
+              (2.13:1 landscape, 0.66 portrait below 1000px), so its type scales against the
+              <em>dialog</em>, not the viewport — a fixed ramp size would either overflow the box or
+              float in it. Do not copy these steps anywhere else.
+            </p>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Part</th><th>Desktop</th><th>≤1000px</th><th>≤1000px &amp; ≤680px tall</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Heading</td><td><code>clamp(32px, 3.1vw, 56px)</code></td><td><code>clamp(27px, 8.2vw, 39px)</code></td><td><code>clamp(25px, 7.5vw, 33px)</code></td></tr>
+                  <tr><td>Offer</td><td><code>clamp(20px, 1.9vw, 35px)</code></td><td><code>clamp(18px, 5.5vw, 25px)</code></td><td>—</td></tr>
+                  <tr><td>Threshold</td><td><code>clamp(15px, 1.3vw, 25px)</code></td><td><code>clamp(15px, 4.2vw, 19px)</code></td><td>—</td></tr>
+                  <tr><td>Description</td><td><code>clamp(15px, 1.2vw, 22px)</code></td><td><code>clamp(14px, 4vw, 17px)</code></td><td>—</td></tr>
+                  <tr><td>CTA</td><td><code>clamp(12px, 0.85vw, 15px)</code></td><td><code>clamp(16px, 4.7vw, 21px)</code></td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ds-note">
+              The CTA is the only label on the site that gets <em>bigger</em> on mobile — below 1000px it
+              becomes a full-bleed bar across the foot of the sheet, so it takes bar sizing rather than
+              button sizing. The offer line's 0.075em tracking sits off the ladder because it is
+              display-scale uppercase, not a label.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>The tracking ladder</h3>
+            <p>
+              Uppercase text is always tracked, and the smaller it is the wider it tracks. Uppercase at
+              default tracking is off-system.
+            </p>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Size</th><th>Token</th><th>Tracking</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>15px</td><td>--track-15</td><td>0.12em</td></tr>
+                  <tr><td>14px</td><td>--track-14</td><td>0.11em</td></tr>
+                  <tr><td>12px</td><td>--track-12</td><td>0.08em</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ds-note">
+              Nothing on this site is set smaller than 12px. If a label will not fit at 12px, the layout
+              is wrong — do not go to 11px.
+            </p>
+          </div>
+        </section>
+
+        <section class="ds-section" id="space">
+          <h2>Space &amp; layout</h2>
+          <p>
+            The page is full-bleed, not boxed. One fluid gutter runs down both edges and every band
+            shares it. There is no page-wide max-width container; measure caps do the work instead.
+          </p>
+
+          <div class="ds-block">
+            <h3>Tokens</h3>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Token</th><th>Value</th><th>Use for</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>--gutter</td>
+                    <td><code>clamp(28px, 3.2vw, 64px)</code></td>
+                    <td>Horizontal padding on the header and on every full-width band. Never hand-pick another.</td>
+                  </tr>
+                  <tr>
+                    <td>--section-y</td>
+                    <td><code>clamp(64px, 7.5vw, 118px)</code></td>
+                    <td>A content band's top padding.</td>
+                  </tr>
+                  <tr>
+                    <td>--section-y-end</td>
+                    <td><code>clamp(56px, 6vw, 96px)</code></td>
+                    <td>Its bottom padding.</td>
+                  </tr>
+                  <tr>
+                    <td>--head-gap</td>
+                    <td><code>clamp(36px, 4vw, 64px)</code></td>
+                    <td>The gap from a band's heading down to its content.</td>
+                  </tr>
+                  <tr>
+                    <td>--measure</td>
+                    <td><code>68ch</code></td>
+                    <td>Long-form reading width. Use <code>.prose</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>--measure-tight</td>
+                    <td><code>62ch</code></td>
+                    <td>A copy column sitting beside a heading. Use <code>.lede</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>--header-height</td>
+                    <td><code>122px</code> / <code>106px</code> ≤860px</td>
+                    <td>34px announcement + 88px nav. The hero, mega menu and drawer all measure against it.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ds-note">
+              Inside a component the rhythm is 4 / 8 / 10 / 14 / 16 / 24 / 32. Between bands it is always
+              a fluid clamp, never a fixed number.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Breakpoints</h3>
+            <p>All max-width. Two of them are structural; the rest only re-fit type and art.</p>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Width</th><th>What changes</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1280px</td><td>Product rail steps from 4 cards to 3.</td></tr>
+                  <tr><td>1180px</td><td>Nav gaps and type compress; footer lead stacks.</td></tr>
+                  <tr><td>1000px</td><td>Rail steps to 2 cards; two-column band bodies stack; promotion goes portrait.</td></tr>
+                  <tr><td><strong>900px</strong></td><td>Category grid, mission and footer all go to one column.</td></tr>
+                  <tr><td><strong>860px</strong></td><td><strong>The real break.</strong> Nav collapses to the hamburger drawer, mega menu is removed entirely, search toggle and account link hide.</td></tr>
+                  <tr><td>780px</td><td>Ethos proof marks stack into full-width rows.</td></tr>
+                  <tr><td>660 / 620 / 520px</td><td>Rail card width, tile crops, hero and search sizing.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="ds-note">
+              Below 860px the mega menu does not degrade into an accordion — it does not exist, and the
+              drawer carries the same links. Do not build a page that needs it on mobile.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Band scaffold</h3>
+            <p>
+              The generalised version of every content band on the home page. Pick a ground, give it a
+              heading, put your content under it.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;section class="section" id="range" aria-labelledby="range-title"&gt;
+  &lt;div class="section__head"&gt;
+    &lt;h2 class="section-title" id="range-title"&gt;Shop by category&lt;/h2&gt;
+  &lt;/div&gt;
+
+  &lt;!-- content --&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Modifier</th><th>Ground</th><th>When</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>(none)</td><td>--paper</td><td>The default for content.</td></tr>
+                  <tr><td>.section--ivory</td><td>--ivory</td><td>To separate two paper bands that would otherwise merge.</td></tr>
+                  <tr><td>.section--cream</td><td>--cream</td><td>A quieter separation, or a band of tiles that need a mat.</td></tr>
+                  <tr><td>.section--deep</td><td>--chocolate-deep</td><td>The sanctioned dark band. One per page, and read <a href="#laws">the Doorway Rule</a> first.</td></tr>
+                  <tr><td>.section--bleed</td><td>—</td><td>Add when the band runs a rail or marquee to the page edge; the head and foot keep the gutter.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="shape">
+          <h2>Shape &amp; edges</h2>
+          <p>
+            Corners are almost square, on a three-value scale with nothing between. Pill-shaped buttons
+            and chips are not part of this system — the pill radius is for circles only.
+          </p>
+
+          <div class="ds-demo">
+            <div class="ds-row">
+              <div style="width: 120px; height: 68px; border: 1px solid var(--chocolate-deep); border-radius: var(--radius-sm); display: grid; place-items: center; font-size: 12px; letter-spacing: var(--track-12); text-transform: uppercase">
+                2px
+              </div>
+              <div style="width: 120px; height: 68px; border: 1px solid var(--chocolate-deep); border-radius: var(--radius-md); display: grid; place-items: center; font-size: 12px; letter-spacing: var(--track-12); text-transform: uppercase">
+                4px
+              </div>
+              <div style="width: 68px; height: 68px; border: 1px solid var(--chocolate-deep); border-radius: var(--radius-pill); display: grid; place-items: center; font-size: 12px; letter-spacing: var(--track-12); text-transform: uppercase">
+                999
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead>
+                <tr><th>Token</th><th>Value</th><th>Use for</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>--radius-sm</td><td>2px</td><td>Buttons, inputs, chips, the newsletter field.</td></tr>
+                <tr><td>--radius-md</td><td>4px</td><td>Cards, image tiles, panels, the promotion dialog.</td></tr>
+                <tr><td>--radius-pill</td><td>999px</td><td>Circles only: icon-button hover disc, drawer thumb, rail arrows, social buttons.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="ds-note">
+            Borders are hairlines. 1px solid <code>--chocolate-deep</code> for a control outline; 1px of
+            a <code>--hairline*</code> token for structure. There are no thick strokes, no double rules
+            and no decorative frames.
+          </p>
+        </section>
+
+        <section class="ds-section" id="depth">
+          <h2>Depth</h2>
+          <p>
+            The system is flat. Depth comes from tonal layering — paper, ivory, cream, deep brown — and
+            from hairlines, not from shadow. Only three shadows exist, and each one is attached to a
+            state or to a job, never to a resting surface.
+          </p>
+
+          <div class="ds-block">
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-grid">
+                <div class="ds-shadow" style="background: var(--paper); box-shadow: var(--shadow-lift)">
+                  <strong>--shadow-lift</strong>
+                  <span>Hover on a card or tile, paired with a 3px rise.</span>
+                </div>
+                <div class="ds-shadow" style="background: var(--paper); box-shadow: var(--shadow-panel)">
+                  <strong>--shadow-panel</strong>
+                  <span>A panel overlaying the page — the open mega menu.</span>
+                </div>
+                <div class="ds-shadow ds-shadow--night" style="background: var(--night)">
+                  <strong style="text-shadow: var(--shadow-hero-text)">--shadow-hero-text</strong>
+                  <span>Legibility insurance for display type over photography. Not a style choice; never reuse off the hero.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="ds-note">
+            <strong>Flat-at-rest.</strong> No surface carries a shadow in its default state. If a card
+            needs to look separate while idle, change its tone to cream or give it a hairline — do not
+            add a shadow.
+          </p>
+        </section>
+
+        <section class="ds-section" id="motion">
+          <h2>Motion</h2>
+          <p>
+            Short and ease-only. Nothing bounces, nothing springs, nothing slides in from off-screen
+            except the mobile drawer. Motion is a response to the visitor, not decoration.
+          </p>
+
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead>
+                <tr><th>Token</th><th>Value</th><th>Use for</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>--dur-fast</td><td>160ms</td><td>A small state flip: a tab, a drawer card edge.</td></tr>
+                <tr><td>--dur</td><td>200ms</td><td>The default: colour, background, transform on a control.</td></tr>
+                <tr><td>--dur-slow</td><td>220ms</td><td>A card lift, an underline wipe, a panel opening.</td></tr>
+                <tr><td>--dur-image</td><td>400ms</td><td>Image scale on hover. Reserved — nothing else takes 400ms.</td></tr>
+                <tr><td>--dur-reveal</td><td>520ms</td><td>The once-only settle-upward as a band enters view.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ds-block">
+            <h3>The two-speed gesture</h3>
+            <p>
+              The site's signature: on hover a card rises at 220ms while its image scales at 400ms. Two
+              speeds, one gesture. Use <code>.lift</code> and <code>.lift__media</code> to get it.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;a class="lift focus-ring" href="#chutneys"&gt;
+  &lt;span class="lift__media"&gt;
+    &lt;img src="…" alt="" width="1080" height="667" loading="lazy" decoding="async" /&gt;
+  &lt;/span&gt;
+  &lt;span&gt;Chutneys &amp;amp; Relishes&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Band reveal</h3>
+            <p>
+              Content settles upward once, the first time its band comes into view. The band is only
+              armed by script when the browser can observe it <em>and</em> the visitor accepts motion —
+              so copy is never left invisible by a failed script.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;section class="section" id="story"&gt;
+  &lt;h2 class="section-title" data-reveal&gt;Our story&lt;/h2&gt;
+  &lt;p class="lede" data-reveal data-reveal-delay="1"&gt;…&lt;/p&gt;
+  &lt;a class="button" href="#shop" data-reveal data-reveal-delay="2"&gt;Shop the range&lt;/a&gt;
+&lt;/section&gt;
+
+&lt;!-- then in script.js: --&gt;
+armBandReveal(document.querySelector("#story"));</code></pre>
+            </div>
+          </div>
+
+          <p class="ds-note">
+            <code>prefers-reduced-motion</code> is honoured globally: every transition collapses to
+            0.01ms, smooth scrolling turns off, and the recipes marquee becomes an ordinary scrollable
+            row. Anything you add must survive that.
+          </p>
+        </section>
+
+        <section class="ds-section" id="imagery">
+          <h2>Imagery</h2>
+          <p>
+            Photography carries all the warmth in this system, which is why the chrome around it stays so
+            plain.
+          </p>
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead>
+                <tr><th>Kind</th><th>Treatment</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Packshot</td>
+                  <td>
+                    Shot on white. <code>object-fit: contain</code> with
+                    <code>mix-blend-mode: multiply</code> so the white drops onto the card ground. Square
+                    frame, 640×640.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Lifestyle</td>
+                  <td>
+                    <code>object-fit: cover</code>, <code>mix-blend-mode: normal</code>. Add
+                    <code>.product-card__media--photo</code> on a card whose main image is lifestyle, not
+                    a packshot.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Category tile</td>
+                  <td>
+                    Framed at the photograph's own ratio via <code>--tile-ratio</code>, not forced into
+                    one crop. Wide group shots 2.36:1, standard tiles 1.62:1.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Dish / recipe</td>
+                  <td>Square, 1:1, no mat and no hairline — the picture sits straight on the ground.</td>
+                </tr>
+                <tr>
+                  <td>Band background</td>
+                  <td>
+                    A real <code>&lt;img&gt;</code> behind the copy at <code>z-index: -2</code>, plus a
+                    scrim <code>::before</code> at <code>-1</code> once the band narrows. Text is always
+                    real HTML, never baked into the picture.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="ds-note">
+            Every <code>&lt;img&gt;</code> below the fold carries <code>width</code>,
+            <code>height</code>, <code>loading="lazy"</code> and <code>decoding="async"</code>. A
+            decorative image takes <code>alt=""</code>; a meaningful one describes what is in the frame,
+            not what the product is called.
+          </p>
+        </section>
+
+        <!-- ================================================================
+             LAWS
+             ================================================================ -->
+
+        <section class="ds-section" id="laws">
+          <h2>The named rules</h2>
+          <p>
+            These are the decisions that make the site look like one site. Breaking one is allowed, but
+            only on purpose and only once you have said so out loud.
+          </p>
+
+          <ul class="ds-rules">
+            <li class="ds-rule">
+              <strong>The One Family Rule</strong>
+              <span>
+                There is no second accent hue. Every colour is the same warm brown at a different
+                lightness, plus the ground it sits on. If a screen needs emphasis, change tone or weight
+                — never introduce a colour. This is why the sale price uses a dimmed strike-through
+                rather than red.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Doorway Rule</strong>
+              <span>
+                <code>--night</code> appears once per page, in the hero, and never below it. The dark is
+                an entrance, not the house — the page turns to daylight from the fold down.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Dark Band Allowance</strong>
+              <span>
+                A page may carry <em>one</em> dark band below the hero, in
+                <code>--chocolate-deep</code> with lamplight type — never <code>--night</code>, so the
+                Doorway Rule still holds. The home page spends its allowance twice, on the ethos band and
+                the pantry CTA, because the CTA is photography with a brown fallback rather than a flat
+                brown band. A new page gets one. Do not spend it on a band that could sit on paper.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Rare Serif Rule</strong>
+              <span>
+                Libre Caslon Display appears at most twice per screen — practically, that is the band's
+                heading and, if the band has one, its statement. A voice that speaks constantly stops
+                being heard. This is why product names in cards are set in DM Sans.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Tracking Ladder Rule</strong>
+              <span>
+                Uppercase is always tracked: 15px → 0.12em, 14px → 0.11em, 12px → 0.08em. Uppercase at
+                default tracking is off-system.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Flat-At-Rest Rule</strong>
+              <span>
+                No surface carries a shadow in its default state. Shadow is a response to hover or focus,
+                or the mark of a panel floating over the page. Nothing else.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Dietary Contrast Rule</strong>
+              <span>
+                Dietary, allergen and ingredient text is safety information. It is set at full
+                <code>--ink</code> on <code>--paper</code>, <code>--ivory</code> or <code>--cream</code>
+                — never over photography, never in a translucent panel, never at reduced opacity, never
+                clipped by a line clamp. The one dark-ground exception is the ethos band's marketing
+                copy, set in full-strength lamplight on solid brown (≈13:1). Actual label text stays
+                pale-ground.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Evidence Rule</strong>
+              <span>
+                There is no visual vocabulary for star ratings, review counts, testimonials, awards,
+                stockist addresses or delivery estimates — because there is no evidence for them. Do not
+                invent the component; ask the client for the content first.
+              </span>
+            </li>
+            <li class="ds-rule">
+              <strong>The Mutual Exclusion Rule</strong>
+              <span>
+                The mega menu, the search panel and the mobile drawer are never open at once. Opening any
+                one closes the other two, and Escape closes all three.
+              </span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- ================================================================
+             COMPONENTS
+             ================================================================ -->
+
+        <section class="ds-section" id="buttons">
+          <h2>Buttons</h2>
+          <p>
+            Nearly square, hairline-bordered, uppercase label on the tracking ladder. Every button pairs
+            <code>:hover</code> with <code>:focus-visible</code> and lifts 2px on both.
+          </p>
+
+          <div class="ds-block">
+            <h3>Primary — on a pale ground</h3>
+            <p>
+              <code>.button</code> · min 252×58px · translucent ivory fill so photography shows through ·
+              inverts to solid deep brown on hover.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-row">
+                <a class="button" href="#" style="margin-top: 0">Shop the range</a>
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;a class="button" href="#shop"&gt;Shop the range&lt;/a&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              <code>.button</code> ships with <code>margin-top: 30px</code>, because it almost always
+              follows copy. Zero it when the button sits in a grid or a row of its own.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Primary — on a dark ground</h3>
+            <p>
+              Same geometry. Lamplight border at 75–78%, lamplight label, a 24–28% night fill and (on the
+              hero) a 2px backdrop blur. Inverts to a solid lamplight fill.
+            </p>
+            <div class="ds-demo ds-demo--night">
+              <div class="ds-row">
+                <a
+                  class="button"
+                  href="#"
+                  style="margin-top: 0; border-color: rgba(247, 237, 225, 0.75); color: var(--lamplight); background: rgba(23, 19, 16, 0.28)"
+                  >Shop the range</a
+                >
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;!-- inside .hero--dark or .pantry-cta the modifier is inherited from the band --&gt;
+&lt;a class="button pantry-cta__button" href="#shop"&gt;Shop the range&lt;/a&gt;
+
+/* on a new dark band, restate the three properties: */
+.my-band .button {
+  border-color: rgba(247, 237, 225, 0.78);
+  color: var(--lamplight);
+  background: rgba(23, 19, 16, 0.24);
+}
+.my-band .button:hover,
+.my-band .button:focus-visible {
+  color: var(--on-lamplight);
+  background: var(--lamplight);
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Button with an arrow</h3>
+            <p>The arrow nudges 4px right on hover. Used for a soft secondary action.</p>
+            <div class="ds-demo ds-demo--paper">
+              <a class="button button--arrow" href="#" style="margin-top: 0">
+                Our story
+                <svg class="button__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 12h15M13 6l6 6-6 6" />
+                </svg>
+              </a>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;a class="button button--arrow" href="#story"&gt;
+  Our story
+  &lt;svg class="button__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"&gt;
+    &lt;path d="M4 12h15M13 6l6 6-6 6" /&gt;
+  &lt;/svg&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Outline button</h3>
+            <p>
+              <code>.outline-button</code> · 58px tall, label left and chevron right, no fill at rest.
+              The footer's call to action; use it where a full primary would shout.
+            </p>
+            <div class="ds-demo">
+              <a class="outline-button" href="#" style="max-width: 300px">
+                Shop all products <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;a class="outline-button" href="#shop"&gt;
+  Shop all products &lt;span aria-hidden="true"&gt;&amp;rarr;&lt;/span&gt;
+&lt;/a&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Add to cart</h3>
+            <p>
+              <code>.add-button</code> · a filled 12px micro label, the smallest button in the system,
+              sized to fit a card. Flips to <em>Added</em> for 1600ms and announces itself to screen
+              readers.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-row">
+                <button class="add-button" type="button" style="min-width: 160px">Add to cart</button>
+                <button class="add-button is-added" type="button" style="min-width: 160px">Added</button>
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;button
+  class="add-button"
+  type="button"
+  data-add-to-cart
+  data-product="Apple Fig and Ginger Chutney"
+&gt;&lt;span data-add-label&gt;Add to cart&lt;/span&gt;&lt;/button&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Icon button</h3>
+            <p>
+              <code>.icon-button</code> · a 42px hit area (34px ≤860px) holding a 25px, 1.6-weight stroked
+              SVG. On hover an 8%-brown disc scales up from 0.72 behind the icon.
+            </p>
+            <div class="ds-demo">
+              <div class="ds-row">
+                <button class="icon-button" type="button" aria-label="Search">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="10.5" cy="10.5" r="6.75"></circle>
+                    <path d="M15.4 15.4 20.5 20.5"></path>
+                  </svg>
+                </button>
+                <button class="icon-button" type="button" aria-label="Your account">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="8" r="4"></circle>
+                    <path d="M4.75 20.25a7.25 7.25 0 0 1 14.5 0"></path>
+                  </svg>
+                </button>
+                <span class="icon-button bag-link" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path>
+                    <path d="M8.9 9.6V6.9a3.1 3.1 0 0 1 6.2 0v2.7"></path>
+                  </svg>
+                  <span class="bag-count">0</span>
+                </span>
+              </div>
+            </div>
+            <p class="ds-note">
+              An icon button always carries an <code>aria-label</code> and its SVG is always
+              <code>aria-hidden="true"</code>. The bag's label restates the live count:
+              <code>aria-label="Shopping bag, 3 items"</code>.
+            </p>
+          </div>
+        </section>
+
+        <section class="ds-section" id="links">
+          <h2>Links</h2>
+          <p>
+            The site has one link signature: a 1px underline that wipes in over 220ms. The
+            <em>direction</em> is the vocabulary — the header wipes in from the right, content links wipe
+            in from the left, and a centred label opens from its middle. Never a colour change.
+          </p>
+
+          <div class="ds-demo">
+            <div class="ds-row" style="gap: 40px">
+              <a class="link-wipe link-wipe--from-right" href="#" style="font-size: 17px; font-weight: 600">From the right — header nav</a>
+              <a class="link-wipe" href="#" style="font-size: 17px; font-weight: 600">From the left — content &amp; footer</a>
+              <a class="link-wipe link-wipe--from-centre" href="#" style="font-size: 17px; font-weight: 600">From the centre — a centred tile</a>
+            </div>
+          </div>
+
+          <div class="ds-code">
+            <button class="ds-copy" type="button" data-copy>Copy</button>
+            <pre><code>&lt;a class="link-wipe" href="#recipes"&gt;Browse recipes&lt;/a&gt;
+&lt;a class="link-wipe link-wipe--from-right" href="#shop"&gt;Shop&lt;/a&gt;
+&lt;a class="link-wipe link-wipe--from-centre" href="#dish"&gt;Tomato pasta&lt;/a&gt;</code></pre>
+          </div>
+
+          <p class="ds-note">
+            For a link inside running copy, do not use the wipe — keep the native underline and set
+            <code>text-underline-offset: 4px</code>. <code>.prose a</code> already does this.
+          </p>
+        </section>
+
+        <section class="ds-section" id="controls">
+          <h2>Chips &amp; controls</h2>
+
+          <div class="ds-block">
+            <h3>Filter chip</h3>
+            <p>
+              <code>.collection-chip</code> · 42px tall. Inactive chips sit back — soft ink, warm ground,
+              faint edge. The active one fills with deep brown. Clicking the active chip clears the
+              filter.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-row" style="gap: 8px">
+                <button class="collection-chip is-active" type="button" aria-pressed="true">Chutneys &amp; Relishes</button>
+                <button class="collection-chip" type="button" aria-pressed="false">Sauces</button>
+                <button class="collection-chip" type="button" aria-pressed="false">Jams &amp; Marmalades</button>
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;div class="collection__filters" role="group" aria-label="Filter products by category"&gt;
+  &lt;button class="collection-chip" type="button" data-filter="sauces" aria-pressed="false"&gt;
+    Sauces
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              A chip is a toggle, so it carries <code>aria-pressed</code>, not
+              <code>aria-selected</code>. Below 860px the chip row scrolls sideways rather than wrapping.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Rail arrows</h3>
+            <p>
+              <code>.collection-arrow</code> · the only circular buttons in the content area. They
+              disable at each end of the rail rather than disappearing, and they hide entirely below
+              860px where swipe takes over.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div class="ds-row" style="gap: 10px">
+                <button class="collection-arrow" type="button" aria-label="Previous" disabled>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" /></svg>
+                </button>
+                <button class="collection-arrow" type="button" aria-label="Next">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Quantity control</h3>
+            <p>
+              <code>.quantity-control</code> · a 96px three-cell control sharing one hairline box. Range
+              1–99; the ends disable rather than wrapping. Uses <code>&lt;output&gt;</code>, so the value
+              is announced when it changes.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div class="quantity-control" role="group" aria-label="Quantity" style="width: 96px">
+                <button class="quantity-control__button" type="button" aria-label="Decrease quantity" disabled>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg>
+                </button>
+                <output class="quantity-control__value">1</output>
+                <button class="quantity-control__button" type="button" aria-label="Increase quantity">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                </button>
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;div class="purchase-row"&gt;
+  &lt;div class="quantity-control" role="group" aria-labelledby="p1-qty"&gt;
+    &lt;span class="visually-hidden" id="p1-qty"&gt;Quantity of Chilli Jam&lt;/span&gt;
+    &lt;button class="quantity-control__button" type="button"
+            aria-label="Decrease quantity of Chilli Jam" data-decrease&gt;
+      &lt;svg viewBox="0 0 24 24" aria-hidden="true"&gt;&lt;path d="M5 12h14" /&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;output class="quantity-control__value" data-quantity&gt;1&lt;/output&gt;
+    &lt;button class="quantity-control__button" type="button"
+            aria-label="Increase quantity of Chilli Jam" data-increase&gt;
+      &lt;svg viewBox="0 0 24 24" aria-hidden="true"&gt;&lt;path d="M12 5v14M5 12h14" /&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;button class="add-button" type="button" data-add-to-cart data-product="Chilli Jam"&gt;
+    &lt;span data-add-label&gt;Add to cart&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              Every control label names its product — <em>"Increase quantity of Chilli Jam"</em>, not
+              <em>"Increase"</em>. In a rail of sixteen cards, an unqualified label is useless.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Tabs</h3>
+            <p>
+              <code>.drawer-tab</code> · two cream pills that swap to a bordered transparent state when
+              active. Full arrow-key roving tabindex. Currently mobile-drawer only; reuse the pattern if
+              a page needs tabs.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;div class="drawer-tabs" role="tablist" aria-label="Menu sections"&gt;
+  &lt;button class="drawer-tab is-active" type="button" role="tab"
+          id="tab-shop" aria-controls="panel-shop" aria-selected="true"&gt;Shop All&lt;/button&gt;
+  &lt;button class="drawer-tab" type="button" role="tab"
+          id="tab-explore" aria-controls="panel-explore" aria-selected="false" tabindex="-1"&gt;Explore&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="drawer-panel is-active" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop"&gt;…&lt;/div&gt;
+&lt;div class="drawer-panel" id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" hidden&gt;…&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="cards">
+          <h2>Cards &amp; tiles</h2>
+          <p>
+            Four card shapes exist, and they are not interchangeable. Pick by what the visitor is meant to
+            do, not by what looks right.
+          </p>
+
+          <div class="ds-block">
+            <h3>Product card</h3>
+            <p>
+              The one card that sells. Paper ground, hairline edge, 1:1 packshot on multiply, meta row,
+              name, pairing line, then the purchase row pinned to the bottom with
+              <code>margin-top: auto</code> — so every card in a rail has its buttons on the same line
+              whatever the name length.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div style="max-width: 320px">
+                <article class="product-card" aria-labelledby="ds-product-name">
+                  <div class="product-card__media">
+                    <img
+                      class="product-card__image"
+                      src="assets/images/Apple-Fig-And-Ginger-hutney.jpg"
+                      alt="Maleny Cuisine Apple Fig and Ginger Chutney"
+                      width="640"
+                      height="640"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div class="product-card__content">
+                    <div class="product-card__meta">
+                      <p class="product-card__category">Chutneys &amp; Relishes</p>
+                      <p class="product-card__price">$10.50</p>
+                    </div>
+                    <h3 class="product-card__title" id="ds-product-name">Apple Fig and Ginger Chutney</h3>
+                    <p class="product-card__description">With cheese, curries or cold meats</p>
+                    <div class="purchase-row">
+                      <div class="quantity-control" role="group" aria-label="Quantity">
+                        <button class="quantity-control__button" type="button" aria-label="Decrease" disabled>
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg>
+                        </button>
+                        <output class="quantity-control__value">1</output>
+                        <button class="quantity-control__button" type="button" aria-label="Increase">
+                          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+                        </button>
+                      </div>
+                      <button class="add-button" type="button">Add to cart</button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead>
+                  <tr><th>Part</th><th>Spec</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>.product-card</td><td>Paper, 1px <code>--hairline</code>, 4px radius, <code>container-type: inline-size</code> so its padding and long-name step respond to the card, not the viewport.</td></tr>
+                  <tr><td>.product-card__media</td><td>1:1, hairline bottom edge. Packshot on <code>contain</code> + <code>multiply</code>.</td></tr>
+                  <tr><td>.product-card__image--alt</td><td>Optional second view revealed on hover, cropped at <code>50% 34%</code>. Decorative (<code>alt=""</code>), and guarded by <code>@media (hover: hover)</code> so touch never strands a card on it.</td></tr>
+                  <tr><td>.product-card__category</td><td>12px micro, <code>--chocolate</code>, uppercase.</td></tr>
+                  <tr><td>.product-card__price</td><td>17px / 600. Sale: <code>--sale</code> modifier with a dimmed <code>&lt;s&gt;</code> and visually-hidden "Was"/"now".</td></tr>
+                  <tr><td>.product-card__description</td><td>16px, clamped to 2 lines — <em>unless</em> it carries an allergen note, when the clamp lifts.</td></tr>
+                  <tr><td>.product-card__note</td><td>Allergen text. 12px micro at full ink, inline at the end of the description, separator generated in CSS so it never reaches a screen reader.</td></tr>
+                  <tr><td>.product-card__title--long</td><td>Steps the size down for the one name that will not fit on a line. Product names are brand copy and cannot be shortened.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;li class="collection__item" data-category="chutneys"&gt;
+  &lt;article class="product-card product-card--rail" aria-labelledby="product-1-name"&gt;
+    &lt;div class="product-card__media"&gt;
+      &lt;img class="product-card__image" src="assets/images/…jpg"
+           alt="Maleny Cuisine Apple Fig and Ginger Chutney"
+           width="640" height="640" loading="lazy" decoding="async" /&gt;
+      &lt;img class="product-card__image product-card__image--alt" src="assets/images/hover/…jpg"
+           alt="" aria-hidden="true" loading="lazy" decoding="async" /&gt;
+    &lt;/div&gt;
+
+    &lt;div class="product-card__content"&gt;
+      &lt;div class="product-card__meta"&gt;
+        &lt;p class="product-card__category"&gt;Chutneys &amp;amp; Relishes&lt;/p&gt;
+        &lt;p class="product-card__price"&gt;$10.50&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;h3 class="product-card__title" id="product-1-name"&gt;Apple Fig and Ginger Chutney&lt;/h3&gt;
+      &lt;p class="product-card__description"&gt;With cheese, curries or cold meats&lt;/p&gt;
+
+      &lt;div class="purchase-row"&gt;…&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+&lt;/li&gt;</code></pre>
+            </div>
+
+            <p class="ds-note">
+              A sale price and an allergen note look like this:
+              <code>&lt;p class="product-card__price product-card__price--sale"&gt;&lt;span class="visually-hidden"&gt;Was&lt;/span&gt;&lt;s class="price-was"&gt;$10.50&lt;/s&gt;&lt;span class="visually-hidden"&gt;now&lt;/span&gt;&lt;span class="price-now"&gt;$8.95&lt;/span&gt;&lt;/p&gt;</code>
+              and
+              <code>…cold meats&lt;span class="product-card__note"&gt;Contains wheat&lt;/span&gt;</code>.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Category tile</h3>
+            <p>
+              <code>.range-tile</code> · a photograph on the page ground with its label beneath. No mat,
+              no border — the picture's own darkness gives it the edge. The frame takes the
+              photograph's real ratio through <code>--tile-ratio</code>, so a mixed library still lines
+              up. Label underline wipes from the left.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div style="max-width: 380px">
+                <a class="range-tile" href="#">
+                  <span class="range-tile__frame">
+                    <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" width="1080" height="638" loading="lazy" decoding="async" />
+                  </span>
+                  <span class="range-tile__foot">
+                    <span class="range-tile__name">Sauces</span>
+                    <span class="range-tile__use">For stir-fries, pies and dipping</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;li class="range__item"&gt;
+  &lt;a class="range-tile" href="#shop" data-jump-filter="sauces"&gt;
+    &lt;span class="range-tile__frame"&gt;
+      &lt;img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt=""
+           width="1080" height="638" loading="lazy" decoding="async" /&gt;
+    &lt;/span&gt;
+    &lt;span class="range-tile__foot"&gt;
+      &lt;span class="range-tile__name"&gt;Sauces&lt;/span&gt;
+      &lt;span class="range-tile__use"&gt;For stir-fries, pies and dipping&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/a&gt;
+&lt;/li&gt;
+
+&lt;!-- a full-width group shot takes the wide modifier, which also sets --tile-ratio --&gt;
+&lt;li class="range__item range__item--wide"&gt;…&lt;/li&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              <code>data-jump-filter</code> makes a tile jump into the product rail with its category
+              already filtered. The anchor's own <code>href</code> does the scrolling, so the link still
+              works if the script never runs.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Dish tile</h3>
+            <p>
+              <code>.dish</code> · square photograph, centred label, underline opening from the middle.
+              Used in the recipes strip; reuse it for any centred grid of pictures.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <div style="max-width: 280px">
+                <a class="dish" href="#">
+                  <span class="dish__frame">
+                    <img src="assets/images/chutney-cheese-fruit.jpg" alt="" width="1080" height="360" loading="lazy" decoding="async" />
+                  </span>
+                  <span class="dish__foot"><span class="dish__name">Cheese and fruit board</span></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Mega-menu card</h3>
+            <p>
+              <code>.mega-card</code> · cream ground, 4:3 media, title and a circular outline arrow that
+              nudges 3px right. Navigation only — do not reuse it as a content card.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Drawer card</h3>
+            <p>
+              <code>.drawer-card</code> · a 74px row: title, sub-line and a 52px circular thumb. Mobile
+              navigation only.
+            </p>
+          </div>
+        </section>
+
+        <section class="ds-section" id="forms">
+          <h2>Forms &amp; inputs</h2>
+          <p>
+            Three input treatments exist and each belongs to one place. Do not mix them.
+          </p>
+
+          <div class="ds-block">
+            <h3>Newsletter — the boxed field</h3>
+            <p>
+              58px tall, a hairline box split into a field and a filled 58px submit. This is the
+              treatment to copy for any new form on a pale ground.
+            </p>
+            <div class="ds-demo">
+              <form class="newsletter" style="max-width: 420px" onsubmit="return false">
+                <label class="visually-hidden" for="ds-email">Email address</label>
+                <input id="ds-email" name="email" type="email" autocomplete="email" placeholder="Email address" />
+                <button type="submit" aria-label="Join our email list">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M4 12h15M13 6l6 6-6 6" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;form class="newsletter" action="#" method="post"&gt;
+  &lt;label class="visually-hidden" for="email"&gt;Email address&lt;/label&gt;
+  &lt;input id="email" name="email" type="email" autocomplete="email" placeholder="Email address" /&gt;
+  &lt;button type="submit" aria-label="Join our email list"&gt;
+    &lt;svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"&gt;
+      &lt;path d="M4 12h15M13 6l6 6-6 6" /&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              A placeholder is never the only label. Every field gets a real
+              <code>&lt;label&gt;</code>, visually hidden if the design has no room for it.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Search — the written line</h3>
+            <p>
+              <code>.search-field</code> · no box. A transparent field on a single deep-brown bottom
+              rule, set in Caslon at 25px, so it reads as a written line rather than a form control.
+              Reserved for the header search panel.
+            </p>
+            <div class="ds-demo">
+              <div class="search-field" style="max-width: 520px">
+                <input type="search" placeholder="What are you looking for?" aria-label="Search Maleny Cuisine" />
+                <button type="button">Search</button>
+              </div>
+            </div>
+            <p class="ds-note">
+              <strong>Known gap:</strong> the search input removes its native outline and has no visible
+              focus treatment of its own — focus is only managed by the panel moving into it. If you
+              reuse this field anywhere else, add a visible focus state first.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Drawer search — the filled field</h3>
+            <p>
+              <code>.drawer-search</code> · a 48px cream field with a leading icon and a
+              <code>:focus-within</code> outline. Mobile drawer only.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Focus</h3>
+            <p>Two focus treatments, both visible, both required.</p>
+            <div class="ds-table-wrap">
+              <table class="ds-table">
+                <thead><tr><th>Treatment</th><th>Where</th></tr></thead>
+                <tbody>
+                  <tr><td><code>outline: 3px solid var(--ink); outline-offset: 3px</code></td><td>Dense controls inside a card — add button, quantity buttons. The element also lifts to <code>z-index: 2</code> so the ring is never clipped by a sibling.</td></tr>
+                  <tr><td><code>outline: 2px solid var(--chocolate-deep); outline-offset: 4–6px</code></td><td>Everything else. <code>.focus-ring</code> gives you this, and it flips to lamplight inside <code>.section--deep</code>.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="bands">
+          <h2>Bands</h2>
+          <p>
+            A page is a stack of full-bleed bands. These are the shapes that already exist; a new page
+            should reach for one of them before inventing a sixth.
+          </p>
+
+          <div class="ds-block">
+            <h3>Dark hero — the doorway</h3>
+            <p>
+              <code>.hero.hero--dark</code> · <code>min(95vh, calc(100vh - var(--header-height)))</code>
+              so the first screen is exactly one hero and nothing peeks. Centred display heading in
+              lamplight with the hero text-shadow, one button, a radial scrim on desktop and a linear one
+              on mobile, and a separate mobile art file.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;section class="hero hero--dark" aria-labelledby="hero-title"&gt;
+  &lt;div class="hero__content"&gt;
+    &lt;h1 id="hero-title"&gt;Handcrafted flavour,&lt;br /&gt;made on the&lt;br /&gt;Sunshine Coast.&lt;/h1&gt;
+    &lt;a class="button" href="#shop"&gt;Shop the range&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              The heading is set with hard <code>&lt;br /&gt;</code> breaks so the phrase lands in three
+              short lines. Keep it to three. One hero, one h1, one page.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Rail band</h3>
+            <p>
+              Heading, a filter row and arrows, then a horizontally scrolling rail with mandatory snap.
+              Four cards fill the rail at full width, stepping to 3 / 2 / one-and-a-bit as the viewport
+              narrows.
+            </p>
+            <p class="ds-note">
+              <strong>The rail's structural trick:</strong> <code>contain: paint</code> on the scroller.
+              Without it the off-screen cards still counted towards the document's scrollable width — the
+              root reported 4759px on a 414px phone — and iOS Safari let the whole page be dragged
+              sideways, ignoring <code>overflow-x: hidden</code> on the root. Any new horizontal scroller
+              you add needs <code>contain: paint</code> too.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Dark statement band</h3>
+            <p>
+              <code>.section--deep</code> · proof marks separated by hairlines rather than boxes, then a
+              statement and a copy column. Below 780px the marks stack into full-width rows and the
+              hairlines pull out through the gutter so they run edge to edge.
+            </p>
+            <div class="ds-demo ds-demo--deep">
+              <p class="eyebrow">Our mission</p>
+              <p class="section-statement" style="margin-top: 14px; color: var(--lamplight)">
+                Proudly 100% Australian owned.
+              </p>
+              <p class="lede" style="margin-top: 18px; color: var(--lamplight)">
+                Every product is made by hand, preservative free with no artificial colours. Our range
+                is gluten free, with one exception &mdash; our Special BBQ Sauce contains wheat.
+              </p>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Full-bleed CTA over photography</h3>
+            <p>
+              <code>.pantry-cta</code> · a real <code>&lt;img&gt;</code> at <code>z-index: -2</code>, a
+              scrim <code>::before</code> that only appears below 900px, and the copy sitting
+              <em>above</em> optical centre because the product row occupies the lower half of the
+              photograph. All words stay selectable HTML.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Assurance bar</h3>
+            <p>
+              <code>.assurance</code> · the footer's top rail, and the announcement bar's twin: the page
+              opens on a Chocolate bar and closes on the same one. Six claims drift as one endless rail,
+              separated by <code>--rule-on-dark</code> hairlines. The bar counts as chrome rather than a
+              content band, so it spends none of the Dark Band Allowance.
+            </p>
+            <p>
+              One custom property, <code>--assurance-gap</code>, drives the space between claims, the
+              left padding that centres each hairline in that space, and the keyframe's seam correction.
+              The six claims are repeated three times so the rail never runs short on a wide monitor;
+              copies two and three carry <code>aria-hidden="true"</code> and live in the markup rather
+              than in script, so the loop still closes with JavaScript off. Keep the copy count in the
+              markup and the <code>copies</code> option in <code>armMarquee</code> in step, or the loop
+              seam will drift. Script only holds the speed at 60px per second and runs the pause button.
+            </p>
+            <p>
+              Claims are kept to three words or fewer, apart from the shipping threshold, which has to
+              stay precise. That is what lets all six sit on screen together from about 1200px up.
+            </p>
+            <p>
+              <strong>Dietary, allergen and ingredient text is not allowed on this bar.</strong> Regulated
+              claims have to stand still at full ink on a pale ground, under the Dietary Contrast Rule.
+            </p>
+          </div>
+        </section>
+
+        <section class="ds-section" id="navigation">
+          <h2>Navigation</h2>
+          <p>
+            The header is one block: announcement bar, nav, mega menu, search panel and mobile drawer.
+            Copy it whole from
+            <a href="page-template.html">page-template.html</a> — do not rebuild it per page.
+          </p>
+
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead><tr><th>Part</th><th>Spec</th></tr></thead>
+              <tbody>
+                <tr><td>.announcement</td><td>34px band (30px ≤860px) in <code>--chocolate</code>, 12px micro. Its height is structural — on mobile it truncates with an ellipsis rather than wrapping. Never let it grow.</td></tr>
+                <tr><td>.navigation</td><td>88px, a three-column grid <code>minmax(0,1fr) auto minmax(0,1fr)</code> with the logo centred and links splitting around it.</td></tr>
+                <tr><td>.nav-links a</td><td>17px / 600, capitalised, underline wiping in from the right.</td></tr>
+                <tr><td>.mega-menu</td><td>Full-width ivory panel with panel-drop shadow. Inner grid <code>minmax(220px,1fr) minmax(0,2.4fr)</code>, capped at 1560px. Opens on hover, focus or click; closes after a 160ms delay, on Escape, on link click, and when focus leaves. <strong>Removed entirely below 860px.</strong></td></tr>
+                <tr><td>.search-panel</td><td>Drops from below the announcement bar, ivory ground, focus moves into the field 180ms after opening.</td></tr>
+                <tr><td>.mobile-menu</td><td>Fixed below the header, ivory, scroll-locked body. Search field, two tabs, then a list of drawer cards.</td></tr>
+                <tr><td>.menu-toggle</td><td>Two 23px strokes that rotate into an X at <code>aria-expanded="true"</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="ds-note">
+            On a new page, mark the current section by adding <code>aria-current="page"</code> to its nav
+            link. There is no styled current state yet — if you need one, add a permanent underline, not a
+            colour change.
+          </p>
+        </section>
+
+        <section class="ds-section" id="footer">
+          <h2>Footer</h2>
+          <p>
+            <code>.footer--split</code> · a two-column grid, <code>minmax(420px, 39%)</code> photograph
+            beside a stack of lead, links and newsletter, with one legal bar spanning both. Goes to a
+            single column below 900px. Like the header, copy it whole from the page template.
+          </p>
+          <div class="ds-table-wrap">
+            <table class="ds-table">
+              <thead><tr><th>Part</th><th>Spec</th></tr></thead>
+              <tbody>
+                <tr><td>.split-image</td><td>560px minimum, cropped at <code>center 62%</code>, with a bottom gradient so the caption stays readable. Scales 1.015 → 1.045 over 800ms on hover — the one slow motion on the site.</td></tr>
+                <tr><td>.split-lead h2</td><td><code>clamp(48px, 5vw, 78px)</code> at -0.036em. The largest type below the hero, and the only place that outruns the section step.</td></tr>
+                <tr><td>.footer-label</td><td>12px / 600 / 0.11em uppercase — the column headings.</td></tr>
+                <tr><td>.footer-links a</td><td>15px, underline wiping in from the left.</td></tr>
+                <tr><td>.footer-base</td><td>76px legal bar: copyright and legal links left, social icons right. Stacks below 620px.</td></tr>
+                <tr><td>[data-year]</td><td>Script writes the current year in. Leave the markup's fallback year in place.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="ds-section" id="overlays">
+          <h2>Overlays</h2>
+
+          <div class="ds-block">
+            <h3>Promotion dialog</h3>
+            <p>
+              A real modal: <code>role="dialog"</code>, <code>aria-modal="true"</code>, labelled and
+              described, focus moved to the close button on open and returned to the previous element on
+              close, Tab trapped inside, Escape and backdrop click both close it, and the body scroll
+              locked while it is up. It appears 550ms after load.
+            </p>
+            <p class="ds-note">
+              It is a 2.13:1 landscape dialog on desktop and a 0.66 portrait sheet below 1000px, with a
+              separate art file for each and a third layout for short screens
+              (<code>max-height: 680px</code>). If you change the copy, check all three.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Skip link</h3>
+            <p>
+              Fixed top-left, translated out of view until focused. Every page needs it as its first
+              element, pointing at the <code>id</code> on <code>&lt;main&gt;</code>.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;a class="skip-link" href="#main-content"&gt;Skip to content&lt;/a&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Visually hidden</h3>
+            <p>
+              <code>.visually-hidden</code> · for text that a screen reader needs and the design does not
+              show — a field label, a "Was"/"now" price qualifier, a live region.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;p class="visually-hidden" aria-live="polite" data-collection-status&gt;&lt;/p&gt;</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="icons">
+          <h2>Icons</h2>
+          <p>
+            One icon language: a 24×24 viewBox, no fill, <code>stroke: currentColor</code>, round caps and
+            joins, and a 1.5–1.6 stroke weight. They are drawn inline so they inherit colour from their
+            button.
+          </p>
+          <div class="ds-demo">
+            <div class="ds-row" style="gap: 26px">
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.75"></circle><path d="M15.4 15.4 20.5 20.5"></path></svg>
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4.75 20.25a7.25 7.25 0 0 1 14.5 0"></path></svg>
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path><path d="M8.9 9.6V6.9a3.1 3.1 0 0 1 6.2 0v2.7"></path></svg>
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" /></svg>
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round" aria-hidden="true"><circle cx="12" cy="12" r="10.25"></circle><path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path></svg>
+              <svg viewBox="0 0 24 24" width="26" height="26" style="fill: none; stroke: var(--chocolate-deep); stroke-width: 1.5; stroke-linecap: square" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+            </div>
+          </div>
+          <p class="ds-note">
+            Two exceptions, both deliberate: the rail arrows use <code>stroke-linecap: square</code> and
+            <code>linejoin: miter</code> so they read as chevrons rather than as soft strokes; the ethos
+            proof marks and the social icons are filled shapes, not strokes.
+          </p>
+        </section>
+
+        <!-- ================================================================
+             BUILDING
+             ================================================================ -->
+
+        <section class="ds-section" id="recipes">
+          <h2>Page recipes</h2>
+          <p>
+            How to compose the pages still to be built, using only what is already here. Every one starts
+            from <a href="page-template.html">page-template.html</a>.
+          </p>
+
+          <div class="ds-block">
+            <h3>Category page (Chutneys, Sauces, …)</h3>
+            <p>
+              Dark hero with the category name → paper band with the section heading and a
+              <em>grid</em> of product cards (not a rail — there is no "more" to scroll to) → a paper
+              band of dish tiles for that category → the pantry CTA → footer.
+            </p>
+            <p class="ds-note">
+              Reuse <code>.collection__item</code>'s card markup inside an ordinary grid:
+              <code>display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: clamp(14px, 1.4vw, 22px);</code>
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Product page</h3>
+            <p>
+              Use the <strong>Serve First</strong> recipe. The serving photograph <em>is</em> the entrance:
+              a 60/40 split with one full-bleed product-in-scene image left, then breadcrumb,
+              name, price, short pairing line, verified dietary claims, quantity and a full-width Add to
+              cart action on Ivory. Follow it with one Chocolate Deep statement band linking directly to
+              Ingredients and Serving ideas, then put the full product copy and label-derived ingredients
+              on pale grounds.
+            </p>
+            <p class="ds-note">
+              This is the one page where the Doorway Rule is spent differently: the meal and packshot
+              replace the dark hero. Do not add both. Stack the 4:3 image above purchase below 900px; below
+              620px, move the purchase controls ahead of supporting copy so the Add to cart action remains
+              in the first viewport. The jar and meal must be flattened into one production image rather
+              than layered at runtime. <a href="product.html">Open the implemented reference page.</a>
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Our Story / About</h3>
+            <p>
+              Dark hero → <code>.prose</code> in a paper band → the dark statement band with the proof
+              marks → the two-column family feature → footer. This page is Read mode: structure for
+              comprehension first, and let the serif appear only twice per screen.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Contact / FAQ / policies</h3>
+            <p>
+              No hero. Open straight onto a paper band with the section heading and
+              <code>.prose</code> at <code>--measure</code>. A form uses the newsletter field treatment.
+              Keep the page short and let the footer carry the address and email — they are already
+              there.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Stockists / Food Service</h3>
+            <p>
+              Dark hero → a paper band of copy → whatever the content actually is. Do not build a map
+              component, a stockist card or a wholesale pricing table until the client supplies the data
+              — see the Evidence Rule.
+            </p>
+          </div>
+        </section>
+
+        <section class="ds-section" id="a11y">
+          <h2>Accessibility floor</h2>
+          <p>
+            The home page already ships all of this. It is the floor, not the target — a new page that
+            drops any of it is a regression.
+          </p>
+          <div class="ds-verdicts">
+            <div class="ds-verdict ds-verdict--do">
+              <h3>Every page carries</h3>
+              <ul>
+                <li>A skip link as the first element in <code>&lt;body&gt;</code>.</li>
+                <li>One <code>&lt;h1&gt;</code>, and headings that descend without skipping a level.</li>
+                <li><code>aria-labelledby</code> on every <code>&lt;section&gt;</code>, pointing at its own heading.</li>
+                <li><code>aria-label</code> on every <code>&lt;nav&gt;</code> — "Main navigation", "Shop", "Help", "Legal", "Social media".</li>
+                <li>An <code>aria-label</code> on every icon-only control, and <code>aria-hidden="true"</code> on its SVG.</li>
+                <li>A real <code>&lt;label&gt;</code> for every input, visually hidden if need be.</li>
+                <li>A visible focus state on everything focusable.</li>
+                <li>A polite live region for anything that changes without a page load.</li>
+                <li>Decorative images at <code>alt=""</code>; clones out of the tab order with <code>tabindex="-1"</code> and <code>aria-hidden</code>.</li>
+                <li>A real pause control for anything that moves for more than five seconds (WCAG 2.2.2).</li>
+              </ul>
+            </div>
+            <div class="ds-verdict ds-verdict--dont">
+              <h3>Known gaps to fix, not to copy</h3>
+              <ul>
+                <li>The header search input has no visible focus treatment of its own.</li>
+                <li>There is no styled <code>aria-current</code> state for the nav.</li>
+                <li>The mobile drawer does not trap focus the way the promotion dialog does.</li>
+                <li>The promotion appears on every page load with no memory of being dismissed.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="ds-section" id="checklist">
+          <h2>Ship checklist</h2>
+          <p>Run this before calling a new page done.</p>
+          <div class="ds-verdicts">
+            <div class="ds-verdict ds-verdict--do">
+              <h3>Do</h3>
+              <ul>
+                <li>Ground every screen in <code>--paper</code> or <code>--ivory</code> with <code>--ink</code> text.</li>
+                <li>Use a token wherever one exists — colour, shadow, duration, radius, gutter.</li>
+                <li>Keep to the three-radius scale: 2px controls, 4px surfaces, 999px circles only.</li>
+                <li>Track every uppercase string on the ladder.</li>
+                <li>Set dietary and allergen text at full ink on a solid pale ground.</li>
+                <li>Pair <code>:hover</code> with <code>:focus-visible</code> on every interactive element.</li>
+                <li>Give every below-fold image <code>width</code>, <code>height</code>, <code>loading="lazy"</code> and <code>decoding="async"</code>.</li>
+                <li>Add <code>contain: paint</code> to any new horizontal scroller.</li>
+                <li>Check the page at 1440, 1180, 900, 860, 620 and 375px.</li>
+                <li>Check it once with reduced motion on.</li>
+              </ul>
+            </div>
+            <div class="ds-verdict ds-verdict--dont">
+              <h3>Don't</h3>
+              <ul>
+                <li>Introduce a second accent hue, or a fourth ink opacity.</li>
+                <li>Put a resting shadow on any surface.</li>
+                <li>Use <code>--night</code> below the hero, or run two flat dark bands on one page.</li>
+                <li>Set Libre Caslon more than twice per screen, or use it for body copy.</li>
+                <li>Use a pill-shaped button, chip or input.</li>
+                <li>Let the announcement bar grow past 34px — truncate instead.</li>
+                <li>Let the mega menu, search panel and drawer be open at once.</li>
+                <li>Go below 12px, or use uppercase without tracking.</li>
+                <li>Invent ratings, reviews, awards, stockists or shipping promises.</li>
+                <li>Paraphrase a regulated dietary claim, or drop the Special BBQ Sauce carve-out from a range-wide statement.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const code = button.parentElement.querySelector("code");
+          if (!code) return;
+
+          try {
+            await navigator.clipboard.writeText(code.textContent);
+            button.textContent = "Copied";
+          } catch {
+            button.textContent = "Select it";
+          }
+
+          window.setTimeout(() => {
+            button.textContent = "Copy";
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

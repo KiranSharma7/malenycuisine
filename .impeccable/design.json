@@ -1,0 +1,340 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-12T07:46:40.0267206Z",
+  "title": "Design System: Maleny Cuisine",
+  "extensions": {
+    "colorMeta": {
+      "fig-chutney-brown": {
+        "role": "primary",
+        "displayName": "Fig Chutney Brown",
+        "canonical": "#4a261c",
+        "tonalRamp": [
+          "oklch(15% 0.040 40)",
+          "oklch(24% 0.058 40)",
+          "oklch(33% 0.070 40)",
+          "oklch(44% 0.076 40)",
+          "oklch(57% 0.078 40)",
+          "oklch(70% 0.062 40)",
+          "oklch(84% 0.036 40)",
+          "oklch(95% 0.013 40)"
+        ]
+      },
+      "fig-chutney-deep": {
+        "role": "primary",
+        "displayName": "Fig Chutney Deep",
+        "canonical": "#32150f",
+        "tonalRamp": [
+          "oklch(15% 0.045 35)",
+          "oklch(24% 0.060 35)",
+          "oklch(34% 0.070 35)",
+          "oklch(45% 0.074 35)",
+          "oklch(58% 0.072 35)",
+          "oklch(71% 0.056 35)",
+          "oklch(84% 0.032 35)",
+          "oklch(95% 0.012 35)"
+        ]
+      },
+      "chutney-ink": {
+        "role": "neutral",
+        "displayName": "Chutney Ink",
+        "canonical": "#2d150f",
+        "tonalRamp": [
+          "oklch(15% 0.040 33)",
+          "oklch(22% 0.050 33)",
+          "oklch(32% 0.058 33)",
+          "oklch(44% 0.062 33)",
+          "oklch(57% 0.060 33)",
+          "oklch(70% 0.048 33)",
+          "oklch(84% 0.028 33)",
+          "oklch(95% 0.010 33)"
+        ]
+      },
+      "linen-ivory": {
+        "role": "neutral",
+        "displayName": "Linen Ivory",
+        "canonical": "#f8f4ec",
+        "tonalRamp": [
+          "oklch(15% 0.010 85)",
+          "oklch(26% 0.012 85)",
+          "oklch(38% 0.013 85)",
+          "oklch(50% 0.014 85)",
+          "oklch(63% 0.014 85)",
+          "oklch(76% 0.013 85)",
+          "oklch(88% 0.013 85)",
+          "oklch(96.5% 0.012 85)"
+        ]
+      },
+      "pastry-cream": {
+        "role": "neutral",
+        "displayName": "Pastry Cream",
+        "canonical": "#eee4d6",
+        "tonalRamp": [
+          "oklch(15% 0.016 80)",
+          "oklch(26% 0.020 80)",
+          "oklch(38% 0.023 80)",
+          "oklch(50% 0.025 80)",
+          "oklch(63% 0.025 80)",
+          "oklch(76% 0.024 80)",
+          "oklch(87% 0.023 80)",
+          "oklch(95% 0.018 80)"
+        ]
+      },
+      "night-stone": {
+        "role": "neutral",
+        "displayName": "Night Stone",
+        "canonical": "#171310",
+        "tonalRamp": [
+          "oklch(12% 0.010 60)",
+          "oklch(17% 0.012 60)",
+          "oklch(28% 0.014 60)",
+          "oklch(40% 0.015 60)",
+          "oklch(53% 0.015 60)",
+          "oklch(67% 0.014 60)",
+          "oklch(81% 0.012 60)",
+          "oklch(94% 0.008 60)"
+        ]
+      },
+      "lamplight": {
+        "role": "neutral",
+        "displayName": "Lamplight",
+        "canonical": "#f7ede1",
+        "tonalRamp": [
+          "oklch(15% 0.014 75)",
+          "oklch(26% 0.017 75)",
+          "oklch(38% 0.019 75)",
+          "oklch(50% 0.020 75)",
+          "oklch(63% 0.021 75)",
+          "oklch(76% 0.020 75)",
+          "oklch(88% 0.019 75)",
+          "oklch(94.5% 0.018 75)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headings only, set with hard line breaks across three short lines. At most twice per screen."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Secondary serif moments — the open search input, mobile menu links. Makes an interface element feel spoken."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Navigation links, mega-menu links, card titles. Anything clickable and short."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Page and product copy. Not yet implemented; 16px minimum, line-height 1.6, 65–75ch measure when it lands."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase button labels and the announcement bar. Always tracked on the ladder: 15px/0.12em, 14px/0.11em, 12px/0.08em."
+      }
+    },
+    "shadows": [
+      {
+        "name": "panel-drop",
+        "value": "0 24px 40px -28px rgba(45, 21, 15, 0.45)",
+        "purpose": "Separation for a panel overlaying the page — the open mega menu only. Reads as separation, not height."
+      },
+      {
+        "name": "card-lift",
+        "value": "0 16px 26px -20px rgba(45, 21, 15, 0.6)",
+        "purpose": "Hover/focus state of an interactive card, paired with a 3px upward translate. Never at rest."
+      },
+      {
+        "name": "hero-text",
+        "value": "0 2px 24px rgba(0, 0, 0, 0.45)",
+        "purpose": "Legibility insurance for display type over hero photography. Not decorative; not for use off the hero."
+      }
+    ],
+    "motion": [
+      {
+        "name": "duration-quick",
+        "value": "180ms",
+        "purpose": "Icon hover disc, skip link, focus hand-off into the search field."
+      },
+      {
+        "name": "duration-panel",
+        "value": "200ms",
+        "purpose": "Search panel, mobile menu, mega menu open/close; button colour and lift."
+      },
+      {
+        "name": "duration-line",
+        "value": "220ms",
+        "purpose": "Nav underline wipe and card lift."
+      },
+      {
+        "name": "duration-image",
+        "value": "400ms",
+        "purpose": "Card image scale to 1.04 on hover. The only duration above 220ms in the system."
+      },
+      {
+        "name": "ease-standard",
+        "value": "ease",
+        "purpose": "The only easing curve used. Nothing in this system overshoots or bounces."
+      },
+      {
+        "name": "mega-close-delay",
+        "value": "160ms",
+        "purpose": "Grace period before the mega menu closes on mouse-out, so a diagonal cursor path does not dismiss it."
+      },
+      {
+        "name": "testimonial-arrive",
+        "value": "220ms ease",
+        "purpose": "A changed customer review settles into place from 10px below. Removed entirely when reduced motion is preferred."
+      }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "1180px" },
+      { "name": "content-stack", "value": "900px" },
+      { "name": "md", "value": "860px" },
+      { "name": "sm", "value": "520px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The site's only button on pale grounds — translucent ivory with a hairline brown outline, inverting to solid on hover.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Shop the range</a>",
+      "css": ".ds-btn-primary { min-width: 252px; min-height: 58px; display: inline-grid; place-items: center; padding: 16px 30px; border: 1px solid var(--chocolate-deep, #32150f); border-radius: var(--radius-sm, 2px); color: var(--chocolate-deep, #32150f); background: rgba(250, 247, 240, 0.86); font-family: 'DM Sans', Arial, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: color 200ms ease, background 200ms ease, transform 200ms ease; } .ds-btn-primary:hover, .ds-btn-primary:focus-visible { color: #fffaf3; background: var(--chocolate-deep, #32150f); transform: translateY(-2px); }"
+    },
+    {
+      "name": "Button on Dark",
+      "kind": "button",
+      "refersTo": "button-on-dark",
+      "description": "The hero variant: same geometry, Lamplight stroke and label, a whisper of backdrop blur over photography.",
+      "html": "<a class=\"ds-btn-dark\" href=\"#\">Shop the range</a>",
+      "css": ".ds-btn-dark { min-width: 252px; min-height: 58px; display: inline-grid; place-items: center; padding: 16px 30px; border: 1px solid rgba(247, 237, 225, 0.75); border-radius: var(--radius-sm, 2px); color: #f7ede1; background: rgba(23, 19, 16, 0.28); backdrop-filter: blur(2px); font-family: 'DM Sans', Arial, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: color 200ms ease, background 200ms ease, transform 200ms ease; } .ds-btn-dark:hover, .ds-btn-dark:focus-visible { color: #23150f; background: #f7ede1; transform: translateY(-2px); }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header link with the signature underline that wipes in from the right and out to the left.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">Stockists</a>",
+      "css": ".ds-nav-link { position: relative; display: block; padding: 8px 0; color: #2d150f; font-family: 'DM Sans', Arial, sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 0.02em; text-decoration: none; } .ds-nav-link::after { content: ''; position: absolute; right: 0; bottom: 2px; left: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 220ms ease; } .ds-nav-link:hover::after, .ds-nav-link:focus-visible::after { transform: scaleX(1); transform-origin: left; }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "icon-button",
+      "description": "42px stroked-icon action with a circular 8%-brown disc that scales up behind it on hover. The only circle in the system.",
+      "html": "<button class=\"ds-icon-btn\" type=\"button\" aria-label=\"Search\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.75\"></circle><path d=\"M15.4 15.4 20.5 20.5\"></path></svg></button>",
+      "css": ".ds-icon-btn { position: relative; width: 42px; height: 42px; display: inline-grid; place-items: center; padding: 0; border: 0; color: #17100e; background: transparent; cursor: pointer; } .ds-icon-btn svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; } .ds-icon-btn::before { content: ''; position: absolute; inset: 0; border-radius: 999px; background: rgba(74, 38, 28, 0.08); opacity: 0; transform: scale(0.72); transition: opacity 180ms ease, transform 180ms ease; } .ds-icon-btn:hover::before, .ds-icon-btn:focus-visible::before { opacity: 1; transform: scale(1); }"
+    },
+    {
+      "name": "Category Card",
+      "kind": "card",
+      "refersTo": "card-category",
+      "description": "Pastry Cream tile with a 4/3 clipped image and an outline arrow. Two speeds on hover: the card rises, the image scales.",
+      "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card__media\"><img src=\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%23d5c4b1'/%3E%3C/svg%3E\" alt=\"\" /></span><span class=\"ds-card__foot\"><span class=\"ds-card__title\">Chutneys &amp; Relishes</span><span class=\"ds-card__arrow\"><svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10.25\"></circle><path d=\"M8 12h8m-3.4-3.4L16 12l-3.4 3.4\"></path></svg></span></span></a>",
+      "css": ".ds-card { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--radius-md, 4px); background: var(--cream, #eee4d6); color: #2d150f; text-decoration: none; transition: transform 220ms ease, box-shadow 220ms ease; } .ds-card:hover, .ds-card:focus-visible { transform: translateY(-3px); box-shadow: 0 16px 26px -20px rgba(45, 21, 15, 0.6); } .ds-card__media { display: block; aspect-ratio: 4 / 3; overflow: hidden; } .ds-card__media img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 400ms ease; } .ds-card:hover .ds-card__media img { transform: scale(1.04); } .ds-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 18px 18px; } .ds-card__title { font-family: 'DM Sans', Arial, sans-serif; font-size: 16px; font-weight: 600; } .ds-card__arrow svg { width: 26px; height: 26px; display: block; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.4; transition: transform 220ms ease; } .ds-card:hover .ds-card__arrow svg { transform: translateX(3px); }"
+    },
+    {
+      "name": "Customer Review Carousel",
+      "kind": "custom",
+      "refersTo": "testimonial-table-carousel-v1",
+      "description": "Image-led customer proof with one review visible at a time. There is no autoplay; arrows wrap, the focused viewport accepts Left/Right Arrow, and one atomic polite status announces each complete change. At 900px the photograph stacks before the review field.",
+      "html": "<section class=\"ds-review\" aria-label=\"Customer reviews\"><div class=\"ds-review__media\"><img src=\"assets/images/generated/testimonials/testimonial-table-products.png\" alt=\"Sunlit Maleny Cuisine products on a table\" /></div><div class=\"ds-review__content\"><h3>Passed around.<br />Asked for again.</h3><div class=\"ds-review__viewport\" tabindex=\"0\" aria-label=\"Customer reviews carousel\"><figure><blockquote><p>Customer review copy to be supplied.</p></blockquote><figcaption><span>Customer name</span><span>Product purchased</span></figcaption></figure></div><div class=\"ds-review__foot\"><p class=\"ds-review__status\" aria-live=\"polite\" aria-atomic=\"true\">Review 1. Customer review copy to be supplied. Customer name. Product purchased.</p><button type=\"button\" aria-label=\"Show previous customer review\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m14.5 5-7 7 7 7\" /></svg></button><button type=\"button\" aria-label=\"Show next customer review\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m9.5 5 7 7-7 7\" /></svg></button></div></div></section>",
+      "css": ".ds-review { min-height: 620px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); color: var(--chocolate-deep, #32150f); background: var(--paper, #fff); } .ds-review__media { min-height: 100%; overflow: hidden; background: var(--cream, #eee4d6); } .ds-review__media img { width: 100%; height: 100%; display: block; object-fit: cover; } .ds-review__content { min-width: 0; display: flex; flex-direction: column; padding: clamp(56px, 8vw, 112px) clamp(28px, 3.2vw, 64px) 48px; } .ds-review h3 { margin: 0; font-family: 'Libre Caslon Display', Georgia, serif; font-size: clamp(38px, 4.2vw, 58px); font-weight: 400; line-height: 1.06; letter-spacing: -0.028em; } .ds-review__viewport { margin-top: clamp(38px, 5vw, 64px); padding-top: 28px; border-top: 1px solid rgba(74, 38, 28, 0.2); } .ds-review__viewport:focus-visible { outline: 2px solid var(--chocolate-deep, #32150f); outline-offset: 6px; } .ds-review figure, .ds-review blockquote { margin: 0; } .ds-review blockquote p { max-width: 24ch; margin: 0; font-family: 'Libre Caslon Display', Georgia, serif; font-size: clamp(26px, 3vw, 50px); line-height: 1.12; letter-spacing: -0.025em; } .ds-review figcaption { display: flex; justify-content: space-between; gap: 24px; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(74, 38, 28, 0.2); font-family: 'DM Sans', Arial, sans-serif; font-size: 12px; font-weight: 600; line-height: 1.35; letter-spacing: 0.08em; text-transform: uppercase; } .ds-review__foot { display: flex; justify-content: flex-end; gap: 12px; margin-top: auto; padding-top: 40px; } .ds-review__foot button { width: 52px; height: 52px; display: grid; place-items: center; padding: 0; border: 1px solid var(--chocolate-deep, #32150f); border-radius: 999px; color: var(--chocolate-deep, #32150f); background: transparent; cursor: pointer; transition: color 200ms ease, background 200ms ease, transform 220ms ease; } .ds-review__foot button:hover, .ds-review__foot button:focus-visible { color: var(--ivory, #f8f4ec); background: var(--chocolate-deep, #32150f); transform: translateY(-2px); } .ds-review__foot button:focus-visible { outline: 2px solid var(--chocolate-deep, #32150f); outline-offset: 4px; } .ds-review__foot svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; } .ds-review__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } @media (max-width: 900px) { .ds-review { min-height: 0; grid-template-columns: 1fr; } .ds-review__media img { height: auto; aspect-ratio: 16 / 9; } .ds-review__content { min-height: 560px; } } @media (prefers-reduced-motion: reduce) { .ds-review__foot button { transition: none; } }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "No box — a Caslon-set line on a single hairline rule, with a borderless uppercase submit. Reads as writing, not a form control.",
+      "html": "<div class=\"ds-search\"><input class=\"ds-search__input\" type=\"search\" placeholder=\"What are you looking for?\" aria-label=\"Search Maleny Cuisine\" /><button class=\"ds-search__submit\" type=\"submit\">Search</button></div>",
+      "css": ".ds-search { display: flex; border-bottom: 1px solid var(--chocolate-deep, #32150f); } .ds-search__input { flex: 1; min-width: 0; padding: 12px 4px; border: 0; color: #2d150f; background: transparent; font-family: 'Libre Caslon Display', Georgia, serif; font-size: 25px; } .ds-search__input:focus-visible { outline: 2px solid var(--chocolate-deep, #32150f); outline-offset: 4px; } .ds-search__submit { padding: 8px 4px 8px 24px; border: 0; color: #2d150f; background: transparent; font-family: 'DM Sans', Arial, sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.11em; text-transform: uppercase; cursor: pointer; }"
+    },
+    {
+      "name": "Announcement Bar",
+      "kind": "custom",
+      "refersTo": "announcement-bar",
+      "description": "34px Fig Chutney Brown band at the top of every page. Height is structural — it truncates rather than wraps.",
+      "html": "<div class=\"ds-announcement\"><p>Free Shipping on orders over $60</p></div>",
+      "css": ".ds-announcement { height: 34px; display: grid; place-items: center; padding: 0 24px; color: #fffdf8; background: var(--chocolate, #4a261c); } .ds-announcement p { margin: 0; overflow: hidden; font-family: 'DM Sans', Arial, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; line-height: 1; text-transform: uppercase; text-overflow: ellipsis; white-space: nowrap; }"
+    },
+    {
+      "name": "Mobile Menu Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Below 860px the nav becomes a Fig Chutney Brown panel with Caslon-set links divided by 20%-white hairlines.",
+      "html": "<ul class=\"ds-mobile-menu\"><li><a href=\"#\">Shop</a></li><li><a href=\"#\">Recipes</a></li><li><a href=\"#\">Our Story</a></li></ul>",
+      "css": ".ds-mobile-menu { display: grid; gap: 0; margin: 0; padding: 22px 28px; list-style: none; color: var(--ivory, #f8f4ec); background: var(--chocolate, #4a261c); } .ds-mobile-menu li + li { border-top: 1px solid rgba(255, 255, 255, 0.2); } .ds-mobile-menu a { display: block; padding: 13px 0; color: inherit; font-family: 'Libre Caslon Display', Georgia, serif; font-size: 26px; text-decoration: none; } .ds-mobile-menu a:hover, .ds-mobile-menu a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sunlit Kitchen Table",
+    "overview": "This is a table set in daylight: linen, ripe fruit, glass jars, people about to eat. The world is warm, pale and generous, built on an ivory ground with fig-brown ink. Nothing here is clinical and nothing is precious. The brand has made the same recipes in the same kitchen since 1988, and the design should feel like that — settled, unhurried, sure of itself.\n\nThe one deliberate exception is the doorway. Every page opens on a dark, full-bleed photographic hero — evening light, dark stone, the table after sundown — and then the site turns to daylight from the fold down. The dark is an entrance, not the house. It buys one moment of atmosphere and then gets out of the way so the shopping surfaces can be bright, legible and calm.\n\nThe execution is crisp editorial, not rustic. Corners are nearly square (2px), borders are hairlines, shadows are almost absent, and typography does the work: a high-contrast Caslon display against a plain, tightly-set grotesque. Warmth comes entirely from the palette and the photography, never from soft corners, drop shadows or decorative flourish. The result should read as a serious food brand that happens to be family-run, not a craft-market stall.",
+    "keyCharacteristics": [
+      "Ivory ground, fig-brown ink, one dark photographic hero per page",
+      "Libre Caslon Display for voice, DM Sans for everything operational",
+      "Near-square corners (2px / 4px); circles reserved for icon states only",
+      "Flat at rest — shadow only ever appears as a response to hover or focus",
+      "Uppercase, wide-tracked labels as the only ornament",
+      "Motion is short (180–220ms) and ease-only; nothing bounces"
+    ],
+    "rules": [
+      {
+        "name": "The One Family Rule",
+        "body": "There is no second accent hue. Every colour in this system is the same warm brown at a different lightness, plus the ivory it sits on. If a screen needs emphasis, it changes tone or weight — it does not introduce a colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Doorway Rule",
+        "body": "Night Stone appears once per page, in the hero, and never below it. A second dark section on the same page is off-system unless the user has explicitly asked for one.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dietary Contrast Rule",
+        "body": "Dietary and ingredient text is safety information. It is set in Chutney Ink on Linen Ivory or Pastry Cream — never on photography, never on Night Stone, never in a translucent panel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rare Serif Rule",
+        "body": "Libre Caslon Display appears at most twice per screen. It is the brand's voice, and a voice that speaks constantly stops being heard.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tracking Ladder Rule",
+        "body": "Uppercase text is always tracked, and the smaller it is the wider it tracks: 15px → 0.12em, 14px → 0.11em, 12px → 0.08em. Uppercase at default tracking is off-system.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "No surface carries a shadow in its default state. If a card needs to look separate while idle, change its tone to Pastry Cream — do not add a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Single Review Rule",
+        "body": "Customer proof arrives as one generous table-side story at a time, never a wall of review cards. Keep review, customer and purchased-product data as explicit placeholders until verified; do not infer identities or add stars, scores, totals, awards or badges.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do keep every screen grounded in Linen Ivory (#f8f4ec) with Chutney Ink (#2d150f) text.",
+      "Do obey the three-radius scale exactly: 2px for controls, 4px for surfaces, 999px only for circles.",
+      "Do set dietary, allergen and ingredient text in solid ink on a solid pale surface, at body size or larger.",
+      "Do track uppercase text on the ladder — 15px/0.12em, 14px/0.11em, 12px/0.08em.",
+      "Do keep transitions between 180ms and 220ms with plain ease; 400ms is reserved for image scale.",
+      "Do pair :hover with :focus-visible on every interactive element, as the current stylesheet already does throughout.",
+      "Do honour prefers-reduced-motion — the stylesheet already collapses all transitions to 0.01ms.",
+      "Do keep testimonial review, customer and product data explicitly marked as placeholders until the client supplies verified copy.",
+      "Do use the fluid gutter clamp(28px, 3.2vw, 64px) for horizontal page padding."
+    ],
+    "donts": [
+      "Don't introduce a second accent hue. Emphasis is tone and weight, never colour.",
+      "Don't put a resting shadow on any surface.",
+      "Don't use Night Stone below the hero, or run a second dark band on the same page.",
+      "Don't set Libre Caslon Display more than twice per screen, and never for body copy.",
+      "Don't use pill-shaped buttons, chips or inputs — the pill radius is for circles only.",
+      "Don't grow the announcement bar past 34px (30px mobile); truncate instead of wrapping.",
+      "Don't let the mega menu and the search panel be open at once; opening either closes the other.",
+      "Don't invent star ratings, scores, review totals, review copy, customer identities, purchased-product attributions, badges or award marks — there is no visual vocabulary for them because there is no evidence for them."
+    ]
+  }
+}

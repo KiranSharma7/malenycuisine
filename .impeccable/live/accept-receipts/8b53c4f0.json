@@ -1,0 +1,11 @@
+{
+  "id": "8b53c4f0",
+  "operation": "discard",
+  "variantId": null,
+  "result": {
+    "handled": true,
+    "file": "index2.html",
+    "carbonize": false
+  },
+  "completedAt": "2026-08-09T09:10:28.179Z"
+}

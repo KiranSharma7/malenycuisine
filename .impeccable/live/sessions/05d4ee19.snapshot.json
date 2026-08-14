@@ -1,0 +1,61 @@
+{
+  "id": "05d4ee19",
+  "phase": "completed",
+  "pageUrl": "/C:/Users/black/OneDrive/Desktop/Code/Abacus%20Infosys/Malenycuisine/index2.html",
+  "sourceFile": "index2.html",
+  "previewFile": null,
+  "previewMode": null,
+  "expectedVariants": 2,
+  "arrivedVariants": 2,
+  "visibleVariant": 1,
+  "paramValues": {
+    "size": 17.5
+  },
+  "pendingEventSeq": null,
+  "pendingEvent": null,
+  "deliveryLease": null,
+  "checkpointRevision": 27,
+  "browserCheckpointRevision": 27,
+  "publicationCheckpointRevision": 0,
+  "activeOwner": "4f4946d3",
+  "sourceMarkers": {},
+  "fallbackMode": null,
+  "generationPhase": "generation_ready",
+  "generationCompletedAt": 1786266346349,
+  "generationTimings": {
+    "picked_up": {
+      "at": 1786266251494,
+      "durationMs": null
+    },
+    "scaffolding": {
+      "at": 1786266251509,
+      "durationMs": null
+    },
+    "source_ready": {
+      "at": 1786266252441,
+      "durationMs": 915.816700000003
+    },
+    "generation_ready": {
+      "at": 1786266252459,
+      "durationMs": null
+    }
+  },
+  "variantPlan": null,
+  "generationCanceled": true,
+  "generationCanceledAt": 1786266346131,
+  "cancelReason": "accept",
+  "annotationArtifacts": [],
+  "mountedVariants": [],
+  "mountFailures": [],
+  "renderState": "pending",
+  "diagnostics": [
+    {
+      "error": "carbonize_cleanup_required",
+      "file": "index2.html",
+      "message": "Accepted variant still has carbonize markers that must be folded into source CSS."
+    }
+  ],
+  "updatedAt": "2026-08-09T09:06:40.276Z",
+  "__journalBytes": 13994,
+  "__nextSeq": 23
+}

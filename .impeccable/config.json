@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "17.5px",
+        "createdAt": "2026-08-09T09:41:30.911Z",
+        "reason": "User confirmed 17.5px is intentional: chosen via the live-mode slider for the product card title"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#ffffff",
+        "createdAt": "2026-08-09T14:18:46.769Z",
+        "reason": "User asked for a pure white recipes section background"
+      }
+    ]
+  }
+}
