@@ -1,0 +1,310 @@
+/* ==========================================================================
+   ARCHIVE — the category / collection page.
+
+   Loads after styles.css and uses its :root tokens only. Everything here is
+   the page shape a category needs and the home page does not: a short
+   text-only hero, a filter bar that survives the scroll, and a grid where the
+   home page runs a rail.
+
+   Every category page (Chutneys, Sauces, Jams, Dressings, Pudding) inherits
+   this file unchanged and swaps only its heading, its sentence, its active
+   chip and its cards.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Sideways lock, restated so the filter bar can stick.
+
+   styles.css locks <html> and <body> with `overflow-x: hidden` and its note
+   says why that was safe: nothing on the home page is sticky. `hidden` makes
+   both elements scroll containers, and a sticky child of <body> then measures
+   against a box that never scrolls, so it silently scrolls away.
+
+   `clip` contains the page sideways without creating a scroll container, so
+   the bar sticks. It is safe here because this page's only horizontal scroller
+   — the chip row below 860px — already carries `contain: paint`, which is what
+   actually keeps its children out of the document's width; the root lock was
+   only ever the second line of defence.
+   -------------------------------------------------------------------------- */
+
+html,
+body {
+  overflow-x: clip;
+}
+
+/* --------------------------------------------------------------------------
+   Hero — heading and one sentence, centred, no photograph.
+
+   The home page spends its Doorway on a dark photographic hero. A category
+   page has nothing to establish and sixteen jars to get to, so the hero is
+   a label, not an event: white ground, short padding, and the first row of
+   product breaking the fold. This is the deliberate opposite of the home
+   page's full-height opening.
+   -------------------------------------------------------------------------- */
+
+.archive-hero {
+  padding: clamp(26px, 2.6vw, 42px) var(--gutter) clamp(18px, 1.9vw, 28px);
+  background: var(--paper);
+  text-align: center;
+}
+
+/* The statement step, two rungs below display. Display is sized to hold its
+   own against a photograph across a full screen; here it would be most of the
+   first viewport on its own, which is the height this band is explicitly not
+   allowed to take. A category name is a label, not an argument, so it takes
+   the smallest step that still reads as the page's title. Still the page's
+   one h1 and its one Caslon line. */
+.archive-hero__title {
+  margin: 0 auto;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+
+/* Held to two lines by measure, not by a clamp: a clamp can hide a word, and
+   this sentence is the only thing telling a shopper what the page is. Wider
+   than a reading measure because there is only one sentence to place, and
+   centred copy this short reads better balanced than stacked. */
+.archive-hero__lede {
+  max-width: 66ch;
+  margin: clamp(12px, 1.2vw, 16px) auto 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   Filter bar — the home page's chips, restated as navigation, plus sort.
+
+   On the home page a chip is a toggle that hides cards in place. Here each
+   chip is a real link to that line's own page, so it carries aria-current
+   rather than aria-pressed, and the row still works with no JavaScript.
+
+   Same white ground as the hero and no rules above or below it, so the two
+   read as one short header block rather than two stacked bands. The chips
+   already draw their own edges; a full-width rule on top of them only says a
+   second time what the gap between hero and grid has already said. The bar
+   earns an edge when it starts floating, and not before.
+
+   It sticks because the grid is long: sixteen
+   cards is several screens, and a filter you have to scroll back up to reach
+   is a filter you stop using. The site header is not sticky, so top: 0 is the
+   header's own place once it has gone. Sits under the drawer, search panel
+   and mega menu in the stack.
+   -------------------------------------------------------------------------- */
+
+.archive-filter {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 10px var(--gutter);
+  background: var(--paper);
+  transition: box-shadow var(--dur) ease;
+}
+
+/* Only once it has actually left its place in the flow — a resting shadow
+   would break the Flat-At-Rest Rule. This is the mega menu's panel shadow,
+   used for the same job: a surface reading as separate from the page under it. */
+.archive-filter.is-stuck {
+  box-shadow: var(--shadow-panel);
+}
+
+.archive-filter__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 2vw, 32px);
+}
+
+.archive-filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* A chip that navigates. Same box as the home page's button, plus the two
+   things an anchor needs to sit on that box. */
+.collection-chip--link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* The page you are on. The home page marks its active filter with a class the
+   script sets; a page cannot change under you, so the state is the markup. */
+.collection-chip[aria-current="page"] {
+  color: var(--ivory);
+  background: var(--chocolate-deep);
+  border-color: var(--chocolate-deep);
+}
+
+.collection-chip:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+/* DESIGN.md records the missing nav aria-current state as a known gap. A page
+   that sits under one of these links is where it has to be fixed: the wipe
+   rests drawn rather than waiting for a hover that will never say anything
+   new. */
+.nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* --------------------------------------------------------------------------
+   Sort — the one control on this page that changes the grid in place.
+   -------------------------------------------------------------------------- */
+
+.archive-sort {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* A visible label, not a placeholder option. The control has to say what it
+   does before it is opened, and "Featured" alone does not. */
+.archive-sort__label {
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Built on the chip's box — same height, same 2px corner, same hairline — so
+   the bar reads as one row of controls rather than a nav with a form bolted
+   on. `appearance: none` because the native select paints its own chrome, and
+   a system blue chevron is the one thing on this page that is not ours. */
+.archive-sort__select {
+  height: 42px;
+  padding: 0 40px 0 14px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  background-color: transparent;
+  /* The chevron is the same 45-degree stroke as the mega menu's, drawn in
+     --chocolate-deep. Inlined so the bar costs no extra request. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%2332150f' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  appearance: none;
+  transition: border-color var(--dur) ease, color var(--dur) ease;
+}
+
+.archive-sort__select:hover {
+  border-color: var(--hairline-strong);
+}
+
+.archive-sort__select:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+/* The list itself is drawn by the OS and inherits nothing, so the options are
+   set explicitly for the platforms that do honour it. */
+.archive-sort__select option {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+/* Below the drawer breakpoint the row scrolls instead of wrapping, so the bar
+   stays one line tall and the grid keeps the screen. Sort moves above the
+   chips rather than competing with them for the last of the width. */
+@media (max-width: 860px) {
+  .archive-filter__inner {
+    display: grid;
+    gap: 10px;
+  }
+
+  .archive-sort {
+    order: -1;
+    justify-content: flex-end;
+  }
+
+  .archive-sort__select {
+    height: 38px;
+  }
+
+  .archive-filter__chips {
+    flex-wrap: nowrap;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 2px var(--gutter);
+    overflow-x: auto;
+    /* Same reason as .collection__rail: without it the off-screen chips still
+       count towards the document width and iOS Safari drags the whole page. */
+    contain: paint;
+    scrollbar-width: none;
+  }
+
+  .archive-filter__chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collection-chip--link {
+    white-space: nowrap;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Grid — the home page's rail, unrolled.
+
+   Same card, same gap, same four-across count and the same step-downs the
+   rail takes, so a shopper who has scrolled the home page meets a surface
+   they already know. The only difference is that nothing is off-screen.
+   -------------------------------------------------------------------------- */
+
+.archive-grid-band {
+  padding: clamp(28px, 3vw, 44px) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+}
+
+.archive-grid {
+  /* The rail's own --rail-gap value; the token lives on .collection__rail, so
+     the number is restated rather than inherited. */
+  --shelf-gap: clamp(14px, 1.4vw, 22px);
+  display: grid;
+  gap: var(--shelf-gap);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.archive-grid__item {
+  display: flex;
+}
+
+.archive-empty {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* The same steps the rail takes, for the same reason: a card must never get
+   too narrow for its purchase row. */
+@media (max-width: 1280px) {
+  .archive-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .archive-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .archive-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

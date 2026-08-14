@@ -1,0 +1,1850 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Every Maleny Cuisine product in one place — chutneys, relishes, sauces, dressings, jams and marmalades, handmade on Queensland&#39;s Sunshine Coast." />
+    <title>Shop all products — Maleny Cuisine</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&family=Mrs+Saint+Delafield&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="archive.css" />
+    <link rel="stylesheet" href="cart.css" />
+  </head>
+
+  <body>
+    <!--
+      THESIS: The archive spends nothing on itself. Two words, one sentence, one
+      row of controls, then product — the whole first screen is the shelf, not a
+      category banner. Every category page inherits this shape unchanged.
+      OWN-WORLD: The shipped Maleny Cuisine system, unchanged. Ivory chrome over
+      a white shopping ground that now runs from the masthead to the footer,
+      fig-brown ink, one Caslon line over DM Sans, 2px and 4px corners,
+      hairlines, nothing shadowed at rest.
+      STORY: A shopper lands, reads what the range is in one line, sees four
+      jars immediately, narrows by line or reorders by price from a bar that
+      follows them down, and adds to the bag from the card.
+      FIRST VIEWPORT: Chrome, a short white header block — Caslon heading, one
+      sentence, chips and sort — then the first full row of cards, with the
+      second row breaking the fold.
+      FORM: Shelf — the home page's rail unrolled. The same card, the same gap,
+      four across, and the same step-downs to three, two and one.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with
+      the finish review, the verdict, and DESIGN.md.
+    -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- ==================================================================
+         PROMOTION — site chrome. Delete the whole block on a page where the
+         offer would be intrusive (checkout, policies). The script guards for
+         its absence.
+         ================================================================== -->
+    <div class="promotion" data-promotion hidden>
+      <section
+        class="promotion__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="promotion-title"
+        aria-describedby="promotion-description"
+      >
+        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M13 13l22 22M35 13 13 35" />
+          </svg>
+        </button>
+
+        <div class="promotion__copy">
+          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
+
+          <div class="promotion__delivery">
+            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
+              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
+              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
+              <circle cx="48" cy="64" r="11" />
+              <circle cx="88" cy="64" r="11" />
+            </svg>
+            <div>
+              <p class="promotion__offer">Free delivery</p>
+              <p class="promotion__threshold">On orders over $60</p>
+            </div>
+          </div>
+
+          <p class="promotion__description" id="promotion-description">
+            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
+            products and enjoy free delivery.
+          </p>
+
+          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
+        </div>
+
+        <div class="promotion__visual" aria-hidden="true">
+          <img
+            class="promotion__scene promotion__scene--desktop"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
+            alt=""
+          />
+          <img
+            class="promotion__scene promotion__scene--mobile"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
+            alt=""
+          />
+          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================================================================
+         HEADER — site chrome. Do not restructure per page. The only per-page
+         edit allowed here is adding aria-current="page" to the nav link for
+         the section you are on.
+         ================================================================== -->
+    <header class="site-header">
+      <div class="announcement">
+        <p>Free Shipping on orders over $60</p>
+      </div>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <button
+          class="icon-button menu-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul class="nav-links nav-links--left">
+          <li class="has-mega">
+            <a href="index.html#shop" aria-current="page" aria-expanded="false" aria-controls="mega-shop">Shop</a>
+          </li>
+          <li><a href="index.html#recipes">Recipes</a></li>
+          <li><a href="index.html#story">Our Story</a></li>
+          <li><a href="index.html#stockists">Stockists</a></li>
+        </ul>
+
+        <a class="brand" href="index.html" aria-label="Maleny Cuisine home">
+          <img src="assets/images/logo.png" alt="Maleny Cuisine" />
+        </a>
+
+        <div class="nav-end">
+          <ul class="nav-links nav-links--right">
+            <li><a href="index.html#work-with-us">Work With Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+          </ul>
+
+          <div class="nav-actions">
+            <button class="icon-button search-toggle" type="button" aria-label="Search" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="6.75"></circle>
+                <path d="M15.4 15.4 20.5 20.5"></path>
+              </svg>
+            </button>
+
+            <a class="icon-button account-link" href="#account" aria-label="Your account">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4.75 20.25a7.25 7.25 0 0 1 14.5 0"></path>
+              </svg>
+            </a>
+
+            <!-- A real link to the bag page, not a placeholder anchor: cart.js
+                 takes the click over and opens the slide-out instead, so the
+                 icon still leads somewhere with JavaScript off. -->
+            <a class="icon-button bag-link" href="cart-b.html" aria-label="Shopping bag, 0 items">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path>
+                <path d="M8.9 9.6V6.9a3.1 3.1 0 0 1 6.2 0v2.7"></path>
+              </svg>
+              <span class="bag-count" aria-hidden="true">0</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="mega-menu" id="mega-shop" aria-hidden="true">
+        <div class="mega-menu__inner">
+          <div class="mega-menu__column">
+            <ul class="mega-links">
+              <li><a href="index.html#best-sellers">Best Sellers</a></li>
+              <li><a href="index.html#chutneys">Chutneys</a></li>
+              <li><a href="index.html#relishes">Relishes</a></li>
+              <li><a href="index.html#sauces">Sauces</a></li>
+              <li><a href="index.html#dressings">Salad Dressings</a></li>
+              <li><a href="index.html#jams">Jams &amp; Marmalades</a></li>
+              <li><a href="index.html#shop">Shop All</a></li>
+            </ul>
+          </div>
+
+          <div class="mega-cards">
+            <a class="mega-card" href="index.html#chutneys">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Chutneys.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Chutneys &amp; Relishes</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="mega-card" href="index.html#sauces">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Sauces &amp; Dressings</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="mega-card" href="index.html#jams">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Jams-Marmalades.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Jams &amp; Marmalades</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-panel" role="search" aria-hidden="true">
+        <form class="search-form">
+          <label for="site-search">Search Maleny Cuisine</label>
+          <div class="search-field">
+            <input id="site-search" name="q" type="search" placeholder="What are you looking for?" />
+            <button type="submit">Search</button>
+          </div>
+        </form>
+        <button class="search-close" type="button" aria-label="Close search">×</button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <form class="drawer-search" role="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.75"></circle>
+            <path d="M15.4 15.4 20.5 20.5"></path>
+          </svg>
+          <input
+            id="drawer-search-input"
+            name="q"
+            type="search"
+            placeholder="Search for..."
+            aria-label="Search Maleny Cuisine"
+          />
+        </form>
+
+        <div class="drawer-tabs" role="tablist" aria-label="Menu sections">
+          <button
+            class="drawer-tab is-active"
+            type="button"
+            role="tab"
+            id="tab-shop"
+            aria-controls="panel-shop"
+            aria-selected="true"
+          >
+            Shop All
+          </button>
+          <button
+            class="drawer-tab"
+            type="button"
+            role="tab"
+            id="tab-explore"
+            aria-controls="panel-explore"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Explore
+          </button>
+        </div>
+
+        <div class="drawer-panel is-active" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop">
+          <ul class="drawer-list">
+            <li>
+              <a class="drawer-card" href="index.html#best-sellers">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Best Sellers</span>
+                  <span class="drawer-card__sub">The best of Maleny Cuisine</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-products.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#chutneys">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Chutneys</span>
+                  <span class="drawer-card__sub">Slow-cooked in small batches</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Chutneys.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#relishes">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Relishes</span>
+                  <span class="drawer-card__sub">Tomato, onion &amp; eggplant</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Spicy-Tomato-Relish.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#sauces">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Sauces</span>
+                  <span class="drawer-card__sub">BBQ, sweet chilli &amp; more</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#dressings">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Salad Dressings</span>
+                  <span class="drawer-card__sub">Italian, Thai &amp; sweet mustard</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Salad-Dressings.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#jams">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Jams &amp; Marmalades</span>
+                  <span class="drawer-card__sub">Fruit picked at its best</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Jams-Marmalades.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#shop">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Shop All</span>
+                  <span class="drawer-card__sub">Browse the full range</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Grazing-Platter-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="drawer-panel" id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" hidden>
+          <ul class="drawer-list">
+            <li>
+              <a class="drawer-card" href="index.html#recipes">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Recipes</span>
+                  <span class="drawer-card__sub">Ideas for every jar</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/hover/Recipes-Home-Page-Image.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#story">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Our Story</span>
+                  <span class="drawer-card__sub">Made on the Sunshine Coast</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/ABOUT-US.jpeg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#stockists">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Stockists</span>
+                  <span class="drawer-card__sub">Find us near you</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/chutney-cheese-fruit.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#work-with-us">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Work With Us</span>
+                  <span class="drawer-card__sub">Wholesale &amp; food service</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/FOOD-SERVICE_IMAGE-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#contact">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Contact Us</span>
+                  <span class="drawer-card__sub">We would love to hear from you</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Grazing-Platter-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <a class="mobile-menu__account" href="#account">My account</a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- Hero. Heading and one sentence, centred, no photograph: a category
+           page has nothing to establish and a catalogue to get to. -->
+      <section class="archive-hero" aria-labelledby="archive-title">
+        <h1 class="archive-hero__title" id="archive-title">Shop All</h1>
+        <p class="archive-hero__lede">Every jar we make, cooked in small batches in our own kitchen at Marcoola, from Sunshine Coast produce, since 1988.</p>
+      </section>
+
+      <!-- Filter. The home page's chip row, restated as navigation: each chip
+           is a real link to that line's own page, so it carries aria-current
+           rather than aria-pressed and needs no script to work. The <nav> wraps
+           only the links; sort is a control, not navigation, so it sits beside
+           the nav rather than inside it. -->
+      <div class="archive-filter" data-filter-bar>
+        <div class="archive-filter__inner">
+          <nav class="archive-filter__chips" aria-label="Product categories">
+            <a
+              class="collection-chip collection-chip--link"
+              href="archive-a.html"
+              aria-current="page"
+            >All products</a>
+            <a
+              class="collection-chip collection-chip--link"
+              href="shop-chutneys.html"
+            >Chutneys &amp; Relishes</a>
+            <a
+              class="collection-chip collection-chip--link"
+              href="shop-sauces.html"
+            >Sauces</a>
+            <a
+              class="collection-chip collection-chip--link"
+              href="shop-jams.html"
+            >Jams &amp; Marmalades</a>
+            <a
+              class="collection-chip collection-chip--link"
+              href="shop-dressings.html"
+            >Salad Dressings</a>
+            <a
+              class="collection-chip collection-chip--link"
+              href="shop-puddings.html"
+            >Christmas Pudding</a>
+          </nav>
+
+          <div class="archive-sort">
+            <label class="archive-sort__label" for="archive-sort">Sort by</label>
+            <select class="archive-sort__select" id="archive-sort" data-archive-sort>
+              <option value="featured">Featured</option>
+              <option value="name-asc">Name: A to Z</option>
+              <option value="name-desc">Name: Z to A</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <section class="archive-grid-band" aria-labelledby="archive-grid-title">
+        <h2 class="visually-hidden" id="archive-grid-title">All products</h2>
+
+        <ul class="archive-grid" data-archive-grid>
+          <li class="archive-grid__item" data-category="chutneys" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-1-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Apple-Fig-And-Ginger-hutney.jpg"
+                  alt="Maleny Cuisine Apple Fig and Ginger Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/AppleFigGinger_219895.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price product-card__price--sale">
+                    <span class="visually-hidden">Was</span>
+                    <s class="price-was">$10.50</s>
+                    <span class="visually-hidden">now</span>
+                    <span class="price-now">$8.95</span>
+                  </p>
+                </div>
+
+                <h3 class="product-card__title" id="product-1-name">Apple Fig and Ginger Chutney</h3>
+                <p class="product-card__description">With cheese, curries or cold meats</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-1-qty">
+                    <span class="visually-hidden" id="product-1-qty">Quantity of Apple Fig and Ginger Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Apple Fig and Ginger Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Apple Fig and Ginger Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Apple Fig and Ginger Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="chutneys" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-2-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Homestyle-Tomato-Chutney_.png"
+                  alt="Maleny Cuisine Homestyle Tomato Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/CHUTNEY_IMAGE.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-2-name">Homestyle Tomato Chutney</h3>
+                <p class="product-card__description">For all-day breakfasts, sausages and burgers</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-2-qty">
+                    <span class="visually-hidden" id="product-2-qty">Quantity of Homestyle Tomato Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Homestyle Tomato Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Homestyle Tomato Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Homestyle Tomato Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="chutneys" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-3-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Spicy-Tomato-Relish.jpg"
+                  alt="Maleny Cuisine Spicy Tomato Relish"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/chutney-cheese-fruit.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-3-name">Spicy Tomato Relish</h3>
+                <p class="product-card__description">For sandwiches, cold meats and eggs</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-3-qty">
+                    <span class="visually-hidden" id="product-3-qty">Quantity of Spicy Tomato Relish</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Spicy Tomato Relish"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Spicy Tomato Relish"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Spicy Tomato Relish"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="chutneys" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-4-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Mediterranean-Eggplant-Relish.png"
+                  alt="Maleny Cuisine Mediterranean Eggplant Relish"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/lamb-savoury-eggplant-chutney-pizza.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+
+                <h3 class="product-card__title" id="product-4-name">Mediterranean Eggplant Relish</h3>
+
+                <p class="product-card__description">For lamb, cheese and antipasto platters</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-4-qty">
+                    <span class="visually-hidden" id="product-4-qty">Quantity of Mediterranean Eggplant Relish</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Mediterranean Eggplant Relish"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Mediterranean Eggplant Relish"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Mediterranean Eggplant Relish"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="chutneys">
+            <article class="product-card product-card--grid" aria-labelledby="product-5-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Tropical-Mango-and-Apple-Chutney.png"
+                  alt="Maleny Cuisine Tropical Mango and Apple Chutney"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Grazing-Platter_BANNERFINAL.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Chutneys &amp; Relishes</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-5-name">Tropical Mango and Apple Chutney</h3>
+                <p class="product-card__description">For chicken and summer salads</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-5-qty">
+                    <span class="visually-hidden" id="product-5-qty">Quantity of Tropical Mango and Apple Chutney</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Tropical Mango and Apple Chutney"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Tropical Mango and Apple Chutney"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Tropical Mango and Apple Chutney"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="sauces" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-6-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Sweet-Chilli-Sauce.jpg"
+                  alt="Maleny Cuisine Sweet Chilli Sauce"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/SAUCES_IMAGE.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Sauces</p>
+                  <p class="product-card__price">$9.98</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-6-name">Sweet Chilli Sauce</h3>
+                <p class="product-card__description">For stir-fries, fish and dipping</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-6-qty">
+                    <span class="visually-hidden" id="product-6-qty">Quantity of Sweet Chilli Sauce</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Sweet Chilli Sauce"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Sweet Chilli Sauce"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Sweet Chilli Sauce"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="sauces">
+            <article class="product-card product-card--grid" aria-labelledby="product-7-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Sweet-Chilli-Ginger-Sauce.jpg"
+                  alt="Maleny Cuisine Sweet Chilli and Ginger Sauce"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/sweet-chilli-ginger-pork-dumplings.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Sauces</p>
+                  <p class="product-card__price">$9.98</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-7-name">Sweet Chilli and Ginger Sauce</h3>
+                <p class="product-card__description">Buderim ginger through our sweet chilli</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-7-qty">
+                    <span class="visually-hidden" id="product-7-qty">Quantity of Sweet Chilli and Ginger Sauce</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Sweet Chilli and Ginger Sauce"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Sweet Chilli and Ginger Sauce"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Sweet Chilli and Ginger Sauce"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="sauces">
+            <article class="product-card product-card--grid" aria-labelledby="product-8-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Spicy-Tomato-Sauce.jpg"
+                  alt="Maleny Cuisine Spicy Tomato Sauce"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Recipes-Home-Page-Image.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Sauces</p>
+                  <p class="product-card__price">$9.98</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-8-name">Spicy Tomato Sauce</h3>
+                <p class="product-card__description">For meats, pies and pasta</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-8-qty">
+                    <span class="visually-hidden" id="product-8-qty">Quantity of Spicy Tomato Sauce</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Spicy Tomato Sauce"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Spicy Tomato Sauce"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Spicy Tomato Sauce"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="sauces">
+            <article class="product-card product-card--grid" aria-labelledby="product-9-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Special-BBQ-Sauce.jpg"
+                  alt="Maleny Cuisine Special BBQ Sauce"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Special-BBQ.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Sauces</p>
+                  <p class="product-card__price">$9.98</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-9-name">Special BBQ Sauce</h3>
+                <p class="product-card__description">
+                  For meat, poultry and vegetables, or as a marinade or dip<span
+                    class="product-card__note"
+                  >Contains wheat</span>
+                </p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-9-qty">
+                    <span class="visually-hidden" id="product-9-qty">Quantity of Special BBQ Sauce</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Special BBQ Sauce"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Special BBQ Sauce"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Special BBQ Sauce"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="jams" data-bestseller>
+            <article class="product-card product-card--grid" aria-labelledby="product-10-name">
+              <div class="product-card__media">
+                <span class="product-card__flag">Best seller</span>
+                <img
+                  class="product-card__image"
+                  src="assets/images/Caramelised-Onion.jpg"
+                  alt="Maleny Cuisine Caramelised Onion Marmalade"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/MARMALADE-IMAGE.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Jams &amp; Marmalades</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-10-name">Caramelised Onion Marmalade</h3>
+                <p class="product-card__description">For burgers, steak and blue cheese</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-10-qty">
+                    <span class="visually-hidden" id="product-10-qty">Quantity of Caramelised Onion Marmalade</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Caramelised Onion Marmalade"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Caramelised Onion Marmalade"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Caramelised Onion Marmalade"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="jams">
+            <article class="product-card product-card--grid" aria-labelledby="product-11-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Chilli-Jam.jpg"
+                  alt="Maleny Cuisine Chilli Jam"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Grazing-Platter-1.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Jams &amp; Marmalades</p>
+                  <p class="product-card__price">$10.50</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-11-name">Chilli Jam</h3>
+                <p class="product-card__description">For stir-fries, seafood and soft cheese</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-11-qty">
+                    <span class="visually-hidden" id="product-11-qty">Quantity of Chilli Jam</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Chilli Jam"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Chilli Jam"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Chilli Jam"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="jams">
+            <article class="product-card product-card--grid" aria-labelledby="product-12-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Strawberry-Lime-And-Whisky-Conserve.jpg"
+                  alt="Maleny Cuisine Strawberry Lime and Whiskey Conserve"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Strawberry-Lime-Whiskey-Jame.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Jams &amp; Marmalades</p>
+                  <p class="product-card__price">$10.98</p>
+                </div>
+
+                <h3 class="product-card__title product-card__title--long" id="product-12-name">Strawberry Lime and Whiskey Conserve</h3>
+                <p class="product-card__description">Strawberries, lime and a measure of whiskey</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-12-qty">
+                    <span class="visually-hidden" id="product-12-qty">Quantity of Strawberry Lime and Whiskey Conserve</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Strawberry Lime and Whiskey Conserve"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Strawberry Lime and Whiskey Conserve"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Strawberry Lime and Whiskey Conserve"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="dressings">
+            <article class="product-card product-card--grid" aria-labelledby="product-13-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Italian-Style-Salad-Dressing.jpg"
+                  alt="Maleny Cuisine Italian Style Dressing"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/Grazing-Platter_BANNER.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Salad Dressings</p>
+                  <p class="product-card__price">$9.35</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-13-name">Italian Style Dressing</h3>
+                <p class="product-card__description">Oil free. Over vegetable or fruit salads</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-13-qty">
+                    <span class="visually-hidden" id="product-13-qty">Quantity of Italian Style Dressing</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Italian Style Dressing"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Italian Style Dressing"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Italian Style Dressing"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="dressings">
+            <article class="product-card product-card--grid" aria-labelledby="product-14-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Sweet-Mustard-Salad-Dressing.jpg"
+                  alt="Maleny Cuisine Sweet Mustard Dressing"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/DRESSING-IMAGE.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Salad Dressings</p>
+                  <p class="product-card__price">$9.35</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-14-name">Sweet Mustard Dressing</h3>
+                <p class="product-card__description">Oil free. Over vegetable or fruit salads</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-14-qty">
+                    <span class="visually-hidden" id="product-14-qty">Quantity of Sweet Mustard Dressing</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Sweet Mustard Dressing"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Sweet Mustard Dressing"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Sweet Mustard Dressing"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="dressings">
+            <article class="product-card product-card--grid" aria-labelledby="product-15-name">
+              <div class="product-card__media">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Thai-Style-Salad-Dressing.jpg"
+                  alt="Maleny Cuisine Thai Style Salad Dressing"
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/chutney-cheese-fruit.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Salad Dressings</p>
+                  <p class="product-card__price">$9.35</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-15-name">Thai Style Salad Dressing</h3>
+                <p class="product-card__description">Oil free. With chicken, avocado and mango</p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-15-qty">
+                    <span class="visually-hidden" id="product-15-qty">Quantity of Thai Style Salad Dressing</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Thai Style Salad Dressing"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Thai Style Salad Dressing"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Thai Style Salad Dressing"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <li class="archive-grid__item" data-category="puddings">
+            <article class="product-card product-card--grid" aria-labelledby="product-16-name">
+              <div class="product-card__media product-card__media--photo">
+                <img
+                  class="product-card__image"
+                  src="assets/images/Pudding.png"
+                  alt="Maleny Cuisine Gluten Free Christmas Pudding"
+                  width="640"
+                  height="413"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <img
+                  class="product-card__image product-card__image--alt"
+                  src="assets/images/hover/pudding-with-bauble-heading.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="product-card__content">
+                <div class="product-card__meta">
+                  <p class="product-card__category">Christmas Pudding</p>
+                  <p class="product-card__price">$18.00</p>
+                </div>
+
+                <h3 class="product-card__title" id="product-16-name">Gluten Free Christmas Pudding</h3>
+                <p class="product-card__description">
+                  Traditional fruit pudding, cloth wrapped, 400g<span
+                    class="product-card__note"
+                  >Contains egg</span>
+                </p>
+
+                <div class="purchase-row">
+                  <div class="quantity-control" role="group" aria-labelledby="product-16-qty">
+                    <span class="visually-hidden" id="product-16-qty">Quantity of Gluten Free Christmas Pudding</span>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Decrease quantity of Gluten Free Christmas Pudding"
+                      data-decrease
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /></svg></button>
+                    <output class="quantity-control__value" data-quantity>1</output>
+                    <button
+                      class="quantity-control__button"
+                      type="button"
+                      aria-label="Increase quantity of Gluten Free Christmas Pudding"
+                      data-increase
+                    ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg></button>
+                  </div>
+
+                  <button
+                    class="add-button"
+                    type="button"
+                    data-add-to-cart
+                    data-product="Gluten Free Christmas Pudding"
+                  ><span data-add-label>Add to cart</span></button>
+                </div>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <p class="visually-hidden" aria-live="polite" data-archive-status></p>
+      </section>
+    </main>
+
+    <!-- ==================================================================
+         FOOTER — site chrome. Do not restructure per page.
+         ================================================================== -->
+    <footer class="footer footer--split">
+      <!-- The page opens on a Chocolate bar and now closes on one. Six things a
+           shopper wants settled before they leave, short enough that a normal
+           screen holds all six at once. Every claim here is documented in
+           PRODUCT.md. Nothing on this bar may become a shipping promise, a
+           rating, an award or a dietary claim — regulated dietary text has to
+           stand still on a pale ground.
+           The set is repeated three times: copies two and three are hidden from
+           assistive tech and out of the tab order, and they are in the markup so
+           the loop closes without script and never runs short on a wide screen. -->
+      <section class="assurance" aria-labelledby="assurance-title">
+        <h2 class="visually-hidden" id="assurance-title">Why shop with Maleny Cuisine</h2>
+
+        <div class="assurance__viewport">
+          <ul class="assurance__track" data-assurance-track>
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+          </ul>
+        </div>
+
+        <button
+          class="icon-button assurance__pause"
+          type="button"
+          data-assurance-pause
+          aria-pressed="false"
+          aria-label="Pause the moving information bar"
+        >
+          <span class="assurance__pause-icon assurance__pause-icon--pause" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M9.25 5.5v13M14.75 5.5v13" />
+            </svg>
+          </span>
+          <span class="assurance__pause-icon assurance__pause-icon--play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M8 5.6v12.8L18.4 12 8 5.6Z" />
+            </svg>
+          </span>
+        </button>
+      </section>
+
+      <div class="split-image">
+        <img
+          src="assets/images/generated/footer-last-serving-three-products.png"
+          alt="Apple Fig &amp; Ginger Chutney, Spicy Tomato Relish and Caramelised Onion Marmalade on a board with cheese, figs and grapes"
+          width="1131"
+          height="1440"
+          loading="lazy"
+          decoding="async"
+        />
+        <p>Made in Queensland since 1988</p>
+      </div>
+
+      <div class="split-content">
+        <section class="split-lead" aria-labelledby="split-title">
+          <h2 id="split-title">Bring good flavour<br />to the table.</h2>
+          <a class="outline-button" href="index.html#shop">
+            Shop all products <span aria-hidden="true">&rarr;</span>
+          </a>
+        </section>
+
+        <div class="split-links">
+          <nav class="footer-links" aria-label="Shop">
+            <p class="footer-label">Shop</p>
+            <a href="index.html#shop">Chutneys &amp; Relishes</a>
+            <a href="index.html#shop">Sauces &amp; Dressings</a>
+            <a href="index.html#shop">Jams &amp; Marmalades</a>
+            <a href="index.html#shop">Christmas Pudding</a>
+          </nav>
+
+          <nav class="footer-links" aria-label="Help">
+            <p class="footer-label">Help</p>
+            <a href="#shipping">Shipping</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#contact">Contact</a>
+            <a href="#work-with-us">Wholesale</a>
+          </nav>
+
+          <div class="split-contact">
+            <p class="footer-label">Our kitchen</p>
+            <address>
+              4/25 Runway Drive<br />
+              Marcoola QLD 4564
+            </address>
+            <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>
+          </div>
+        </div>
+
+        <section class="split-newsletter" aria-labelledby="split-newsletter-title">
+          <h3 id="split-newsletter-title">Join our table</h3>
+          <form class="newsletter" action="#" method="post">
+            <label class="visually-hidden" for="split-email">Email address</label>
+            <input
+              id="split-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Email address"
+            />
+            <button type="submit" aria-label="Join our email list">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 12h15M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </form>
+        </section>
+      </div>
+
+      <div class="footer-base footer-base--split">
+        <p>&copy; <span data-year>2026</span> Maleny Cuisine Pty Ltd</p>
+        <nav class="footer-base__legal" aria-label="Legal">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+        </nav>
+        <nav class="footer-base__social" aria-label="Social media">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38C1.35 2.68.93 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.3 1.46-.72 2.13-1.38.66-.67 1.08-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.79-.72-1.46-1.38-2.13C21.32 1.35 20.65.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"
+              />
+            </svg>
+            <span class="visually-hidden">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"
+              />
+            </svg>
+            <span class="visually-hidden">Facebook</span>
+          </a>
+          <a href="https://www.pinterest.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 0a12 12 0 0 0-4.37 23.17c-.06-.9-.01-1.98.22-2.96.25-1.05 1.68-7.1 1.68-7.1s-.42-.83-.42-2.06c0-1.93 1.12-3.37 2.51-3.37 1.18 0 1.76.89 1.76 1.96 0 1.19-.76 2.98-1.15 4.63-.33 1.39.69 2.52 2.06 2.52 2.48 0 4.14-3.18 4.14-6.95 0-2.86-1.93-5.01-5.44-5.01-3.97 0-6.44 2.96-6.44 6.27 0 1.14.34 1.95.86 2.57.24.29.28.4.19.73-.06.24-.21.83-.27 1.06-.09.34-.36.46-.66.33-1.85-.75-2.71-2.78-2.71-5.06 0-3.76 3.17-8.27 9.46-8.27 5.06 0 8.39 3.66 8.39 7.59 0 5.2-2.89 9.08-7.15 9.08-1.43 0-2.78-.77-3.24-1.65l-.88 3.49c-.32 1.15-.94 2.3-1.51 3.2A12 12 0 1 0 12 0z"
+              />
+            </svg>
+            <span class="visually-hidden">Pinterest</span>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- ==================================================================
+         THE BAG — site chrome for any page that sells.
+
+         Two parts. First the record: an empty list that cart.js appends a line
+         to each time a jar is added. It is markup rather than script state for
+         the same reason the bag page's list is, and it is hidden because this
+         page has no room to show a bag — the panel below is its only view.
+
+         Then the panel itself, copied whole from cart-b.html. The header's bag
+         icon is a real link to that page, so with JavaScript off the bag still
+         works; with it, the link opens this instead, and so does Add to cart.
+         ================================================================== -->
+    <ul class="bag-store" data-cart hidden></ul>
+    <p class="visually-hidden" data-cart-status role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <div class="mini-bag" id="mini-bag" data-mini-bag aria-hidden="true">
+      <div class="mini-bag__scrim" data-mini-scrim></div>
+
+      <section class="mini-bag__panel" role="dialog" aria-modal="true" aria-labelledby="mini-bag-title">
+        <header class="mini-bag__head">
+          <h2 class="mini-bag__title" id="mini-bag-title">Your bag</h2>
+          <button class="icon-button" type="button" data-mini-close aria-label="Close bag">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="mini-bag__body">
+          <ul class="mini-bag__list" data-mini-list hidden></ul>
+
+          <!-- The bag starts empty on this page, so this is the state that
+               ships visible and the foot below it ships hidden. -->
+          <!-- The one page where "Shop all products" would be a link back to
+               itself. The range is already behind the panel, so the button
+               closes it rather than navigating anywhere. -->
+          <div class="mini-bag__empty" data-mini-empty>
+            <p>Your bag is empty. The whole range is right behind this panel.</p>
+            <button class="outline-button" type="button" data-mini-close>
+              Keep shopping <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mini-bag__foot" data-mini-foot hidden>
+          <div class="delivery-meter" data-delivery-meter>
+            <p class="delivery-meter__text" data-meter-text>
+              <span class="delivery-meter__amount">$60.00</span> more and delivery is free — the offer
+              applies to orders over $60.
+            </p>
+            <div class="delivery-meter__track" aria-hidden="true">
+              <div class="delivery-meter__fill" data-meter-fill style="--meter-progress: 0"></div>
+            </div>
+          </div>
+
+          <dl class="mini-bag__subtotal">
+            <dt>Subtotal</dt>
+            <dd data-subtotal>$0.00</dd>
+          </dl>
+
+          <!-- Two routes to the same money: the full checkout, and the direct
+               one that skips it. Both are dead anchors in this prototype until
+               a payment provider exists. -->
+          <div class="mini-bag__actions">
+            <a class="button cart-checkout" href="checkout.html">Proceed to checkout</a>
+            <a class="button cart-checkout cart-pay" href="#payment">
+              <svg class="cart-pay__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="4" y="10.5" width="16" height="9.5" rx="1.5" />
+                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+              </svg>
+              Pay now
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="archive.js"></script>
+    <script src="cart.js"></script>
+  </body>
+</html>

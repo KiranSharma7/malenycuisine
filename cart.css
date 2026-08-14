@@ -1,0 +1,992 @@
+/* ==========================================================================
+   CART — the bag page and the slide-out mini bag.
+
+   Loads after styles.css and uses its :root tokens; the one hue it adds is the
+   express-pay violet declared below, and nothing here invents a duration, a
+   radius or a shadow. The file is in two halves: the shared parts first — the
+   page head, the bag line, the free-delivery meter and the empty state — then
+   `.counter`, the page shape itself, a paper item list beside a dark summary
+   column. The mini bag closes the file, because it belongs to any page that
+   sells and not to this one.
+   ========================================================================== */
+
+/* --express-pay and --express-pay-deep used to be declared here. They moved to
+   :root in styles.css when checkout.html gained an express button of its own —
+   two surfaces sharing a colour means the colour belongs to the system, and a
+   token declared in two stylesheets is how a value drifts. The reasoning behind
+   the exception travelled with it. */
+
+/* --------------------------------------------------------------------------
+   Sideways lock, restated so the summary column can stick.
+
+   styles.css locks <html> and <body> with `overflow-x: hidden`, which makes
+   both of them scroll containers; a sticky child of <body> then measures
+   against a box that never scrolls and silently scrolls away. `clip` contains
+   the page sideways without creating a scroll container. archive.css does the
+   same thing for the same reason. Safe on the cart page because it has no
+   horizontal scroller at all.
+
+   Held behind a class on <html> rather than applied to every page that loads
+   this file. The mini bag brings cart.css onto the home page, which does have
+   rails and marquees, and `clip` is unsupported before iOS Safari 16 — there it
+   falls back to `visible` and the sideways drag this project already fixed
+   comes straight back. A class keeps the swap on the one page that needs it.
+   -------------------------------------------------------------------------- */
+
+html.page-cart,
+html.page-cart body {
+  overflow-x: clip;
+}
+
+/* --------------------------------------------------------------------------
+   The hiding contract.
+
+   cart.js shows and hides whole regions with the `hidden` attribute. That works
+   until the region is also given a `display` of its own — an author rule always
+   outranks the browser's `[hidden] { display: none }`, so a grid stays a grid
+   while claiming to be hidden, and the empty state ends up printed underneath
+   the very lines that say the bag is not empty.
+
+   Stated once, for every region this file lets the script toggle. Two attribute
+   selectors outrank a single class, so no `!important` is needed. Any new
+   toggled region belongs on this list.
+   -------------------------------------------------------------------------- */
+
+[data-cart-filled][hidden],
+[data-cart-empty][hidden],
+[data-mini-list][hidden],
+[data-mini-empty][hidden],
+[data-mini-foot][hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Page head.
+
+   The bag is not an argument, so there is no hero and no photograph above it:
+   a shopper who reaches this page has already decided. The heading is the
+   Statement step rather than Display for the same reason the archive hero is,
+   and it is one of only two Caslon lines on the page — the other is the total.
+   -------------------------------------------------------------------------- */
+
+.cart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px clamp(16px, 2vw, 32px);
+}
+
+.cart-head__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+
+.cart-head__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+/* The count is a fact the script keeps current, so it is set at full ink while
+   the label beside it stays supporting. */
+.cart-head__count {
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   A line in the bag — the parts the page and the mini bag share.
+
+   The grid that arranges these parts belongs to whichever list holds them;
+   only the pieces themselves are held in common, so a change to the allergen
+   note or the thumbnail lands in the page and in the drawer at once.
+   -------------------------------------------------------------------------- */
+
+.cart-line {
+  display: grid;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 26px);
+}
+
+/* The whole line leaves together. Height is animated as well as opacity so the
+   lines beneath close the gap rather than jumping up into it. */
+.cart-line.is-leaving {
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--dur) ease, transform var(--dur) ease;
+}
+
+.cart-line__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(14px, 1.4vw, 22px);
+  min-width: 0;
+}
+
+/* Paper with a hairline, matching the product card's media box. The hairline is
+   doing real work: the range is photographed two ways — packshots on white and
+   full-bleed scenes — and without an edge the two kinds of thumbnail read as
+   two different components sitting in the same column. */
+.cart-line__thumb {
+  flex: none;
+  width: var(--cart-thumb, 108px);
+  height: var(--cart-thumb, 108px);
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-md);
+}
+
+.cart-line__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cart-line__text {
+  min-width: 0;
+}
+
+.cart-line__category {
+  margin: 0 0 6px;
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.cart-line__name {
+  margin: 0;
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+.cart-line__name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.cart-line__name a:hover,
+.cart-line__name a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.cart-line__description {
+  margin: 6px 0 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Regulated allergen text. Full ink on a solid pale surface, never clamped and
+   never tinted back — the same treatment the product card gives it. It sits on
+   its own line here rather than running inline, because a cart line has the
+   room the card did not. */
+.cart-line__note {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.cart-line__price,
+.cart-line__total {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cart-line__price {
+  color: var(--ink-muted);
+  font-size: 15px;
+}
+
+.cart-line__total {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* The quantity control is styles.css's, unchanged, only narrowed to the column
+   it now sits in. */
+.cart-line .quantity-control {
+  width: 108px;
+  min-height: 46px;
+}
+
+.cart-line__remove svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cart-line__remove:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Free-delivery meter.
+
+   The $60 threshold is a real, already-published promotion, so the bar reports
+   a fact rather than inventing an incentive. The sentence is the meter; the
+   rule under it is a second reading of the same number and is hidden from
+   assistive technology because it says nothing the sentence has not.
+
+   The two colours are parameters so the same component can sit on the pale
+   ground of the mini bag and inside the dark summary column of the page.
+   -------------------------------------------------------------------------- */
+
+.delivery-meter {
+  --meter-track: var(--cream);
+  --meter-fill: var(--chocolate-deep);
+  display: grid;
+  gap: 12px;
+}
+
+.delivery-meter__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.delivery-meter__amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.delivery-meter__track {
+  height: 4px;
+  overflow: hidden;
+  background: var(--meter-track);
+  border-radius: var(--radius-sm);
+}
+
+/* Scaled, not widened. `--meter-progress` is a unitless 0–1 fraction the script
+   writes; animating transform keeps the growth off the layout path, which
+   matters because the bar redraws on every press of a quantity stepper. */
+.delivery-meter__fill {
+  width: 100%;
+  height: 100%;
+  background: var(--meter-fill);
+  border-radius: var(--radius-sm);
+  transform: scaleX(var(--meter-progress, 0));
+  transform-origin: left center;
+  transition: transform var(--dur-reveal) ease;
+}
+
+/* --------------------------------------------------------------------------
+   Totals.
+
+   Set as a description list because that is what it is: three labels and
+   three values. Figures are tabular so the column stays a column while the
+   shopper changes quantities.
+   -------------------------------------------------------------------------- */
+
+.cart-totals {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.cart-totals__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cart-totals__row dt {
+  color: var(--ink-muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.cart-totals__row dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* The one figure a shopper is actually looking for, and the page's second and
+   last Caslon line. */
+.cart-totals__row--total {
+  align-items: baseline;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline);
+}
+
+.cart-totals__row--total dt {
+  color: var(--ink);
+}
+
+/* The prose-heading step, verbatim — clamp(26px, 2.4vw, 34px) / 1.2 / -0.02em.
+   It is the only serif step DESIGN.md puts between Body and Statement, which is
+   exactly where a total belongs: bigger than the rows above it, and still well
+   under the heading that opens the page. No new step was invented for it. */
+.cart-totals__row--total dd {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Delivery has no figure until an address exists, and this project may not
+   invent one. The word carries the whole answer, so it is set as a word. */
+.cart-totals__value--word {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.cart-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* The checkout action. `.button` carries a 30px top margin for the hero, which
+   is a layout the cart never has. */
+.cart-checkout {
+  width: 100%;
+  margin-top: 0;
+}
+
+/* A route away from the page, not an offer, so it is a link with the wipe and
+   not a second button competing with checkout. */
+.cart-continue {
+  display: inline-block;
+  position: relative;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.cart-continue::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-slow) ease;
+}
+
+.cart-continue:hover::after,
+.cart-continue:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.cart-continue:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Empty bag.
+
+   Not a dead end and not an apology: the heading says the state, one sentence
+   says what to do, and the three lines of the range are one tap away. The
+   script swaps it in when the last line is removed, so it is a real state of
+   this page rather than a separate page to maintain.
+   -------------------------------------------------------------------------- */
+
+.cart-empty {
+  max-width: 52ch;
+  padding: clamp(28px, 4vw, 56px) 0 clamp(8px, 1vw, 16px);
+}
+
+/* The prose-heading step, not the Statement step. The page keeps its own h1 —
+   "Your bag" — above this, and two Caslon lines at the same size stacked on
+   each other read as the page saying its name twice. This one is clearly the
+   state of the bag rather than a second title. */
+.cart-empty__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* It is given focus by script when the last line is removed, so the reader is
+   put where the content went. It is not in the tab order, so there is no
+   keyboard focus to show — and a ring drawn around a heading nobody tabbed to
+   only reads as a rendering fault. A real keyboard focus still draws one. */
+.cart-empty__title:focus {
+  outline: none;
+}
+
+.cart-empty__title:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 6px;
+}
+
+.cart-empty__lede {
+  margin: clamp(14px, 1.4vw, 20px) 0 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.65;
+}
+
+.cart-empty__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  margin-top: clamp(24px, 2.6vw, 36px);
+}
+
+.cart-empty__actions .button {
+  margin-top: 0;
+}
+
+.cart-empty__lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: clamp(28px, 3vw, 40px) 0 0;
+  padding: clamp(24px, 2.6vw, 34px) 0 0;
+  border-top: 1px solid var(--hairline-soft);
+  list-style: none;
+}
+
+.cart-empty__lines .collection-chip {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.cart-empty__lines .collection-chip:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   THE COUNTER — the page shape.
+
+   The item list on paper, and the money on a dark counter beside it. The
+   summary column spends this page's one Dark Band Allowance (Chocolate Deep,
+   never Night, so the Doorway Rule still holds) on the single zone the shopper
+   is here to settle. It bleeds to the right edge of the page and its contents
+   stick, so the total and the checkout button are on screen for the whole
+   length of the list.
+   ========================================================================== */
+
+.counter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 34%);
+  align-items: stretch;
+  background: var(--paper);
+}
+
+.counter__items {
+  padding: clamp(40px, 4.4vw, 72px) clamp(36px, 4vw, 72px) var(--section-y-end) var(--gutter);
+}
+
+.counter__list {
+  margin: clamp(30px, 3.2vw, 46px) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--chocolate-deep);
+  list-style: none;
+}
+
+.counter__list .cart-line {
+  --cart-thumb: 96px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  padding: clamp(20px, 2.2vw, 28px) 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.counter__list .cart-line__remove {
+  align-self: start;
+}
+
+/* Price, stepper and line total sit under the name rather than in columns of
+   their own: the summary column takes a third of the width, and a four-column
+   line in what is left would squeeze the product name to nothing. */
+.counter__list .cart-line__figures {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  margin-left: calc(var(--cart-thumb) + clamp(14px, 1.4vw, 22px));
+}
+
+.counter__list .cart-line__total {
+  margin-left: auto;
+}
+
+.counter__foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  padding-top: clamp(24px, 2.6vw, 34px);
+}
+
+.counter__summary {
+  padding: 0 var(--gutter) 0 clamp(28px, 3vw, 48px);
+  color: var(--lamplight);
+  background: var(--chocolate-deep);
+}
+
+.counter__summary-inner {
+  position: sticky;
+  top: 0;
+  display: grid;
+  gap: clamp(22px, 2.4vw, 32px);
+  padding: clamp(40px, 4.4vw, 72px) 0 clamp(36px, 4vw, 56px);
+}
+
+/* The title step, not a section heading: this column is a panel inside the
+   page, and the page already has its Caslon line at the top of the list. */
+.counter__summary-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+/* Full-strength lamplight on solid Chocolate Deep, the one dark-ground pairing
+   this system allows for standing copy. */
+.counter__summary .delivery-meter {
+  --meter-track: var(--rule-on-dark);
+  --meter-fill: var(--lamplight);
+  padding-top: clamp(20px, 2.2vw, 28px);
+  border-top: 1px solid var(--rule-on-dark);
+}
+
+/* Lamplight held back one step for supporting labels — the value the hero's
+   own supporting line already uses on a dark ground. It is a tint of the same
+   family, not a fourth ink opacity, and no regulated text is ever set in it:
+   the allergen notes stay on paper in the list to the left. */
+.counter__summary .cart-totals__row dt,
+.counter__summary .cart-note {
+  color: rgba(247, 237, 225, 0.82);
+}
+
+.counter__summary .cart-totals__row--total {
+  border-top-color: var(--rule-on-dark);
+}
+
+.counter__summary .cart-totals__row--total dt {
+  color: var(--lamplight);
+}
+
+/* The site's on-dark button, unchanged: translucent night at rest, filling
+   lamplight on hover. Width is what makes it the primary action here, not a
+   fill the system does not have. */
+.counter__summary .cart-checkout {
+  border-color: rgba(247, 237, 225, 0.75);
+  color: var(--lamplight);
+  background: rgba(23, 19, 16, 0.28);
+}
+
+.counter__summary .cart-checkout:hover,
+.counter__summary .cart-checkout:focus-visible {
+  color: var(--on-lamplight);
+  background: var(--lamplight);
+}
+
+.counter__summary .cart-checkout:focus-visible {
+  outline: 2px solid var(--lamplight);
+  outline-offset: 4px;
+}
+
+/* Three things a shopper wants settled before they hand over a card. Every one
+   of them is documented in PRODUCT.md; none of them is a dietary claim, which
+   could not stand on a dark ground. */
+.counter__marks {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: clamp(20px, 2.2vw, 28px) 0 0;
+  border-top: 1px solid var(--rule-on-dark);
+  list-style: none;
+}
+
+.counter__mark {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.counter__mark svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 1180px) {
+  .counter {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 36%);
+  }
+}
+
+/* Below the drawer breakpoint the counter stops being a column and becomes the
+   band that closes the page: full width, still Chocolate Deep, no longer
+   sticky. The list above it is short enough by then that the total is a thumb
+   flick away. */
+@media (max-width: 900px) {
+  .counter {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .counter__items {
+    padding: clamp(28px, 5vw, 40px) var(--gutter) clamp(30px, 4vw, 44px);
+  }
+
+  .counter__summary {
+    padding-inline: var(--gutter);
+  }
+
+  .counter__summary-inner {
+    position: static;
+    padding: clamp(32px, 6vw, 48px) 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .counter__list .cart-line {
+    --cart-thumb: 84px;
+  }
+
+  /* The indent that lined the figures up under the product name costs more
+     than it buys once the line is this narrow. */
+  .counter__list .cart-line__figures {
+    margin-left: 0;
+  }
+}
+
+/* ==========================================================================
+   MINI BAG — the slide-out.
+
+   The bag icon in the header is a real link to the cart page, so the header
+   still works with no JavaScript. With it, the link is taken over and this
+   panel opens instead: the shopper can check what is in the bag without
+   leaving the page they were shopping.
+
+   It obeys the Mutual Exclusion Rule — opening it closes the mega menu, the
+   search panel and the mobile drawer, and Escape closes all four — and it
+   traps focus, which DESIGN.md records as a gap in the mobile drawer.
+   ========================================================================== */
+
+/* The bag's record on a page that only shows the panel: a list of lines with no
+   view of its own. `hidden` already does this; the rule is here so the store
+   still cannot lay out if a future reset gives lists a display value that
+   outranks the attribute. */
+.bag-store {
+  display: none;
+}
+
+.mini-bag {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-promotion);
+  visibility: hidden;
+}
+
+.mini-bag.is-open {
+  visibility: visible;
+}
+
+/* The promotion dialog's scrim value, reused rather than re-picked, so the two
+   overlays on this site darken the page by the same amount. */
+.mini-bag__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 19, 16, 0.46);
+  opacity: 0;
+  transition: opacity var(--dur-slow) ease;
+}
+
+.mini-bag.is-open .mini-bag__scrim {
+  opacity: 1;
+}
+
+.mini-bag__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100%);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  /* Paper, not the ivory the rest of the chrome uses. This panel is a working
+     surface, not chrome: it carries packshots on white and a column of money,
+     and the warm ground was tinting both. One white runs head to foot, and the
+     hairlines alone separate the three zones. */
+  background: var(--paper);
+  box-shadow: var(--shadow-panel);
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) ease;
+}
+
+.mini-bag.is-open .mini-bag__panel {
+  transform: translateX(0);
+}
+
+.mini-bag__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px clamp(20px, 3vw, 28px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Deliberately not Caslon. The Rare Serif Rule counts per screen, and this
+   panel opens over a page that has already spent both of its serif lines. */
+.mini-bag__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.mini-bag__body {
+  padding: clamp(16px, 2.4vw, 24px) clamp(20px, 3vw, 28px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mini-bag__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mini-bag__list .cart-line {
+  --cart-thumb: 72px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.mini-bag__list .cart-line:first-child {
+  padding-top: 0;
+}
+
+.mini-bag__list .cart-line__name {
+  font-size: 16px;
+}
+
+.mini-bag__list .cart-line__figures {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.mini-bag__list .cart-line .quantity-control {
+  width: 96px;
+  min-height: 42px;
+}
+
+.mini-bag__list .cart-line .quantity-control__button,
+.mini-bag__list .cart-line .quantity-control__value {
+  min-height: 40px;
+}
+
+.mini-bag__list .cart-line__total {
+  margin-left: auto;
+}
+
+/* The panel's empty state is the page's argument in one line, because a drawer
+   has no room for the page's three. */
+.mini-bag__empty {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  padding: clamp(20px, 4vw, 36px) 0;
+}
+
+.mini-bag__empty p {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: var(--type-body);
+  line-height: 1.65;
+}
+
+/* On the archive page this control closes the panel rather than navigating, so
+   the shared outline button has to survive being a <button>. styles.css only
+   ever puts that class on an <a>, where all four of these come for free. */
+.mini-bag__empty button.outline-button {
+  color: inherit;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.mini-bag__foot {
+  display: grid;
+  gap: 18px;
+  padding: clamp(18px, 2.4vw, 24px) clamp(20px, 3vw, 28px) clamp(22px, 3vw, 28px);
+  border-top: 1px solid var(--hairline);
+}
+
+.mini-bag__subtotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0;
+}
+
+.mini-bag__subtotal dt {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.mini-bag__subtotal dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Two stacked actions, both full width. The panel is 440px at most, so side by
+   side would put two uppercase labels on two lines each. */
+.mini-bag__actions {
+  display: grid;
+  gap: 12px;
+}
+
+.mini-bag__actions .button {
+  min-width: 0;
+  width: 100%;
+  margin-top: 0;
+}
+
+/* Pay straight from the drawer, skipping the bag page and the delivery step.
+
+   The one violet thing on the site. Two brown controls stacked in a 440px panel
+   read as one control repeated, and the shopper has to tell them apart before
+   reading either: the outlined one continues through the shop, the violet one
+   leaves it. That is what the colour is buying, and it is why the exception is
+   worth taking here and nowhere else.
+
+   White type, not --on-deep: the warm whites are mixed for a brown ground and
+   go faintly pink on violet. The padlock is the second half of the same signal,
+   so it is meaning rather than decoration and does not move on hover. */
+.cart-pay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-color: var(--express-pay);
+  color: var(--paper);
+  background: var(--express-pay);
+}
+
+/* Pressed reads as deeper, not paler. Inverting to a pale ground — what every
+   other button here does — would throw away the colour at the exact moment the
+   shopper is committing to it. */
+.cart-pay:hover,
+.cart-pay:focus-visible {
+  border-color: var(--express-pay-deep);
+  color: var(--paper);
+  background: var(--express-pay-deep);
+  transform: translateY(var(--lift-button));
+}
+
+/* The ring has to sit outside the fill to be seen at all, and it stays brown:
+   it belongs to the page, not to the payment provider. */
+.cart-pay:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.cart-pay__icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The page underneath must not scroll while the panel is open — the same lock
+   the promotion dialog uses. */
+body.mini-bag-open {
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion.
+
+   styles.css scopes its reduced-motion blocks per component rather than
+   collapsing everything globally, so this file has to answer for its own.
+   The panel and the meter still change — they just change instantly.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .delivery-meter__fill,
+  .mini-bag__scrim,
+  .mini-bag__panel,
+  .cart-line.is-leaving,
+  .cart-continue::after {
+    transition: none;
+  }
+
+  .cart-line.is-leaving {
+    transform: none;
+  }
+}

@@ -13,6 +13,18 @@
 !testimonials.css
 !testimonials.js
 
+# Cart, checkout, archive and product pages.
+!cart-b.html
+!cart.css
+!cart.js
+!checkout.html
+!checkout.css
+!checkout.js
+!archive-a.html
+!archive.css
+!archive.js
+!product.html
+
 # 3. Let the assets folder and everything inside it back in.
 !assets/
 !assets/**

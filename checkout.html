@@ -1,0 +1,596 @@
+<!doctype html>
+<!-- page-checkout releases the sideways lock in checkout.css so the summary
+     column can stick. Only this page needs it; see the note on the rule. -->
+<html lang="en" class="page-checkout">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Checkout — give us a delivery address and pay for your Maleny Cuisine order."
+    />
+    <title>Checkout — Maleny Cuisine</title>
+
+    <!-- A checkout should not be indexed or shared. -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="checkout.css" />
+  </head>
+
+  <body>
+    <!--
+      THESIS: one screen, two grounds — the work on paper, the money on the
+        dark counter beside it. The page refuses the usual checkout stack of
+        boxed cards on a grey field: there are no cards here at all, only two
+        fields of colour meeting on a hard vertical edge.
+      OWN-WORLD: the shipped Maleny system — paper ground, fig-brown ink,
+        hairline rules, 2px controls and 4px surfaces, flat at rest, Caslon
+        exactly twice (the title and the total), DM Sans for every field,
+        label and figure. The one foreign colour is the express-pay violet
+        already sanctioned in DESIGN.md.
+      STORY: a shopper who has decided reads what they are buying, fills three
+        short groups in order, and pays without the total ever leaving screen.
+      FIRST VIEWPORT: stripped chrome — back to bag, the shield, "Secure
+        checkout". Then "Checkout" in Caslon over the breadcrumb, the violet
+        express button, an OR rule, and Contact / Delivery / Payment down the
+        paper. The Chocolate Deep column bleeds off the right edge with the
+        jars, the totals and the trust marks, sticky to the viewport.
+      FORM: Stripe-style split, pinned by the client's supplied reference
+        (design-references/checkout/variation-a-stripe-split.png). The comp is
+        the direction, so no concept roll was run and no seed key applies.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with
+        the finish review, the verdict, and DESIGN.md.
+
+      THREE DEPARTURES FROM THE COMP, each forced by PRODUCT.md:
+      1. Prices. The comp priced the relish at $16.00 and the sauce at $14.00.
+         The real prices are $10.50 and $9.98 (content/products.md).
+      2. Shipping. The comp invented an $8.00 rate. No shipping rate may be
+         invented, so the sample bag sits above the published $60 threshold
+         and the row reports the one delivery fact this project owns: Free.
+      3. The express button. The comp drew Shopify's Shop Pay lockup on a site
+         that does not run Shopify. It is the neutral express control instead,
+         in the same violet and the same position, until a provider is named.
+    -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- The promotion dialog is deliberately absent, as page-template.html
+         directs: an offer sheet over a payment form is an interruption. The
+         bag page drops it for the same reason. -->
+
+    <!-- ==================================================================
+         CHECKOUT CHROME — a stripped header, not the site header.
+
+         Everything that could take a shopper out of the flow is gone: no nav,
+         no mega menu, no search, no drawer, no footer. What is left is the
+         announcement bar (byte-identical to every other page), one way back,
+         the mark, and the reassurance. Because there is no menu, there is no
+         hamburger to collapse into below 860px — the bar just tightens.
+         ================================================================== -->
+    <header class="site-header">
+      <div class="announcement">
+        <p>Free Shipping on orders over $60</p>
+      </div>
+
+      <div class="checkout-bar">
+        <a class="checkout-bar__back" href="cart-b.html">
+          <svg class="checkout-bar__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M19 12H5m6.4-6.4L5 12l6.4 6.4" />
+          </svg>
+          <span class="checkout-bar__label">Back to bag</span>
+        </a>
+
+        <a class="brand" href="index.html" aria-label="Maleny Cuisine home">
+          <img src="assets/images/logo.png" alt="Maleny Cuisine" width="152" height="112" />
+        </a>
+
+        <!-- A statement about the connection, not a control, so it is a <p>
+             rather than a link that goes nowhere. -->
+        <p class="checkout-bar__secure">
+          <svg class="checkout-bar__lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <rect x="4.75" y="10.5" width="14.5" height="9.75" rx="2" />
+            <path d="M8.25 10.5V7.75a3.75 3.75 0 0 1 7.5 0v2.75" />
+          </svg>
+          <span class="checkout-bar__label">Secure checkout</span>
+        </p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- ================================================================
+           THE SPLIT — paper on the left, the counter on the right.
+
+           This page spends its one Dark Band Allowance (Chocolate Deep, never
+           Night, so the Doorway Rule holds) on the summary column, exactly as
+           the bag page does. Source order is head → summary → form so that the
+           mobile stack, which puts the order summary above the fields, needs
+           no `order` property and keeps the tab order matching what is on
+           screen at every width.
+           ================================================================ -->
+      <div class="checkout">
+        <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-checkout-status></p>
+
+        <div class="checkout__head">
+          <h1 class="checkout__title">Checkout</h1>
+
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <ol>
+              <li><a href="cart-b.html">Bag</a></li>
+              <li aria-current="page">Checkout</li>
+            </ol>
+          </nav>
+        </div>
+
+        <!-- ==============================================================
+             ORDER SUMMARY — the dark counter.
+
+             Below 900px this whole column becomes a band above the form with
+             a disclosure toggle, the pattern every shopper already knows from
+             a phone checkout: the total is always on screen, the detail is one
+             tap away. The toggle is display:none above 900px, so it is out of
+             the tab order on desktop where the panel is always open.
+             ============================================================== -->
+        <aside class="checkout__summary" aria-labelledby="summary-title" data-summary>
+          <div class="checkout__summary-inner">
+            <h2 class="visually-hidden" id="summary-title">Order summary</h2>
+
+            <button
+              class="summary-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="summary-detail"
+              data-summary-toggle
+            >
+              <span class="summary-toggle__label">
+                <span data-summary-toggle-text>Show order summary</span>
+                <svg class="summary-toggle__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                </svg>
+              </span>
+              <span class="summary-toggle__total">$61.44</span>
+            </button>
+
+            <div class="summary-detail" id="summary-detail" data-summary-detail>
+              <!-- The bag is real markup, not rendered by script, so the order
+                   is readable and correct with JavaScript off — the same
+                   contract the bag page keeps. Neither of these two products
+                   carries an allergen note; if a line that does (the Special
+                   BBQ Sauce, the Christmas Pudding) is ever shown here, its
+                   regulated text may not be set on this dark ground. It needs
+                   the pale chip treatment, because the Dietary Contrast Rule
+                   requires a solid pale surface at full ink. -->
+              <ul class="summary-lines">
+                <li class="summary-line">
+                  <span class="summary-line__thumb">
+                    <img
+                      src="assets/images/Spicy-Tomato-Relish.jpg"
+                      alt="Maleny Cuisine Spicy Tomato Relish"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                  <span class="summary-line__text">
+                    <span class="summary-line__name">Spicy Tomato Relish</span>
+                    <span class="summary-line__qty">Qty 3</span>
+                  </span>
+                  <span class="summary-line__price">$31.50</span>
+                </li>
+
+                <li class="summary-line">
+                  <span class="summary-line__thumb">
+                    <img
+                      src="assets/images/Sweet-Chilli-Sauce.jpg"
+                      alt="Maleny Cuisine Sweet Chilli Sauce"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                  <span class="summary-line__text">
+                    <span class="summary-line__name">Sweet Chilli Sauce</span>
+                    <span class="summary-line__qty">Qty 3</span>
+                  </span>
+                  <span class="summary-line__price">$29.94</span>
+                </li>
+              </ul>
+
+              <!-- No code is invented and none is seeded. The field exists so
+                   a shopper holding a code the client has issued can use it;
+                   anything else is told plainly that it was not recognised. -->
+              <div class="coupon">
+                <button
+                  class="coupon__toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="coupon-panel"
+                  data-coupon-toggle
+                >
+                  Add a coupon code
+                  <svg class="coupon__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                  </svg>
+                </button>
+
+                <div class="coupon__panel" id="coupon-panel" data-coupon-panel>
+                  <form class="coupon__form" data-coupon-form>
+                    <label class="visually-hidden" for="coupon-code">Coupon code</label>
+                    <input
+                      class="coupon__input"
+                      id="coupon-code"
+                      name="coupon"
+                      type="text"
+                      autocomplete="off"
+                      autocapitalize="characters"
+                      spellcheck="false"
+                      placeholder="Enter code"
+                      aria-describedby="coupon-message"
+                    />
+                    <button class="coupon__apply" type="submit">Apply</button>
+                  </form>
+                  <p class="coupon__message" id="coupon-message" data-coupon-message hidden></p>
+                </div>
+              </div>
+
+              <dl class="summary-totals">
+                <div class="summary-totals__row">
+                  <dt>Subtotal</dt>
+                  <dd>$61.44</dd>
+                </div>
+                <div class="summary-totals__row">
+                  <!-- The one delivery fact this project owns. The bag is over
+                       the published $60 threshold, so this is a real "Free",
+                       not a rate. No figure is invented anywhere on this page. -->
+                  <dt>Shipping</dt>
+                  <dd>Free</dd>
+                </div>
+              </dl>
+
+              <dl class="summary-total">
+                <dt>Total</dt>
+                <dd>
+                  <span class="summary-total__currency">AUD</span>
+                  <span class="summary-total__figure" data-order-total>$61.44</span>
+                </dd>
+              </dl>
+
+              <!-- Two things a shopper wants settled before handing over a
+                   card. Both are documented in PRODUCT.md and neither is a
+                   dietary claim — regulated text cannot stand on a dark
+                   ground. The place mark is the site's own pin icon; the
+                   Australian Made certification logo is a third party's
+                   trademark and is deliberately not drawn here. -->
+              <ul class="summary-marks">
+                <li class="summary-mark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <rect x="4.75" y="10.5" width="14.5" height="9.75" rx="2" />
+                    <path d="M8.25 10.5V7.75a3.75 3.75 0 0 1 7.5 0v2.75" />
+                  </svg>
+                  Secure checkout
+                </li>
+                <li class="summary-mark">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                    <circle cx="12" cy="10.3" r="2.4" />
+                  </svg>
+                  Australian made
+                </li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+        <!-- ==============================================================
+             THE FORM.
+
+             PROTOTYPE ONLY. Nothing here is wired to a payment processor and
+             the card fields must never be pointed at one directly: card data
+             belongs in a provider's own hosted field, never in this markup.
+             checkout.js validates, formats and then stops.
+             ============================================================== -->
+        <section class="checkout__form" aria-labelledby="summary-title">
+          <a class="express-pay" href="#express" data-express>
+            <svg class="express-pay__lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect x="4.75" y="10.5" width="14.5" height="9.75" rx="2" />
+              <path d="M8.25 10.5V7.75a3.75 3.75 0 0 1 7.5 0v2.75" />
+            </svg>
+            Express checkout
+          </a>
+
+          <p class="or-rule"><span>or</span></p>
+
+          <form class="checkout-form" method="post" action="#order" novalidate data-checkout-form>
+            <fieldset class="field-group">
+              <legend class="field-group__title">Contact</legend>
+
+              <p class="field">
+                <label class="field__label" for="email">Email</label>
+                <input
+                  class="field__input"
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="name@email.com"
+                  required
+                  aria-describedby="email-error"
+                />
+                <span class="field__error" id="email-error" data-error hidden></span>
+              </p>
+
+              <p class="checkbox">
+                <input class="checkbox__input" id="save-details" name="save-details" type="checkbox" />
+                <label class="checkbox__label" for="save-details">
+                  <span class="checkbox__box" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false"><path d="m5.5 12.5 4 4 9-9" /></svg>
+                  </span>
+                  Save my details for next time
+                </label>
+              </p>
+            </fieldset>
+
+            <fieldset class="field-group">
+              <legend class="field-group__title">Delivery</legend>
+
+              <p class="field field--select">
+                <label class="field__label" for="country">Country/region</label>
+                <select class="field__input" id="country" name="country" autocomplete="country-name">
+                  <option value="AU" selected>Australia</option>
+                </select>
+                <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                </svg>
+              </p>
+
+              <div class="field-row">
+                <p class="field">
+                  <label class="field__label" for="first-name">First name</label>
+                  <input
+                    class="field__input"
+                    id="first-name"
+                    name="first-name"
+                    type="text"
+                    autocomplete="given-name"
+                    placeholder="First name"
+                    required
+                    aria-describedby="first-name-error"
+                  />
+                  <span class="field__error" id="first-name-error" data-error hidden></span>
+                </p>
+
+                <p class="field">
+                  <label class="field__label" for="last-name">Last name</label>
+                  <input
+                    class="field__input"
+                    id="last-name"
+                    name="last-name"
+                    type="text"
+                    autocomplete="family-name"
+                    placeholder="Last name"
+                    required
+                    aria-describedby="last-name-error"
+                  />
+                  <span class="field__error" id="last-name-error" data-error hidden></span>
+                </p>
+              </div>
+
+              <p class="field">
+                <label class="field__label" for="address">Address</label>
+                <input
+                  class="field__input"
+                  id="address"
+                  name="address"
+                  type="text"
+                  autocomplete="address-line1"
+                  placeholder="Street address"
+                  required
+                  aria-describedby="address-error"
+                />
+                <span class="field__error" id="address-error" data-error hidden></span>
+              </p>
+
+              <p class="field">
+                <label class="field__label" for="suburb">Suburb</label>
+                <input
+                  class="field__input"
+                  id="suburb"
+                  name="suburb"
+                  type="text"
+                  autocomplete="address-level2"
+                  placeholder="Suburb"
+                  required
+                  aria-describedby="suburb-error"
+                />
+                <span class="field__error" id="suburb-error" data-error hidden></span>
+              </p>
+
+              <div class="field-row">
+                <p class="field field--select">
+                  <label class="field__label" for="state">State</label>
+                  <select
+                    class="field__input"
+                    id="state"
+                    name="state"
+                    autocomplete="address-level1"
+                    required
+                    aria-describedby="state-error"
+                  >
+                    <option value="" selected>Select state</option>
+                    <option value="ACT">Australian Capital Territory</option>
+                    <option value="NSW">New South Wales</option>
+                    <option value="NT">Northern Territory</option>
+                    <option value="QLD">Queensland</option>
+                    <option value="SA">South Australia</option>
+                    <option value="TAS">Tasmania</option>
+                    <option value="VIC">Victoria</option>
+                    <option value="WA">Western Australia</option>
+                  </select>
+                  <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                  </svg>
+                  <span class="field__error" id="state-error" data-error hidden></span>
+                </p>
+
+                <p class="field">
+                  <label class="field__label" for="postcode">Postcode</label>
+                  <input
+                    class="field__input"
+                    id="postcode"
+                    name="postcode"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    maxlength="4"
+                    placeholder="Postcode"
+                    required
+                    aria-describedby="postcode-error"
+                  />
+                  <span class="field__error" id="postcode-error" data-error hidden></span>
+                </p>
+              </div>
+            </fieldset>
+
+            <fieldset class="field-group">
+              <legend class="field-group__title">Payment</legend>
+
+              <p class="field-group__sub" id="card-information">Card information</p>
+
+              <div class="card-fields" role="group" aria-labelledby="card-information">
+                <p class="field field--card">
+                  <label class="visually-hidden" for="card-number">Card number</label>
+                  <svg class="field__card-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <rect x="2.75" y="5.25" width="18.5" height="13.5" rx="2" />
+                    <path d="M2.75 9.75h18.5" />
+                  </svg>
+                  <input
+                    class="field__input"
+                    id="card-number"
+                    name="card-number"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="cc-number"
+                    maxlength="19"
+                    placeholder="1234 1234 1234 1234"
+                    required
+                    aria-describedby="card-number-error"
+                    data-card-number
+                  />
+
+                  <!-- The card schemes' own marks. They identify third parties
+                       rather than express this palette — the same class of
+                       exception as the express-pay violet — so they carry their
+                       real colours and appear nowhere else on the site. -->
+                  <span class="card-marks" aria-hidden="true">
+                    <svg class="card-mark" viewBox="0 0 40 26" role="presentation" focusable="false">
+                      <rect x="0.5" y="0.5" width="39" height="25" rx="3" fill="#ffffff" stroke="rgba(74,38,28,0.2)" />
+                      <text
+                        x="20"
+                        y="17.5"
+                        text-anchor="middle"
+                        font-family="Arial, Helvetica, sans-serif"
+                        font-size="11"
+                        font-style="italic"
+                        font-weight="700"
+                        letter-spacing="0.2"
+                        fill="#1a1f71"
+                      >VISA</text>
+                    </svg>
+
+                    <svg class="card-mark" viewBox="0 0 40 26" role="presentation" focusable="false">
+                      <rect x="0.5" y="0.5" width="39" height="25" rx="3" fill="#ffffff" stroke="rgba(74,38,28,0.2)" />
+                      <circle cx="16.4" cy="13" r="7" fill="#eb001b" />
+                      <circle cx="23.6" cy="13" r="7" fill="#f79e1b" fill-opacity="0.85" />
+                    </svg>
+
+                    <svg class="card-mark" viewBox="0 0 40 26" role="presentation" focusable="false">
+                      <rect x="0.5" y="0.5" width="39" height="25" rx="3" fill="#1f72cd" stroke="rgba(74,38,28,0.2)" />
+                      <text
+                        x="20"
+                        y="16.5"
+                        text-anchor="middle"
+                        font-family="Arial, Helvetica, sans-serif"
+                        font-size="8"
+                        font-weight="700"
+                        letter-spacing="0.3"
+                        fill="#ffffff"
+                      >AMEX</text>
+                    </svg>
+                  </span>
+
+                  <span class="field__error" id="card-number-error" data-error hidden></span>
+                </p>
+
+                <div class="field-row">
+                  <p class="field">
+                    <label class="visually-hidden" for="card-expiry">Expiry date, month and year</label>
+                    <input
+                      class="field__input"
+                      id="card-expiry"
+                      name="card-expiry"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-exp"
+                      maxlength="7"
+                      placeholder="MM / YY"
+                      required
+                      aria-describedby="card-expiry-error"
+                      data-card-expiry
+                    />
+                    <span class="field__error" id="card-expiry-error" data-error hidden></span>
+                  </p>
+
+                  <p class="field field--cvc">
+                    <label class="visually-hidden" for="card-cvc">Security code</label>
+                    <input
+                      class="field__input"
+                      id="card-cvc"
+                      name="card-cvc"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-csc"
+                      maxlength="4"
+                      placeholder="CVC"
+                      required
+                      aria-describedby="card-cvc-hint card-cvc-error"
+                      data-card-cvc
+                    />
+                    <span class="field__hint" id="card-cvc-hint">
+                      <svg viewBox="0 0 32 22" aria-hidden="true" focusable="false">
+                        <rect x="0.9" y="0.9" width="30.2" height="20.2" rx="2.6" />
+                        <path d="M0.9 6.6h30.2" />
+                        <path d="M22.5 15.4h5.6" />
+                      </svg>
+                      <span class="visually-hidden">The three or four digit code on the back of your card</span>
+                    </span>
+                    <span class="field__error" id="card-cvc-error" data-error hidden></span>
+                  </p>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Filled Chocolate Deep at rest, so hover cannot invert it the
+                 way the outlined buttons do without throwing the commitment
+                 away at the moment it is being made. It takes the system's own
+                 lift instead. -->
+            <button class="pay-button" type="submit">Pay $61.44</button>
+
+            <p class="checkout-form__foot">
+              <a class="checkout-form__return" href="cart-b.html">Return to bag</a>
+            </p>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <script src="checkout.js"></script>
+  </body>
+</html>

@@ -1,0 +1,899 @@
+<!doctype html>
+<!--
+  ===========================================================================
+  MALENY CUISINE â€” PAGE TEMPLATE
+  Copy this file, rename it, and replace the two marked regions:
+    1. <head> â€” the title and description
+    2. <main id="main-content"> â€” the page's own bands
+  Everything else (promotion, header, mega menu, mobile drawer, footer) is
+  site chrome and should stay byte-identical across every page. If it needs to
+  change, change it here first and then propagate.
+
+  Component markup and the rules behind it: design-system.html
+  ===========================================================================
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
+    <meta
+      name="description"
+      content="Shop Maleny Cuisine Spicy Tomato Relish, handcrafted in Queensland and made for cheese, cold meats, vegetables, sandwiches and eggs."
+    />
+    <!-- REPLACE: "Page name â€” Maleny Cuisine" -->
+    <title>Spicy Tomato Relish — Maleny Cuisine</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Caslon+Display&family=Mrs+Saint+Delafield&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="product-page">
+    <!--
+      DIRECTION CONTRACT: SERVE FIRST
+      THESIS: Sell the condiment through the table it completes, refusing the isolated packshot card.
+      OWN-WORLD: Sunlit linen photography and Ivory purchase space meet at one seam; Chocolate Deep rules, near-square controls and flat surfaces keep the existing Maleny grammar.
+      STORY: See the jar in use, confirm price and dietary facts, choose quantity, add it, then open ingredients and serving ideas.
+      FIRST VIEWPORT: Existing masthead above a 60/40 split; a near life-size jar anchors the food image, purchase controls sit right, and a Chocolate Deep information band breaks the fold.
+      FORM: Serve First, grounded surface candidate 7, seed fa6aac58.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- ==================================================================
+         PROMOTION â€” site chrome. Delete the whole block on a page where the
+         offer would be intrusive (checkout, policies). The script guards for
+         its absence.
+         ================================================================== -->
+    <div class="promotion" data-promotion hidden>
+      <section
+        class="promotion__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="promotion-title"
+        aria-describedby="promotion-description"
+      >
+        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <path d="M13 13l22 22M35 13 13 35" />
+          </svg>
+        </button>
+
+        <div class="promotion__copy">
+          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
+
+          <div class="promotion__delivery">
+            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
+              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
+              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
+              <circle cx="48" cy="64" r="11" />
+              <circle cx="88" cy="64" r="11" />
+            </svg>
+            <div>
+              <p class="promotion__offer">Free delivery</p>
+              <p class="promotion__threshold">On orders over $60</p>
+            </div>
+          </div>
+
+          <p class="promotion__description" id="promotion-description">
+            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
+            products and enjoy free delivery.
+          </p>
+
+          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
+        </div>
+
+        <div class="promotion__visual" aria-hidden="true">
+          <img
+            class="promotion__scene promotion__scene--desktop"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
+            alt=""
+          />
+          <img
+            class="promotion__scene promotion__scene--mobile"
+            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
+            alt=""
+          />
+          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================================================================
+         HEADER â€” site chrome. Do not restructure per page. The only per-page
+         edit allowed here is adding aria-current="page" to the nav link for
+         the section you are on.
+         ================================================================== -->
+    <header class="site-header">
+      <div class="announcement">
+        <p>Free Shipping on orders over $60</p>
+      </div>
+
+      <nav class="navigation" aria-label="Main navigation">
+        <button
+          class="icon-button menu-toggle"
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul class="nav-links nav-links--left">
+          <li class="has-mega">
+            <a href="index.html#shop" aria-expanded="false" aria-controls="mega-shop" aria-current="page">Shop</a>
+          </li>
+          <li><a href="index.html#recipes">Recipes</a></li>
+          <li><a href="index.html#story">Our Story</a></li>
+          <li><a href="index.html#stockists">Stockists</a></li>
+        </ul>
+
+        <a class="brand" href="index.html" aria-label="Maleny Cuisine home">
+          <img src="assets/images/logo.png" alt="Maleny Cuisine" />
+        </a>
+
+        <div class="nav-end">
+          <ul class="nav-links nav-links--right">
+            <li><a href="index.html#work-with-us">Work With Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+          </ul>
+
+          <div class="nav-actions">
+            <button class="icon-button search-toggle" type="button" aria-label="Search" aria-expanded="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="6.75"></circle>
+                <path d="M15.4 15.4 20.5 20.5"></path>
+              </svg>
+            </button>
+
+            <a class="icon-button account-link" href="#account" aria-label="Your account">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"></circle>
+                <path d="M4.75 20.25a7.25 7.25 0 0 1 14.5 0"></path>
+              </svg>
+            </a>
+
+            <a class="icon-button bag-link" href="#bag" aria-label="Shopping bag, 0 items">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path>
+                <path d="M8.9 9.6V6.9a3.1 3.1 0 0 1 6.2 0v2.7"></path>
+              </svg>
+              <span class="bag-count" aria-hidden="true">0</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="mega-menu" id="mega-shop" aria-hidden="true">
+        <div class="mega-menu__inner">
+          <div class="mega-menu__column">
+            <ul class="mega-links">
+              <li><a href="index.html#best-sellers">Best Sellers</a></li>
+              <li><a href="index.html#chutneys">Chutneys</a></li>
+              <li><a href="index.html#relishes">Relishes</a></li>
+              <li><a href="index.html#sauces">Sauces</a></li>
+              <li><a href="index.html#dressings">Salad Dressings</a></li>
+              <li><a href="index.html#jams">Jams &amp; Marmalades</a></li>
+              <li><a href="index.html#shop">Shop All</a></li>
+            </ul>
+          </div>
+
+          <div class="mega-cards">
+            <a class="mega-card" href="index.html#chutneys">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Chutneys.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Chutneys &amp; Relishes</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="mega-card" href="index.html#sauces">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Sauces &amp; Dressings</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+
+            <a class="mega-card" href="index.html#jams">
+              <span class="mega-card__media">
+                <img src="assets/images/Maleny-Cuisine-Jams-Marmalades.jpg" alt="" loading="lazy" />
+              </span>
+              <span class="mega-card__foot">
+                <span class="mega-card__title">Jams &amp; Marmalades</span>
+                <span class="mega-card__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10.25"></circle>
+                    <path d="M8 12h8m-3.4-3.4L16 12l-3.4 3.4"></path>
+                  </svg>
+                </span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-panel" role="search" aria-hidden="true">
+        <form class="search-form">
+          <label for="site-search">Search Maleny Cuisine</label>
+          <div class="search-field">
+            <input id="site-search" name="q" type="search" placeholder="What are you looking for?" />
+            <button type="submit">Search</button>
+          </div>
+        </form>
+        <button class="search-close" type="button" aria-label="Close search">Ã—</button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <form class="drawer-search" role="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="6.75"></circle>
+            <path d="M15.4 15.4 20.5 20.5"></path>
+          </svg>
+          <input
+            id="drawer-search-input"
+            name="q"
+            type="search"
+            placeholder="Search for..."
+            aria-label="Search Maleny Cuisine"
+          />
+        </form>
+
+        <div class="drawer-tabs" role="tablist" aria-label="Menu sections">
+          <button
+            class="drawer-tab is-active"
+            type="button"
+            role="tab"
+            id="tab-shop"
+            aria-controls="panel-shop"
+            aria-selected="true"
+          >
+            Shop All
+          </button>
+          <button
+            class="drawer-tab"
+            type="button"
+            role="tab"
+            id="tab-explore"
+            aria-controls="panel-explore"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            Explore
+          </button>
+        </div>
+
+        <div class="drawer-panel is-active" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop">
+          <ul class="drawer-list">
+            <li>
+              <a class="drawer-card" href="index.html#best-sellers">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Best Sellers</span>
+                  <span class="drawer-card__sub">The best of Maleny Cuisine</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-products.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#chutneys">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Chutneys</span>
+                  <span class="drawer-card__sub">Slow-cooked in small batches</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Chutneys.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#relishes">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Relishes</span>
+                  <span class="drawer-card__sub">Tomato, onion &amp; eggplant</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Spicy-Tomato-Relish.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#sauces">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Sauces</span>
+                  <span class="drawer-card__sub">BBQ, sweet chilli &amp; more</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#dressings">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Salad Dressings</span>
+                  <span class="drawer-card__sub">Italian, Thai &amp; sweet mustard</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Salad-Dressings.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#jams">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Jams &amp; Marmalades</span>
+                  <span class="drawer-card__sub">Fruit picked at its best</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Maleny-Cuisine-Jams-Marmalades.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#shop">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Shop All</span>
+                  <span class="drawer-card__sub">Browse the full range</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Grazing-Platter-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="drawer-panel" id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" hidden>
+          <ul class="drawer-list">
+            <li>
+              <a class="drawer-card" href="index.html#recipes">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Recipes</span>
+                  <span class="drawer-card__sub">Ideas for every jar</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/hover/Recipes-Home-Page-Image.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#story">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Our Story</span>
+                  <span class="drawer-card__sub">Made on the Sunshine Coast</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/ABOUT-US.jpeg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#stockists">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Stockists</span>
+                  <span class="drawer-card__sub">Find us near you</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/chutney-cheese-fruit.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#work-with-us">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Work With Us</span>
+                  <span class="drawer-card__sub">Wholesale &amp; food service</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/FOOD-SERVICE_IMAGE-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+            <li>
+              <a class="drawer-card" href="index.html#contact">
+                <span class="drawer-card__text">
+                  <span class="drawer-card__title">Contact Us</span>
+                  <span class="drawer-card__sub">We would love to hear from you</span>
+                </span>
+                <span class="drawer-card__thumb">
+                  <img src="assets/images/Grazing-Platter-1.jpg" alt="" loading="lazy" />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <a class="mobile-menu__account" href="#account">My account</a>
+      </div>
+    </header>
+
+    <!-- ==================================================================
+         REPLACE EVERYTHING INSIDE <main>.
+         A page is a stack of full-bleed bands. Two starters are shown below â€”
+         delete the one you do not need, and read the "Page recipes" section of
+         design-system.html before adding a third band shape.
+         ================================================================== -->
+    <main id="main-content">
+      <section class="product-stage" aria-labelledby="product-title">
+        <div class="product-stage__media">
+          <img
+            class="product-stage__image"
+            src="assets/images/generated/product-page/serve-first-product-composite.webp"
+            alt="Maleny Cuisine Spicy Tomato Relish served at a grazing table"
+            width="1448"
+            height="1086"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </div>
+
+        <div class="product-stage__purchase" data-product-purchase data-product="Spicy Tomato Relish">
+          <nav class="product-breadcrumb" aria-label="Breadcrumb">
+            <a href="index.html#shop">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m14.5 5-7 7 7 7" />
+              </svg>
+              <span>Chutneys &amp; Relishes</span>
+            </a>
+          </nav>
+
+          <h1 id="product-title">Spicy Tomato Relish</h1>
+          <p class="product-stage__price">$10.50</p>
+
+          <p class="product-stage__summary">
+            Great with cheese, cold meats or vegetables, in sandwiches or served with eggs.
+          </p>
+
+          <ul class="product-claims" aria-label="Dietary information">
+            <li>Gluten free</li>
+            <li>Low sodium</li>
+            <li>Vegan-suitable</li>
+          </ul>
+
+          <div class="product-stage__buy">
+            <span class="product-stage__label" id="product-quantity-label">Quantity</span>
+
+            <div class="product-stage__controls">
+              <div class="quantity-control" role="group" aria-labelledby="product-quantity-label">
+                <button
+                  class="quantity-control__button"
+                  type="button"
+                  aria-label="Decrease quantity of Spicy Tomato Relish"
+                  data-single-decrease
+                  disabled
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M6 12h12" />
+                  </svg>
+                </button>
+                <output class="quantity-control__value" data-single-quantity>1</output>
+                <button
+                  class="quantity-control__button"
+                  type="button"
+                  aria-label="Increase quantity of Spicy Tomato Relish"
+                  data-single-increase
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 6v12M6 12h12" />
+                  </svg>
+                </button>
+              </div>
+
+              <button class="add-button product-stage__add" type="button" data-single-add>
+                <span data-single-add-label>Add to cart</span>
+              </button>
+            </div>
+          </div>
+
+          <p class="visually-hidden" aria-live="polite" aria-atomic="true" data-single-status></p>
+        </div>
+      </section>
+
+      <section class="product-portals" aria-labelledby="product-portals-title">
+        <div class="product-portals__statement">
+          <h2 id="product-portals-title">A jar that earns its<br />place at the table.</h2>
+        </div>
+
+        <nav class="product-portals__links" aria-label="Product information">
+          <a href="#ingredients">
+            <span>Ingredients</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M5 16h20M19 9l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#serving-ideas">
+            <span>Serving ideas</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M5 16h20M19 9l7 7-7 7" />
+            </svg>
+          </a>
+        </nav>
+      </section>
+
+      <section class="product-serving" id="serving-ideas" aria-labelledby="serving-title">
+        <div class="product-serving__copy">
+          <h2 id="serving-title">Made to pass around.</h2>
+          <p>
+            This popular relish combines tomatoes, onions, chilli and sultanas together with a blend of herbs and spices.
+            Great with cheese, cold meats or vegetables, in sandwiches or served with an omelette or scrambled eggs.
+          </p>
+
+          <ul class="product-serving__list" aria-label="Serving suggestions">
+            <li>Cheese and crackers</li>
+            <li>Cold meats and vegetables</li>
+            <li>Sandwiches and burgers</li>
+            <li>Omelettes and scrambled eggs</li>
+          </ul>
+        </div>
+
+        <figure class="product-serving__figure">
+          <img
+            src="assets/images/hover/Recipes-Home-Page-Image.jpg"
+            alt="Spicy Tomato Relish beside an open cookbook, pasta and fresh coriander"
+            width="1066"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>From the pantry to the everyday table.</figcaption>
+        </figure>
+      </section>
+
+      <section class="product-ingredients" id="ingredients" aria-labelledby="ingredients-title">
+        <div class="product-ingredients__title">
+          <h2 id="ingredients-title">What goes into the jar.</h2>
+          <p>Made in Queensland with the product label treated as the source of truth.</p>
+        </div>
+
+        <div class="product-ingredients__facts">
+          <div class="product-ingredients__block">
+            <h3>Ingredients</h3>
+            <p>
+              Tomatoes 40%, Onions, Vinegar, Sugar, Chilli (Acetic Acid), Sultanas and a blend of herbs and spices
+            </p>
+          </div>
+
+          <dl class="product-ingredients__claims">
+            <div>
+              <dt>Dietary</dt>
+              <dd>Gluten free · Low sodium · Vegan-suitable</dd>
+            </div>
+            <div>
+              <dt>Made by</dt>
+              <dd>Maleny Cuisine, Marcoola, Queensland</dd>
+            </div>
+            <div>
+              <dt>Family owned</dt>
+              <dd>Since 1988</dd>
+            </div>
+          </dl>
+
+          <a class="outline-button product-ingredients__back" href="index.html#shop">
+            <span>Shop the full range</span>
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <path d="M5 16h20M19 9l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================================================================
+         FOOTER â€” site chrome. Do not restructure per page.
+         ================================================================== -->
+    <footer class="footer footer--split">
+      <!-- The page opens on a Chocolate bar and now closes on one. Six things a
+           shopper wants settled before they leave, short enough that a normal
+           screen holds all six at once. Every claim here is documented in
+           PRODUCT.md. Nothing on this bar may become a shipping promise, a
+           rating, an award or a dietary claim â€” regulated dietary text has to
+           stand still on a pale ground.
+           The set is repeated three times: copies two and three are hidden from
+           assistive tech and out of the tab order, and they are in the markup so
+           the loop closes without script and never runs short on a wide screen. -->
+      <section class="assurance" aria-labelledby="assurance-title">
+        <h2 class="visually-hidden" id="assurance-title">Why shop with Maleny Cuisine</h2>
+
+        <div class="assurance__viewport">
+          <ul class="assurance__track" data-assurance-track>
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item">
+              <svg class="assurance__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4v-9Z" />
+                <path d="M3.5 7.5 12 11.5l8.5-4" />
+                <path d="M12 11.5v9" />
+              </svg>
+              Free shipping over $60
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M4 10.5 12 4l8 6.5" />
+                <path d="M5.75 9.4V20h12.5V9.4" />
+                <path d="M9.75 20v-6h4.5v6" />
+              </svg>
+              Since 1988
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M3.5 10.5h17a8.5 8.5 0 0 1-17 0Z" />
+                <path d="M15 10.5 17.6 4" />
+              </svg>
+              Made by hand
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M12 20.5s6.4-5.6 6.4-10.2a6.4 6.4 0 1 0-12.8 0C5.6 14.9 12 20.5 12 20.5Z" />
+                <circle cx="12" cy="10.3" r="2.4" />
+              </svg>
+              Made in Queensland
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M20 4c0 9-5 13-11 13a5.5 5.5 0 0 1 0-11c4 0 7-1 11-2Z" />
+                <path d="M4 20c3.4-4.4 6.9-7 11.8-8.9" />
+              </svg>
+              Local produce
+            </li>
+
+            <li class="assurance__item assurance__item--clone" aria-hidden="true">
+              <svg class="assurance__icon" viewBox="0 0 24 24" focusable="false">
+                <path d="M8.4 3.5h7.2v2.6l1.5 2.2V18a2 2 0 0 1-2 2H8.9a2 2 0 0 1-2-2V8.3l1.5-2.2V3.5Z" />
+                <path d="M6.9 10.4h10.2" />
+              </svg>
+              Preservative free
+            </li>
+          </ul>
+        </div>
+
+        <button
+          class="icon-button assurance__pause"
+          type="button"
+          data-assurance-pause
+          aria-pressed="false"
+          aria-label="Pause the moving information bar"
+        >
+          <span class="assurance__pause-icon assurance__pause-icon--pause" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M9.25 5.5v13M14.75 5.5v13" />
+            </svg>
+          </span>
+          <span class="assurance__pause-icon assurance__pause-icon--play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="presentation" focusable="false">
+              <path d="M8 5.6v12.8L18.4 12 8 5.6Z" />
+            </svg>
+          </span>
+        </button>
+      </section>
+
+      <div class="split-image">
+        <img
+          src="assets/images/generated/footer-last-serving-three-products.png"
+          alt="Apple Fig &amp; Ginger Chutney, Spicy Tomato Relish and Caramelised Onion Marmalade on a board with cheese, figs and grapes"
+          width="1131"
+          height="1440"
+          loading="lazy"
+          decoding="async"
+        />
+        <p>Made in Queensland since 1988</p>
+      </div>
+
+      <div class="split-content">
+        <section class="split-lead" aria-labelledby="split-title">
+          <h2 id="split-title">Bring good flavour<br />to the table.</h2>
+          <a class="outline-button" href="index.html#shop">
+            Shop all products <span aria-hidden="true">&rarr;</span>
+          </a>
+        </section>
+
+        <div class="split-links">
+          <nav class="footer-links" aria-label="Shop">
+            <p class="footer-label">Shop</p>
+            <a href="index.html#shop">Chutneys &amp; Relishes</a>
+            <a href="index.html#shop">Sauces &amp; Dressings</a>
+            <a href="index.html#shop">Jams &amp; Marmalades</a>
+            <a href="index.html#shop">Christmas Pudding</a>
+          </nav>
+
+          <nav class="footer-links" aria-label="Help">
+            <p class="footer-label">Help</p>
+            <a href="#shipping">Shipping</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#contact">Contact</a>
+            <a href="#work-with-us">Wholesale</a>
+          </nav>
+
+          <div class="split-contact">
+            <p class="footer-label">Our kitchen</p>
+            <address>
+              4/25 Runway Drive<br />
+              Marcoola QLD 4564
+            </address>
+            <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>
+          </div>
+        </div>
+
+        <section class="split-newsletter" aria-labelledby="split-newsletter-title">
+          <h3 id="split-newsletter-title">Join our table</h3>
+          <form class="newsletter" action="#" method="post">
+            <label class="visually-hidden" for="split-email">Email address</label>
+            <input
+              id="split-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Email address"
+            />
+            <button type="submit" aria-label="Join our email list">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4 12h15M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </form>
+        </section>
+      </div>
+
+      <div class="footer-base footer-base--split">
+        <p>&copy; <span data-year>2026</span> Maleny Cuisine Pty Ltd</p>
+        <nav class="footer-base__legal" aria-label="Legal">
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
+        </nav>
+        <nav class="footer-base__social" aria-label="Social media">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.13 1.38C1.35 2.68.93 3.35.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13.67.66 1.34 1.08 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.3 1.46-.72 2.13-1.38.66-.67 1.08-1.34 1.38-2.13.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91-.3-.79-.72-1.46-1.38-2.13C21.32 1.35 20.65.93 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"
+              />
+            </svg>
+            <span class="visually-hidden">Instagram</span>
+          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"
+              />
+            </svg>
+            <span class="visually-hidden">Facebook</span>
+          </a>
+          <a href="https://www.pinterest.com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path
+                d="M12 0a12 12 0 0 0-4.37 23.17c-.06-.9-.01-1.98.22-2.96.25-1.05 1.68-7.1 1.68-7.1s-.42-.83-.42-2.06c0-1.93 1.12-3.37 2.51-3.37 1.18 0 1.76.89 1.76 1.96 0 1.19-.76 2.98-1.15 4.63-.33 1.39.69 2.52 2.06 2.52 2.48 0 4.14-3.18 4.14-6.95 0-2.86-1.93-5.01-5.44-5.01-3.97 0-6.44 2.96-6.44 6.27 0 1.14.34 1.95.86 2.57.24.29.28.4.19.73-.06.24-.21.83-.27 1.06-.09.34-.36.46-.66.33-1.85-.75-2.71-2.78-2.71-5.06 0-3.76 3.17-8.27 9.46-8.27 5.06 0 8.39 3.66 8.39 7.59 0 5.2-2.89 9.08-7.15 9.08-1.43 0-2.78-.77-3.24-1.65l-.88 3.49c-.32 1.15-.94 2.3-1.51 3.2A12 12 0 1 0 12 0z"
+              />
+            </svg>
+            <span class="visually-hidden">Pinterest</span>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="script.js?v=serve-first-1"></script>
+  </body>
+</html>

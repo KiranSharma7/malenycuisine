@@ -1,0 +1,1293 @@
+/* ==========================================================================
+   CHECKOUT — the payment page.
+
+   Loads after styles.css and uses its :root tokens; it adds no colour, no
+   duration, no radius and no shadow of its own. The one foreign hue on the
+   page, the express-pay violet, is already a system token.
+
+   The file runs in page order: the stripped chrome, the split itself, the
+   paper column (title, express button, fields), then the dark counter, then
+   the breakpoints and the reduced-motion block.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Sideways lock, restated so the summary column can stick.
+
+   styles.css locks <html> and <body> with `overflow-x: hidden`, which makes
+   both of them scroll containers; a sticky child of <body> then measures
+   against a box that never scrolls and silently scrolls away. `clip` contains
+   the page sideways without creating a scroll container. cart.css and
+   archive.css do the same thing for the same reason, and like them it is held
+   behind a class rather than applied to every page that loads a stylesheet:
+   `clip` falls back to `visible` before iOS Safari 16, which would undo the
+   sideways-drag fix on a page that has rails. This page has none.
+   -------------------------------------------------------------------------- */
+
+html.page-checkout,
+html.page-checkout body {
+  overflow-x: clip;
+}
+
+/* ==========================================================================
+   CHECKOUT CHROME
+
+   Not the site header. A shopper on this page has one job, so the nav, the
+   mega menu, the search, the drawer and the whole footer are gone. Three
+   things remain: the way back, the mark, and the reassurance. It borrows the
+   site header's grid, height and ground so the page still opens the way every
+   other page does.
+   ========================================================================== */
+
+.checkout-bar {
+  position: relative;
+  height: 88px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  padding: 0 var(--gutter);
+  background: rgba(250, 247, 240, 0.98);
+}
+
+.checkout-bar__back,
+.checkout-bar__secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.checkout-bar__back {
+  position: relative;
+  justify-self: start;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.checkout-bar__secure {
+  justify-self: end;
+  color: var(--ink-muted);
+}
+
+.checkout-bar__arrow,
+.checkout-bar__lock {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The site's link signature: a 1px rule wiping in, never a colour change. It
+   is drawn under the words alone rather than under the arrow as well, so the
+   gesture reads as a link and not as a box. */
+.checkout-bar__back .checkout-bar__label {
+  position: relative;
+}
+
+.checkout-bar__back .checkout-bar__label::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-slow) ease;
+}
+
+.checkout-bar__back:hover .checkout-bar__label::after,
+.checkout-bar__back:focus-visible .checkout-bar__label::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.checkout-bar__back:hover .checkout-bar__arrow {
+  transform: translateX(-3px);
+}
+
+.checkout-bar__arrow {
+  transition: transform var(--dur) ease;
+}
+
+.checkout-bar__back:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 6px;
+}
+
+/* ==========================================================================
+   THE SPLIT
+
+   Source order is head → summary → form. That is the mobile order, where the
+   summary sits above the fields, so no `order` property is needed and the tab
+   order matches the screen at every width. On desktop the named areas put the
+   head and the form back into one paper column with the counter beside them.
+   ========================================================================== */
+
+.checkout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 39.5%);
+  grid-template-areas:
+    "head summary"
+    "form summary";
+  align-content: start;
+  min-height: calc(100svh - var(--header-height));
+  background: var(--paper);
+}
+
+.checkout__head {
+  grid-area: head;
+  padding: clamp(36px, 3.6vw, 56px) clamp(32px, 4vw, 72px) 0 var(--gutter);
+}
+
+.checkout__form {
+  grid-area: form;
+  padding: clamp(26px, 2.6vw, 34px) clamp(32px, 4vw, 72px) clamp(52px, 5.5vw, 88px) var(--gutter);
+}
+
+/* The reading column, not the band. The gutter puts the fields where every
+   other page starts its content; this caps how wide a single field grows on a
+   large screen, which is the same job --measure does for prose. */
+.checkout__head > *,
+.checkout__form > * {
+  max-width: 676px;
+}
+
+/* --------------------------------------------------------------------------
+   Title and breadcrumb.
+
+   The page has no hero, so the Display step would be the only thing on it —
+   the Section step is the right size for a page that opens straight into
+   work. It is one of exactly two Caslon lines here; the total is the other.
+   -------------------------------------------------------------------------- */
+
+.checkout__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-section);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
+}
+
+.breadcrumb {
+  margin-top: 14px;
+}
+
+.breadcrumb ol {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: 10px;
+  color: var(--ink-quiet);
+}
+
+.breadcrumb li[aria-current] {
+  color: var(--ink-muted);
+}
+
+.breadcrumb a {
+  position: relative;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.breadcrumb a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-slow) ease;
+}
+
+.breadcrumb a:hover::after,
+.breadcrumb a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.breadcrumb a:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   Express pay.
+
+   The system's one foreign colour, and the reason it is allowed: two brown
+   controls stacked above a brown Pay button would read as one control
+   repeated, and this route leaves the shop rather than continuing through it.
+   The shopper has to tell them apart before reading either.
+
+   It is deliberately unbranded. The comp this page was built from drew
+   Shopify's Shop Pay lockup; the live site is WordPress, so that provider is
+   not available to it and its mark is not ours to draw. Once the client names
+   a real provider this button takes that provider's own mark and colour, and
+   --express-pay retires with it.
+   -------------------------------------------------------------------------- */
+
+.express-pay {
+  width: 100%;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border: 1px solid var(--express-pay);
+  border-radius: var(--radius-sm);
+  color: var(--paper);
+  background: var(--express-pay);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: var(--track-15);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color var(--dur) ease, background var(--dur) ease, transform var(--dur) ease;
+}
+
+/* Pressed reads as deeper, not paler. Inverting to a pale ground — what every
+   outlined button on this site does — would throw the colour away at the exact
+   moment the shopper is committing to it. */
+.express-pay:hover,
+.express-pay:focus-visible {
+  border-color: var(--express-pay-deep);
+  background: var(--express-pay-deep);
+  transform: translateY(var(--lift-button));
+}
+
+/* The ring sits outside the fill to be seen at all, and it stays brown: it
+   belongs to the page, not to the payment provider. */
+.express-pay:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.express-pay__lock {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Lowercase in the markup, uppercased here with the ladder's tracking, so the
+   word is a rule marker rather than a heading anyone has to read. */
+.or-rule {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: clamp(20px, 2.2vw, 28px) 0 clamp(24px, 2.6vw, 34px);
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.or-rule::before,
+.or-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* ==========================================================================
+   THE FORM
+
+   Three short groups in the order a shopper can answer them: who you are,
+   where it goes, how you are paying. Nothing is optional except the checkbox,
+   so nothing is marked optional.
+   ========================================================================== */
+
+.checkout-form {
+  display: grid;
+  gap: clamp(30px, 3.2vw, 44px);
+}
+
+.field-group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* The one place this site sets DM Sans large and unbolded. A checkout is read
+   in three passes, and three quiet markers guide that better than three more
+   uppercase labels would — the ramp's label steps are already doing work
+   inside every field below. It stops well short of the Section step so the
+   page keeps one title. */
+.field-group__title {
+  margin: 0 0 4px;
+  padding: 0;
+  color: var(--ink);
+  font-size: clamp(22px, 1.8vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+
+.field-group__sub {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Two fields on one line. They collapse to one column on a narrow screen, but
+   never below the pair's own comfortable width rather than at a page-wide
+   breakpoint — a name field squeezed to 120px is worse than a stacked pair. */
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   A field.
+
+   The label is always shown, sitting inside the top of the box rather than
+   floating on interaction: a shopper correcting a delivery address is reading
+   labels and values at the same time, and a label that disappears the moment
+   the field is filled is the one they need most. 58px matches the newsletter
+   field, which DESIGN.md names as the form treatment to copy.
+   -------------------------------------------------------------------------- */
+
+.field {
+  position: relative;
+  display: block;
+  min-width: 0;
+  margin: 0;
+}
+
+.field__label {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  left: 15px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.field__input {
+  width: 100%;
+  min-height: 58px;
+  display: block;
+  padding: 26px 14px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.35;
+  transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+
+.field__input::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.field__input:hover {
+  border-color: var(--hairline-strong);
+}
+
+/* Three states a shopper can tell apart without reading: resting is a hairline
+   on paper, focus is a full-strength edge plus the ring, and invalid drops the
+   ground to cream. The invalid state changes tone rather than hue, which is
+   what the One Family Rule asks for — and the message underneath carries the
+   meaning, so nothing here depends on colour alone. */
+.field__input:focus-visible {
+  border-color: var(--chocolate-deep);
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 2px;
+}
+
+.field__input[aria-invalid="true"] {
+  border-color: var(--chocolate-deep);
+  background: var(--cream);
+}
+
+.field--select .field__input {
+  padding-right: 44px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.field__chevron {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* A select's chevron would sit on top of the error line if the field grew, so
+   it is pinned to the control's own height rather than the field's. */
+.field--select:has(.field__error:not([hidden])) .field__chevron {
+  top: 29px;
+}
+
+/* Full ink and weight, so the recovery instruction is the strongest thing in
+   the field once it appears. */
+.field__error {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.field__error[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox.
+
+   The native control drives everything and keeps its own focus behaviour; the
+   drawn box follows its state. Both are 20px, so nothing shifts when the
+   custom mark is unavailable.
+   -------------------------------------------------------------------------- */
+
+.checkbox {
+  margin: 4px 0 0;
+}
+
+.checkbox__input {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox__box {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+
+.checkbox__box svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--on-deep);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.checkbox__label:hover .checkbox__box {
+  border-color: var(--chocolate-deep);
+}
+
+.checkbox__input:checked + .checkbox__label .checkbox__box {
+  border-color: var(--chocolate-deep);
+  background: var(--chocolate-deep);
+}
+
+.checkbox__input:checked + .checkbox__label .checkbox__box svg {
+  opacity: 1;
+}
+
+.checkbox__input:focus-visible + .checkbox__label .checkbox__box {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Card fields.
+
+   PROTOTYPE ONLY. These inputs are not connected to a processor and must not
+   be: real card data belongs in a provider's hosted field, never in this
+   page's markup. checkout.js formats and validates the shape of what is typed
+   and does nothing else with it.
+
+   The three card fields carry no visible label, unlike every field above
+   them. A card number, an expiry and a CVC are the one group on any checkout
+   whose placeholders are unambiguous, and stacking a label over each would
+   cost a third of the group's height to say what the digits already say. Each
+   still has a real <label>, visually hidden.
+   -------------------------------------------------------------------------- */
+
+.card-fields {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.card-fields .field__input {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.field--card .field__input {
+  padding-left: 48px;
+  padding-right: 142px;
+}
+
+.field__card-icon {
+  position: absolute;
+  z-index: 1;
+  top: 19px;
+  left: 15px;
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: var(--ink-muted);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+/* The schemes' own marks, at their own colours. They identify third parties
+   rather than express this palette — the same class of exception as the
+   express-pay violet — and they appear nowhere else on the site. */
+.card-marks {
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  right: 14px;
+  display: flex;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.card-mark {
+  width: 34px;
+  height: 22px;
+  display: block;
+}
+
+.field--cvc .field__input {
+  padding-right: 56px;
+}
+
+.field__hint {
+  position: absolute;
+  z-index: 1;
+  top: 18px;
+  right: 14px;
+  pointer-events: none;
+}
+
+.field__hint svg {
+  display: block;
+  width: 32px;
+  height: 22px;
+  fill: none;
+  stroke: var(--ink-quiet);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   Pay.
+
+   Filled Chocolate Deep at rest — the one control on the page that is already
+   at full commitment — so it cannot invert on hover the way the outlined
+   buttons do without going paler at the moment it matters. It takes the
+   system's own two-part lift instead: rise, and the lift shadow behind it.
+   -------------------------------------------------------------------------- */
+
+.pay-button {
+  width: 100%;
+  min-height: 62px;
+  display: grid;
+  place-items: center;
+  padding: 16px 30px;
+  border: 1px solid var(--chocolate-deep);
+  border-radius: var(--radius-sm);
+  color: var(--on-deep);
+  background: var(--chocolate-deep);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: var(--track-15);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform var(--dur) ease, box-shadow var(--dur) ease;
+}
+
+.pay-button:hover,
+.pay-button:focus-visible {
+  transform: translateY(var(--lift-button));
+  box-shadow: var(--shadow-lift);
+}
+
+.pay-button:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+/* Written in by checkout.js only once a valid order is submitted, and only to
+   say that nothing was charged. A prototype that looks like it took a payment
+   is worse than one that plainly did not. Cream, not paper, so it reads as a
+   surface laid on the page rather than part of the form. */
+.checkout-form__note {
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  background: var(--cream);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.checkout-form__note[hidden] {
+  display: none;
+}
+
+.checkout-form__foot {
+  margin: 0;
+  text-align: center;
+}
+
+/* A route away from the page rather than an offer, so it is a link and not a
+   second button competing with Pay. It carries a resting underline because it
+   sits alone in open space with nothing around it to read as clickable. */
+.checkout-form__return {
+  display: inline-block;
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  transition: text-underline-offset var(--dur) ease;
+}
+
+.checkout-form__return:hover {
+  text-underline-offset: 3px;
+}
+
+.checkout-form__return:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 5px;
+}
+
+/* ==========================================================================
+   THE COUNTER — order summary.
+
+   This page spends its one Dark Band Allowance here: Chocolate Deep, never
+   Night, so the Doorway Rule still holds, and on the single zone the shopper
+   is here to settle. It bleeds off the right edge and its contents stick, so
+   the total never leaves the screen while the form is being filled.
+   ========================================================================== */
+
+.checkout__summary {
+  /* Lamplight held back one step for supporting labels — the same value the
+     bag page uses on this ground. It is a tint of the same family, not a
+     fourth ink opacity, and no regulated text is ever set in it. */
+  --on-counter: rgba(247, 237, 225, 0.82);
+
+  grid-area: summary;
+  padding: 0 var(--gutter) 0 clamp(28px, 3vw, 50px);
+  color: var(--lamplight);
+  background: var(--chocolate-deep);
+}
+
+.checkout__summary-inner {
+  position: sticky;
+  top: 0;
+  padding: clamp(40px, 4.4vw, 72px) 0 clamp(36px, 4vw, 56px);
+}
+
+/* The disclosure exists on phones only, where the summary sits above the form
+   and would otherwise push the first field off the screen. Above 900px the
+   panel is simply open, and `display: none` keeps the control out of the tab
+   order rather than leaving a dead button in it. */
+.summary-toggle {
+  display: none;
+}
+
+.summary-detail {
+  display: grid;
+  gap: clamp(22px, 2.4vw, 30px);
+}
+
+/* --------------------------------------------------------------------------
+   The lines.
+
+   Real markup, not drawn by script, so the order is readable and correct with
+   JavaScript off. There are no quantity controls here on purpose: this is the
+   receipt for a decision already made, and the place to change it is the bag,
+   one link away at the top of the page.
+   -------------------------------------------------------------------------- */
+
+.summary-lines {
+  display: grid;
+  gap: clamp(18px, 2vw, 24px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.summary-line {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(16px, 1.6vw, 24px);
+}
+
+.summary-line + .summary-line {
+  padding-top: clamp(18px, 2vw, 24px);
+  border-top: 1px solid var(--rule-on-dark);
+}
+
+/* Paper with a hairline, matching the bag line's media box. The edge is doing
+   real work: the range is photographed two ways, packshots on white and
+   full-bleed scenes, and without it the two kinds of thumbnail read as two
+   different components sitting in one column. */
+.summary-line__thumb {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--rule-on-dark);
+  border-radius: var(--radius-md);
+}
+
+.summary-line__thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.summary-line__text {
+  min-width: 0;
+}
+
+.summary-line__name {
+  display: block;
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+.summary-line__qty {
+  display: block;
+  margin-top: 6px;
+  color: var(--on-counter);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.summary-line__price {
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Coupon.
+
+   No code is invented and none is seeded. The field is here so a shopper
+   holding a code the client has issued can use it; anything else is told
+   plainly that it was not recognised, which is the truth this prototype can
+   tell.
+   -------------------------------------------------------------------------- */
+
+.coupon {
+  padding: clamp(18px, 2vw, 24px) 0;
+  border-top: 1px solid var(--rule-on-dark);
+  border-bottom: 1px solid var(--rule-on-dark);
+}
+
+.coupon__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.coupon__chevron {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur) ease;
+}
+
+.coupon__toggle[aria-expanded="true"] .coupon__chevron {
+  transform: rotate(180deg);
+}
+
+.coupon__toggle:focus-visible {
+  outline: 2px solid var(--lamplight);
+  outline-offset: 5px;
+}
+
+.coupon__panel {
+  display: none;
+  padding-top: 16px;
+}
+
+.coupon.is-open .coupon__panel {
+  display: block;
+}
+
+.coupon__form {
+  display: flex;
+  gap: 8px;
+}
+
+/* A field on a dark ground: it takes the ground's own tint rather than a white
+   box cut into the counter, and the rule is what makes it a field. */
+.coupon__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule-on-dark);
+  border-radius: var(--radius-sm);
+  color: var(--lamplight);
+  background: rgba(23, 19, 16, 0.28);
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-transform: uppercase;
+  transition: border-color var(--dur-fast) ease;
+}
+
+.coupon__input::placeholder {
+  color: var(--on-counter);
+  text-transform: none;
+  opacity: 1;
+}
+
+.coupon__input:hover,
+.coupon__input:focus-visible {
+  border-color: rgba(247, 237, 225, 0.75);
+}
+
+.coupon__input:focus-visible {
+  outline: 2px solid var(--lamplight);
+  outline-offset: 2px;
+}
+
+.coupon__apply {
+  flex: none;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1px solid rgba(247, 237, 225, 0.75);
+  border-radius: var(--radius-sm);
+  color: var(--lamplight);
+  background: rgba(23, 19, 16, 0.28);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--dur) ease, background var(--dur) ease;
+}
+
+.coupon__apply:hover,
+.coupon__apply:focus-visible {
+  color: var(--on-lamplight);
+  background: var(--lamplight);
+}
+
+.coupon__apply:focus-visible {
+  outline: 2px solid var(--lamplight);
+  outline-offset: 3px;
+}
+
+.coupon__message {
+  margin: 12px 0 0;
+  color: var(--lamplight);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.coupon__message[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Totals.
+
+   A description list, because that is what it is: labels and values. Figures
+   are tabular so the column stays a column.
+   -------------------------------------------------------------------------- */
+
+.summary-totals,
+.summary-total {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+}
+
+.summary-totals__row,
+.summary-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.summary-totals__row dt {
+  color: var(--on-counter);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.summary-totals__row dd {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.summary-total {
+  padding-top: clamp(20px, 2.2vw, 28px);
+  border-top: 1px solid var(--rule-on-dark);
+}
+
+.summary-total dt {
+  font-size: clamp(20px, 1.6vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.summary-total dd {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0;
+}
+
+.summary-total__currency {
+  color: var(--on-counter);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+/* The prose-heading step verbatim — clamp(26px, 2.4vw, 34px) / 1.2 / -0.02em —
+   which is the only serif step DESIGN.md puts between Body and Statement, and
+   exactly where a total belongs: bigger than the rows above it and well under
+   the title. It is the page's second and last Caslon line. */
+.summary-total__figure {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.4vw, 34px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Marks.
+
+   Two things a shopper wants settled before handing over a card. Both are
+   documented in PRODUCT.md and neither is a dietary claim: regulated text
+   cannot stand on a dark ground.
+   -------------------------------------------------------------------------- */
+
+.summary-marks {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: clamp(20px, 2.2vw, 28px) 0 0;
+  border-top: 1px solid var(--rule-on-dark);
+  list-style: none;
+}
+
+.summary-mark {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.summary-mark svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ==========================================================================
+   BREAKPOINTS
+   ========================================================================== */
+
+@media (max-width: 1180px) {
+  .checkout {
+    grid-template-columns: minmax(0, 1fr) minmax(330px, 38%);
+  }
+
+  .summary-line__thumb {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+/* Below the site's drawer breakpoint the counter stops being a column and
+   becomes the band the page opens with: full width, still Chocolate Deep, and
+   collapsed to its total so the first field is still in the first screen. */
+@media (max-width: 900px) {
+  .checkout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "head"
+      "summary"
+      "form";
+  }
+
+  .checkout__head {
+    padding: clamp(28px, 5vw, 40px) var(--gutter) clamp(22px, 3vw, 30px);
+  }
+
+  .checkout__form {
+    padding: clamp(30px, 5vw, 44px) var(--gutter) clamp(44px, 7vw, 64px);
+  }
+
+  .checkout__head > *,
+  .checkout__form > * {
+    max-width: none;
+  }
+
+  .checkout__summary {
+    padding-inline: var(--gutter);
+  }
+
+  .checkout__summary-inner {
+    position: static;
+    padding: 0;
+  }
+
+  .summary-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: clamp(18px, 4vw, 24px) 0;
+    border: 0;
+    color: inherit;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .summary-toggle:focus-visible {
+    outline: 2px solid var(--lamplight);
+    outline-offset: -2px;
+  }
+
+  .summary-toggle__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .summary-toggle__chevron {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--dur) ease;
+  }
+
+  .summary-toggle[aria-expanded="true"] .summary-toggle__chevron {
+    transform: rotate(180deg);
+  }
+
+  .summary-toggle__total {
+    font-size: 17px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* Closed by default on a phone, opened by the toggle. The panel is hidden
+     with `display` rather than the `hidden` attribute so that the desktop rule
+     above can simply not apply — an attribute set by script would follow the
+     page across a resize and hide the column on a screen that has no toggle to
+     bring it back. */
+  .summary-detail {
+    display: none;
+    padding-bottom: clamp(24px, 5vw, 34px);
+  }
+
+  .checkout__summary.is-open .summary-detail {
+    display: grid;
+  }
+}
+
+/* styles.css drops --header-height to 106px here — 34px of announcement over a
+   72px bar — and the split measures its minimum height against that token, so
+   the bar has to shed the same 16px at the same width or the two disagree. */
+@media (max-width: 860px) {
+  .checkout-bar {
+    height: 72px;
+  }
+}
+
+@media (max-width: 720px) {
+  /* The bar loses its words before it loses its shape. Both remaining marks
+     keep an accessible name, and "Secure checkout" is repeated in full inside
+     the summary a few hundred pixels below. */
+  .checkout-bar__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .brand {
+    width: clamp(104px, 24vw, 124px);
+  }
+}
+
+@media (max-width: 620px) {
+  .summary-line__thumb {
+    width: 72px;
+    height: 72px;
+  }
+
+  .summary-line__name {
+    font-size: 16px;
+  }
+
+  /* The card marks cost more than they buy once the field is this narrow: the
+     number itself needs the room. The scheme set is unchanged either way. */
+  .card-marks {
+    display: none;
+  }
+
+  .field--card .field__input {
+    padding-right: 14px;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+
+   styles.css scopes its reduced-motion blocks per component rather than
+   collapsing everything globally, so this file answers for its own. Every
+   state still changes — it just changes instantly.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .checkout-bar__back .checkout-bar__label::after,
+  .checkout-bar__arrow,
+  .breadcrumb a::after,
+  .express-pay,
+  .field__input,
+  .checkbox__box,
+  .checkbox__box svg,
+  .pay-button,
+  .checkout-form__return,
+  .coupon__chevron,
+  .coupon__input,
+  .coupon__apply,
+  .summary-toggle__chevron {
+    transition: none;
+  }
+}
