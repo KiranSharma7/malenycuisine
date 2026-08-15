@@ -17,6 +17,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
     <link rel="stylesheet" href="design-system.css" />
   </head>
 
@@ -327,6 +328,20 @@
                   style="font-family: var(--font-display); font-size: var(--type-product-title); font-weight: 400; line-height: 1.02; letter-spacing: -0.034em"
                 >
                   Spicy Tomato Relish
+                </p>
+              </div>
+              <div class="ds-type">
+                <p class="ds-type__meta">
+                  Page title · <code>--type-page-title</code> · clamp(44px, 4.6vw, 66px) / 1.04 / -0.03em ·
+                  the h1 of a page that opens on words instead of a photograph — Work With Us, FAQs,
+                  Contact Us. It sits between Display and Section on purpose: nothing above it
+                  competes, and a band heading beneath it must still read as subordinate.
+                </p>
+                <p
+                  class="ds-type__sample"
+                  style="font-family: var(--font-display); font-size: var(--type-page-title); font-weight: 400; line-height: 1.04; letter-spacing: -0.03em"
+                >
+                  Frequently asked questions
                 </p>
               </div>
               <div class="ds-type">
@@ -977,8 +992,11 @@ armBandReveal(document.querySelector("#story"));</code></pre>
           <div class="ds-block">
             <h3>Primary — on a dark ground</h3>
             <p>
-              Same geometry. Lamplight border at 75–78%, lamplight label, a 24–28% night fill and (on the
-              hero) a 2px backdrop blur. Inverts to a solid lamplight fill.
+              Same geometry. Lamplight border at 75%, lamplight label, a 28% night fill and a 2px
+              backdrop blur. Inverts to a solid lamplight fill, and takes a lamplight focus ring
+              rather than the brown one. <code>.button--on-dark</code> and <code>.hero--dark
+              .button</code> are one rule in <code>styles.css</code>, so the two can never drift
+              apart — never restate these values in a new band's own CSS.
             </p>
             <div class="ds-demo ds-demo--night">
               <div class="ds-row">
@@ -992,20 +1010,11 @@ armBandReveal(document.querySelector("#story"));</code></pre>
             </div>
             <div class="ds-code">
               <button class="ds-copy" type="button" data-copy>Copy</button>
-              <pre><code>&lt;!-- inside .hero--dark or .pantry-cta the modifier is inherited from the band --&gt;
+              <pre><code>&lt;!-- inside .hero--dark or .pantry-cta the treatment is inherited from the band --&gt;
 &lt;a class="button pantry-cta__button" href="#shop"&gt;Shop the range&lt;/a&gt;
 
-/* on a new dark band, restate the three properties: */
-.my-band .button {
-  border-color: rgba(247, 237, 225, 0.78);
-  color: var(--lamplight);
-  background: rgba(23, 19, 16, 0.24);
-}
-.my-band .button:hover,
-.my-band .button:focus-visible {
-  color: var(--on-lamplight);
-  background: var(--lamplight);
-}</code></pre>
+&lt;!-- anywhere else on a dark ground, ask for it by name --&gt;
+&lt;a class="button button--on-dark" href="#enquiry"&gt;Start an enquiry&lt;/a&gt;</code></pre>
             </div>
           </div>
 
@@ -1447,7 +1456,8 @@ armBandReveal(document.querySelector("#story"));</code></pre>
         <section class="ds-section" id="forms">
           <h2>Forms &amp; inputs</h2>
           <p>
-            Three input treatments exist and each belongs to one place. Do not mix them.
+            Four input treatments exist and each belongs to one place. Do not mix them. The
+            labelled field is the one a new form should be built from.
           </p>
 
           <div class="ds-block">
@@ -1482,6 +1492,99 @@ armBandReveal(document.querySelector("#story"));</code></pre>
             <p class="ds-note">
               A placeholder is never the only label. Every field gets a real
               <code>&lt;label&gt;</code>, visually hidden if the design has no room for it.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Labelled field — the one to build a form from</h3>
+            <p>
+              <code>.field</code> · the 58px box again, with the label sitting inside the top of it
+              rather than floating away on interaction: someone correcting an address or an enquiry
+              is reading the label and the value at the same time, and the label they need most is
+              the one that disappears once the field is filled. It lives in
+              <code>styles.css</code> and is shared by the checkout, Work With Us and Contact Us —
+              a second copy is how two forms start to drift apart.
+            </p>
+            <p>
+              Three states anyone can tell apart without reading: resting is a hairline on paper,
+              focus is a full-strength edge plus the ring, and invalid drops the ground to cream.
+              The invalid state changes tone rather than hue, which is what the One Family Rule
+              asks for — and the message underneath carries the meaning, so nothing here depends on
+              colour alone. Every required field is silent about it and every optional one says so,
+              because the reverse marks a whole form with asterisks to flag the exception.
+            </p>
+            <div class="ds-demo ds-demo--paper">
+              <form style="display: grid; gap: 12px; max-width: 460px" onsubmit="return false">
+                <div class="field-row">
+                  <p class="field">
+                    <label class="field__label" for="ds-field-name">Name</label>
+                    <input class="field__input" id="ds-field-name" name="name" type="text" placeholder="Your name" />
+                  </p>
+                  <p class="field">
+                    <label class="field__label" for="ds-field-phone">
+                      Phone <span class="field__optional">(optional)</span>
+                    </label>
+                    <input class="field__input" id="ds-field-phone" name="phone" type="tel" placeholder="Best number to call" />
+                  </p>
+                </div>
+                <p class="field">
+                  <label class="field__label" for="ds-field-email">Email</label>
+                  <input
+                    class="field__input"
+                    id="ds-field-email"
+                    name="email"
+                    type="email"
+                    placeholder="name@email.com"
+                    value="not-an-email"
+                    aria-invalid="true"
+                    aria-describedby="ds-field-email-error"
+                  />
+                  <span class="field__error" id="ds-field-email-error" data-error>
+                    That does not look like an email address. Check for a typo.
+                  </span>
+                </p>
+                <p class="field field--select">
+                  <label class="field__label" for="ds-field-type">What is it about</label>
+                  <select class="field__input" id="ds-field-type" name="enquiry-type">
+                    <option value="" selected>Choose one</option>
+                    <option value="wholesale">Wholesale or food service</option>
+                  </select>
+                  <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                  </svg>
+                </p>
+              </form>
+            </div>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;p class="field"&gt;
+  &lt;label class="field__label" for="enquiry-email"&gt;Email&lt;/label&gt;
+  &lt;input
+    class="field__input"
+    id="enquiry-email"
+    name="email"
+    type="email"
+    autocomplete="email"
+    placeholder="name@email.com"
+    aria-describedby="enquiry-email-error"
+  /&gt;
+  &lt;span class="field__error" id="enquiry-email-error" data-error hidden&gt;&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;!-- a message field is the same field with more room in it --&gt;
+&lt;p class="field field--message"&gt;…&lt;/p&gt;
+
+&lt;!-- optional fields say so, in the label --&gt;
+&lt;label class="field__label" for="enquiry-phone"&gt;
+  Phone &lt;span class="field__optional"&gt;(optional)&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+            </div>
+            <p class="ds-note">
+              <code>.field-group</code> wraps a set as a <code>&lt;fieldset&gt;</code> with a
+              <code>.field-group__title</code> legend; <code>.field-row</code> puts two fields on
+              one line and collapses them at the pair's own comfortable width rather than at a
+              page-wide breakpoint. <code>.field--message</code> and <code>.field__optional</code>
+              are in <code>pages.css</code>; everything else is in <code>styles.css</code>.
             </p>
           </div>
 
@@ -1555,6 +1658,87 @@ armBandReveal(document.querySelector("#story"));</code></pre>
             <p class="ds-note">
               The heading is set with hard <code>&lt;br /&gt;</code> breaks so the phrase lands in three
               short lines. Keep it to three. One hero, one h1, one page.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Page head — the entrance made of type</h3>
+            <p>
+              <code>.page-head</code> · what a page opens on when it has no photograph worth a
+              doorway: an ivory band carrying the <code>--type-page-title</code> h1, one lede at
+              <code>--measure-tight</code>, and optionally a row of two short uppercase jumps. The
+              ivory ground is doing the same job it does in the header and footer — it frames the
+              paper band beneath it, which is where the content actually starts. Used by FAQs and
+              Contact Us.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;section class="page-head" aria-labelledby="page-title"&gt;
+  &lt;h1 class="page-head__title" id="page-title"&gt;Frequently asked questions&lt;/h1&gt;
+  &lt;p class="page-head__lede"&gt;One sentence saying what is on this page.&lt;/p&gt;
+  &lt;p class="page-head__links"&gt;
+    &lt;a class="link-wipe" href="contact.html"&gt;Ask us something else&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Doorway split — a dark opening that is not a hero</h3>
+            <p>
+              <code>.doorway</code> · a 50/50 band, Chocolate Deep copy at left and one photograph
+              at right, stacking copy-first below 900px. It is how a page with something to sell
+              opens without a full-height hero. Chocolate Deep rather than Night, so the Doorway
+              Rule still reserves Night for a true photographic hero — and it spends the page's
+              whole Dark Band Allowance, so nothing below it may be dark. Its button is
+              <code>.button.button--on-dark</code>. Used by Work With Us.
+            </p>
+            <div class="ds-code">
+              <button class="ds-copy" type="button" data-copy>Copy</button>
+              <pre><code>&lt;section class="doorway" aria-labelledby="doorway-title"&gt;
+  &lt;div class="doorway__copy"&gt;
+    &lt;h1 class="doorway__title" id="doorway-title"&gt;Put our kitchen on your menu.&lt;/h1&gt;
+    &lt;p class="doorway__lede"&gt;One sentence of argument.&lt;/p&gt;
+    &lt;a class="button button--on-dark" href="#enquiry"&gt;Start an enquiry&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="doorway__media"&gt;
+    &lt;img src="…" alt="…" width="2048" height="997" decoding="async" /&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="ds-block">
+            <h3>Fact list</h3>
+            <p>
+              <code>.fact-list</code> · short lines of fact divided by hairlines, and
+              <code>.fact-list--split</code> for two columns above 720px — never more than two, because
+              four columns of one short line each stops reading as a list. This is what a band of
+              plain facts uses <em>instead of</em> a grid of same-size cards: a card each would spend
+              more attention on the box than on the line inside it. Regulated dietary text is allowed
+              here, at full ink on paper or ivory, never clipped.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Indexed answers — the FAQ</h3>
+            <p>
+              <code>.faq-layout</code> · a sticky <code>.faq-index</code> beside a column of open
+              <code>.faq-item</code> answers, capped at 1180px and collapsing to one column at 900px.
+              <strong>Deliberately not an accordion.</strong> Two of the FAQ's answers are dietary
+              claims, and the Dietary Contrast Rule will not have regulated text sitting behind a
+              click; once those two have to be open, all of them do, or the page teaches the reader
+              that some answers are hidden. Questions are set in DM Sans, not Caslon — six serif
+              headings on one screen would break the Rare Serif Rule six times over.
+            </p>
+          </div>
+
+          <div class="ds-block">
+            <h3>Closing band</h3>
+            <p>
+              <code>.page-cta</code> · one Caslon line and one button on ivory, as the last thing
+              before the footer. It is the quiet alternative to the full-bleed CTA over photography,
+              for a page whose dark allowance is already spent or which never had a photograph.
             </p>
           </div>
 

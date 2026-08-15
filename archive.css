@@ -308,3 +308,9 @@ body {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* An item filtered out by the category chips leaves the grid entirely,
+   rather than sitting in it as an empty track. */
+.archive-grid__item[hidden] {
+  display: none;
+}

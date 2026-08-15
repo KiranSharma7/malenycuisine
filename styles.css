@@ -65,6 +65,7 @@
   --type-product-title: clamp(46px, 4.3vw, 68px); /* single-product h1: below the home hero, above a band heading */
   --type-product-price: clamp(28px, 2.1vw, 34px); /* one quiet commerce figure under the product name */
   --type-panel-statement: clamp(22px, 1.7vw, 27px); /* a display line inside a narrow panel, where --type-statement would overrun the column */
+  --type-page-title: clamp(44px, 4.6vw, 66px); /* the h1 of a page that opens on words instead of a photograph */
 
   /* Uppercase tracking ladder — the smaller the type, the wider the track. */
   --track-15: 0.12em;
@@ -419,6 +420,244 @@ a {
 
 .is-armed.is-revealed [data-reveal-delay="3"] {
   transition-delay: 240ms;
+}
+
+/* --- Form fields ----------------------------------------------------------
+   The site's one form vocabulary. It was written for the checkout and lived in
+   checkout.css until three more pages needed it; it sits here now because a
+   field is a shared primitive, not a checkout component, and a second copy of
+   these rules is how two forms start drifting apart.
+
+   The 58px box is the treatment DESIGN.md names as the one to copy for new
+   forms. The label stays visible inside the top of the box rather than
+   floating away on interaction: someone correcting an address or an enquiry is
+   reading label and value at the same time.
+
+   Checkout keeps its own card fields, hints and card marks in checkout.css —
+   those belong to paying, not to filling in a form.
+   -------------------------------------------------------------------------- */
+
+.field-group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* The one place this site sets DM Sans large and unbolded. A checkout is read
+   in three passes, and three quiet markers guide that better than three more
+   uppercase labels would — the ramp's label steps are already doing work
+   inside every field below. It stops well short of the Section step so the
+   page keeps one title. */
+.field-group__title {
+  margin: 0 0 4px;
+  padding: 0;
+  color: var(--ink);
+  font-size: clamp(22px, 1.8vw, 26px);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+
+.field-group__sub {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Two fields on one line. They collapse to one column on a narrow screen, but
+   never below the pair's own comfortable width rather than at a page-wide
+   breakpoint — a name field squeezed to 120px is worse than a stacked pair. */
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   A field.
+
+   The label is always shown, sitting inside the top of the box rather than
+   floating on interaction: a shopper correcting a delivery address is reading
+   labels and values at the same time, and a label that disappears the moment
+   the field is filled is the one they need most. 58px matches the newsletter
+   field, which DESIGN.md names as the form treatment to copy.
+   -------------------------------------------------------------------------- */
+
+.field {
+  position: relative;
+  display: block;
+  min-width: 0;
+  margin: 0;
+}
+
+.field__label {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  left: 15px;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.field__input {
+  width: 100%;
+  min-height: 58px;
+  display: block;
+  padding: 26px 14px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.35;
+  transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+
+.field__input::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.field__input:hover {
+  border-color: var(--hairline-strong);
+}
+
+/* Three states a shopper can tell apart without reading: resting is a hairline
+   on paper, focus is a full-strength edge plus the ring, and invalid drops the
+   ground to cream. The invalid state changes tone rather than hue, which is
+   what the One Family Rule asks for — and the message underneath carries the
+   meaning, so nothing here depends on colour alone. */
+.field__input:focus-visible {
+  border-color: var(--chocolate-deep);
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 2px;
+}
+
+.field__input[aria-invalid="true"] {
+  border-color: var(--chocolate-deep);
+  background: var(--cream);
+}
+
+.field--select .field__input {
+  padding-right: 44px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.field__chevron {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* A select's chevron would sit on top of the error line if the field grew, so
+   it is pinned to the control's own height rather than the field's. */
+.field--select:has(.field__error:not([hidden])) .field__chevron {
+  top: 29px;
+}
+
+/* Full ink and weight, so the recovery instruction is the strongest thing in
+   the field once it appears. */
+.field__error {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.field__error[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox.
+
+   The native control drives everything and keeps its own focus behaviour; the
+   drawn box follows its state. Both are 20px, so nothing shifts when the
+   custom mark is unavailable.
+   -------------------------------------------------------------------------- */
+
+.checkbox {
+  margin: 4px 0 0;
+}
+
+.checkbox__input {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkbox__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox__box {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+
+.checkbox__box svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--on-deep);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.checkbox__label:hover .checkbox__box {
+  border-color: var(--chocolate-deep);
+}
+
+.checkbox__input:checked + .checkbox__label .checkbox__box {
+  border-color: var(--chocolate-deep);
+  background: var(--chocolate-deep);
+}
+
+.checkbox__input:checked + .checkbox__label .checkbox__box svg {
+  opacity: 1;
+}
+
+.checkbox__input:focus-visible + .checkbox__label .checkbox__box {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 3px;
 }
 
 /* Delivery promotion ------------------------------------------------------- */
@@ -1665,6 +1904,11 @@ body.promotion-open {
   text-shadow: var(--shadow-hero-text);
 }
 
+/* The same button restated for a dark ground. `.button--on-dark` is the
+   portable form of it, for a dark band that is not the hero; the hero keeps its
+   descendant selector so nothing there has to change. One rule, so the two can
+   never drift apart. */
+.button--on-dark,
 .hero--dark .button {
   border-color: rgba(247, 237, 225, 0.75);
   color: #f7ede1;
@@ -1672,10 +1916,17 @@ body.promotion-open {
   backdrop-filter: blur(2px);
 }
 
+.button--on-dark:hover,
+.button--on-dark:focus-visible,
 .hero--dark .button:hover,
 .hero--dark .button:focus-visible {
   color: var(--on-lamplight);
   background: #f7ede1;
+}
+
+.button--on-dark:focus-visible {
+  outline: 2px solid var(--lamplight);
+  outline-offset: 4px;
 }
 
 /* The heritage line above the heading. Kept to the eyebrow step and tinted back

@@ -1,0 +1,288 @@
+/* ==========================================================================
+   RECIPES — the kitchen index.
+
+   Loads after styles.css and uses its :root tokens only. The home page already
+   carries these six dishes as a drifting marquee; this page is the same set
+   standing still, plus the serving guide that the rail has no room for.
+
+   Nothing here is a new claim about a product. Every line in the serving guide
+   is the client's own product copy, and the dietary paragraph is verbatim
+   regulated text on a solid pale ground.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   The page hero. Same shape as the Stockists hero: centred, no background of
+   its own — the index band right below already carries the paper ground.
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  padding: clamp(52px, 6.5vw, 104px) var(--gutter) clamp(28px, 3.2vw, 44px);
+  text-align: center;
+  background: var(--paper);
+}
+
+.page-hero__title {
+  max-width: 18ch;
+  margin: 0 auto;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-page-title);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.page-hero__lede {
+  max-width: var(--measure-tight);
+  margin: clamp(20px, 2.4vw, 30px) auto 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   The index band.
+
+   Paper ground straight out of the hero, so the hero and the grid read as one
+   opening rather than two stacked bands. The heading block is centred to match
+   the hero above it; every other band on the site heads left, but a centred
+   hero followed by a left-aligned heading reads as a mistake at 1440.
+   -------------------------------------------------------------------------- */
+
+.recipe-index {
+  padding: clamp(30px, 3vw, 48px) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+}
+
+/* Three across, then two, then one. The same step-down the product grid takes,
+   at one column fewer throughout: a dish photograph carries more detail than a
+   packshot and stops being readable sooner. */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 3vw, 52px) clamp(20px, 2.2vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recipe-grid__item {
+  display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   The recipe card.
+
+   Flat at rest — no border, no shadow, no fill. The photograph is the card;
+   the rule under the content only appears at hover, along with the lift and
+   the image scale, so a still page is a page of pictures and names.
+   -------------------------------------------------------------------------- */
+
+.recipe-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  transition: transform var(--dur) ease;
+}
+
+.recipe-card__media {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--cream);
+  aspect-ratio: 4 / 3;
+}
+
+.recipe-card__image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform var(--dur-image) ease;
+}
+
+.recipe-card__content {
+  padding: clamp(14px, 1.4vw, 20px) 2px 0;
+}
+
+.recipe-card__eyebrow {
+  margin: 0 0 8px;
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.recipe-card__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 1.7vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* Two anchors, one destination. The picture is the target a mouse reaches for
+   and the name is the target a keyboard reaches, so the picture is taken out
+   of the tab order and hidden from assistive tech: the card announces its
+   destination once, not twice. */
+.recipe-card__link {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* The site's one link signature, drawn on the name and opening from the left
+   the way every other content link does. */
+.recipe-card__link::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -2px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) ease;
+}
+
+.recipe-card__note {
+  max-width: 34ch;
+  margin: 10px 0 0;
+  color: var(--ink-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* The jar the dish is built on. Full-strength ink, not muted: it is the one
+   piece of product information on the card and the reason the card leads
+   anywhere. */
+.recipe-card__product {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline-soft);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.recipe-card:hover,
+.recipe-card:focus-within {
+  transform: translateY(var(--lift));
+}
+
+.recipe-card:hover .recipe-card__media,
+.recipe-card:focus-within .recipe-card__media {
+  box-shadow: var(--shadow-lift);
+}
+
+.recipe-card:hover .recipe-card__image,
+.recipe-card:focus-within .recipe-card__image {
+  transform: scale(1.04);
+}
+
+.recipe-card__link:hover::after,
+.recipe-card__link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* The card lifts as a unit, so the ring belongs on the card, not on the 1px
+   of text that happens to hold the focus. */
+.recipe-card:focus-within {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 6px;
+}
+
+.recipe-card__link:focus-visible {
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   The way out. One line, one button, paper ground: the page has argued for
+   the jars, so it closes by pointing at them.
+   -------------------------------------------------------------------------- */
+
+.recipe-cta {
+  padding: var(--section-y) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+  text-align: center;
+}
+
+.recipe-cta__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+}
+
+.recipe-cta__lede {
+  max-width: var(--measure-tight);
+  margin: clamp(10px, 1vw, 14px) auto clamp(24px, 2.4vw, 34px);
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+/* The lede above it already carries the gap the primitive's own margin was
+   there to make. */
+.recipe-cta__button {
+  margin-top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Steps.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .recipe-grid {
+    gap: clamp(24px, 3vw, 40px) clamp(18px, 2vw, 28px);
+  }
+}
+
+@media (max-width: 900px) {
+  .recipe-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .recipe-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(26px, 6vw, 36px);
+  }
+
+  .recipe-card__note {
+    max-width: none;
+  }
+}
+
+/* Motion is decoration here — the lift, the image scale and the underline
+   wipe all carry state that hover and focus already carry on their own. */
+@media (prefers-reduced-motion: reduce) {
+  .recipe-card,
+  .recipe-card__image,
+  .recipe-card__link::after {
+    transition: none;
+  }
+
+  .recipe-card:hover,
+  .recipe-card:focus-within {
+    transform: none;
+  }
+
+  .recipe-card:hover .recipe-card__image,
+  .recipe-card:focus-within .recipe-card__image {
+    transform: none;
+  }
+}

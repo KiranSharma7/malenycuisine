@@ -1,29 +1,14 @@
 <!doctype html>
-<!--
-  ===========================================================================
-  MALENY CUISINE — PAGE TEMPLATE
-  Copy this file, rename it, and replace the two marked regions:
-    1. <head> — the title and description
-    2. <main id="main-content"> — the page's own bands
-  Everything else (promotion, header, mega menu, mobile drawer, footer) is
-  site chrome and should stay byte-identical across every page. If it needs to
-  change, change it here first and then propagate.
-
-  Component markup and the rules behind it: design-system.html
-  ===========================================================================
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
     <meta
       name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
+      content="Maleny Cuisine has been handcrafting gourmet condiments on Queensland's Sunshine Coast since 1988 — still family owned, still the same recipes."
     />
-    <!-- REPLACE: "Page name — Maleny Cuisine" -->
-    <title>Page name — Maleny Cuisine</title>
+    <title>Our Story — Maleny Cuisine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,75 +17,44 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="our-story.css" />
   </head>
 
   <body>
+    <!--
+      ===========================================================================
+      OUR STORY — direction contract
+
+      THESIS: The brand's only real credibility is a place, a family and a date,
+        so this page states all three and stops. It refuses the About-page
+        default of a milestone timeline and a wall of values cards; there are no
+        invented milestones on file and cards would turn four true facts into
+        eight hollow ones.
+      OWN-WORLD: The shipped Maleny Cuisine system, unchanged — Paper and Ivory
+        grounds, fig-brown ink, hairline rules, near-square corners, Caslon rare
+        and large against DM Sans. Nothing new was tokenised for this page.
+      STORY: The visitor learns who makes the jars, where, and since when; they
+        believe it because the proof is a real photograph of the real family and
+        a street address, not adjectives; then they go and shop the range.
+      FIRST VIEWPORT: The doorway — one full-bleed evening photograph of the
+        harvest the recipes are made from, scrim weighted to the foot, the h1
+        bottom-left in three short lines with one sentence under it. No action
+        competes with it; the action waits at the close, where the story has
+        earned it.
+      FORM: Editorial long-form on the site's own band stack — doorway, origin
+        split, kitchen-and-claims split, family close.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with
+        the finish review, the verdict, and DESIGN.md.
+
+      The promotion dialog is deliberately absent: it fires on load, and an
+      interruption over an editorial page is exactly the case the template
+      names for dropping it. script.js guards for its absence.
+      Chrome below is the site chrome from index.html with its in-page anchors
+      rewritten to index.html#…, and aria-current="page" added to Our Story.
+      ===========================================================================
+    -->
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- ==================================================================
-         PROMOTION — site chrome. Delete the whole block on a page where the
-         offer would be intrusive (checkout, policies). The script guards for
-         its absence.
-         ================================================================== -->
-    <div class="promotion" data-promotion hidden>
-      <section
-        class="promotion__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="promotion-title"
-        aria-describedby="promotion-description"
-      >
-        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <path d="M13 13l22 22M35 13 13 35" />
-          </svg>
-        </button>
-
-        <div class="promotion__copy">
-          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
-
-          <div class="promotion__delivery">
-            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
-              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
-              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
-              <circle cx="48" cy="64" r="11" />
-              <circle cx="88" cy="64" r="11" />
-            </svg>
-            <div>
-              <p class="promotion__offer">Free delivery</p>
-              <p class="promotion__threshold">On orders over $60</p>
-            </div>
-          </div>
-
-          <p class="promotion__description" id="promotion-description">
-            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
-            products and enjoy free delivery.
-          </p>
-
-          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
-        </div>
-
-        <div class="promotion__visual" aria-hidden="true">
-          <img
-            class="promotion__scene promotion__scene--desktop"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
-            alt=""
-          />
-          <img
-            class="promotion__scene promotion__scene--mobile"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
-            alt=""
-          />
-          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
-        </div>
-      </section>
-    </div>
-
-    <!-- ==================================================================
-         HEADER — site chrome. Do not restructure per page. The only per-page
-         edit allowed here is adding aria-current="page" to the nav link for
-         the section you are on.
-         ================================================================== -->
     <header class="site-header">
       <div class="announcement">
         <p>Free Shipping on orders over $60</p>
@@ -123,7 +77,7 @@
             <a href="index.html#shop" aria-expanded="false" aria-controls="mega-shop">Shop</a>
           </li>
           <li><a href="recipes.html">Recipes</a></li>
-          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="our-story.html" aria-current="page">Our Story</a></li>
           <li><a href="stockists.html">Stockists</a></li>
         </ul>
 
@@ -372,7 +326,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="our-story.html">
+              <a class="drawer-card" href="our-story.html" aria-current="page">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Our Story</span>
                   <span class="drawer-card__sub">Made on the Sunshine Coast</span>
@@ -422,50 +376,160 @@
       </div>
     </header>
 
-    <!-- ==================================================================
-         REPLACE EVERYTHING INSIDE <main>.
-         A page is a stack of full-bleed bands. Two starters are shown below —
-         delete the one you do not need, and read the "Page recipes" section of
-         design-system.html before adding a third band shape.
-         ================================================================== -->
     <main id="main-content">
-      <!-- STARTER B — a content band.
-           .section is paper by default. Add --ivory, --cream or --deep to
-           change the ground; add --bleed when the band runs a rail to the
-           page edge. -->
-      <section class="section" id="intro" aria-labelledby="intro-title">
-        <div class="section__head">
-          <h2 class="section-title" id="intro-title">A band heading</h2>
+      <!-- =====================================================================
+           THE DOORWAY
+           The page's one dark band, and its one photograph of the raw material.
+           The scrim is weighted to the foot rather than the centre because the
+           type sits at the foot: the top of this frame is open sky and would
+           only be muddied by a scrim that has nothing to protect.
+           ================================================================== -->
+      <section class="hero hero--dark story-hero" aria-labelledby="story-hero-title">
+        <div class="hero__content">
+          <h1 id="story-hero-title">Handcrafted on<br />Queensland&rsquo;s<br />Sunshine Coast.</h1>
+          <p class="hero__lede">
+            From locally sourced Australian fresh produce, made by one family since 1988.
+          </p>
         </div>
+      </section>
 
-        <div class="prose">
-          <p>
-            Long-form copy goes here, capped at 68ch by <code>.prose</code>. Product terminology stays
-            as the brand uses it — chutney, relish, sauce, conserve, marmalade, dressing — and spelling
-            is Australian English throughout.
+      <!-- =====================================================================
+           THE ORIGIN — the client's own About copy, reproduced from
+           content/about-us.md with only Australian-English casing touched.
+           ================================================================== -->
+      <section class="section story-band" id="origin" aria-labelledby="origin-title" data-reveal-band>
+        <div class="story-split">
+          <div class="story-split__head">
+            <h2 class="section-title" id="origin-title" data-reveal>The recipes began in 1988.</h2>
+          </div>
+
+          <div class="prose story-split__body" data-reveal data-reveal-delay="1">
+            <p>
+              Inspired by the abundance of fresh fruit and vegetables in Queensland, the first Maleny
+              Cuisine recipes were developed in 1988 when an opening in the market was discovered for
+              gourmet condiments that were gluten free, yet delicious and affordable. Each of the
+              recipes were created based on ripe seasonal fruit and veggies, with minimum processing
+              required to ensure maximum freshness. As a result, each product in the Maleny Cuisine
+              range makes a statement about being a pure gourmet condiment, authentic in flavour and
+              appeal.
+            </p>
+            <p>
+              Now, over 35 years later and still running as a family owned and operated business, we
+              remain true to the original vision for the range by continuing to produce gourmet quality
+              premium condiments that are made from the freshest, locally sourced produce. We pride
+              ourselves in producing these great tasting condiments to enhance the flavours of your
+              everyday dishes or add something special to your entertaining experiences.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           THE KITCHEN
+           Ivory separates this band from the Paper one above it, since two
+           Paper bands would otherwise read as one.
+           The claims list is regulated text: full-strength ink on a solid pale
+           ground, at body size, nothing clamped, and the Special BBQ Sauce
+           carved out of every range-wide line. Do not shorten it, do not tint
+           it back, and do not move it onto photography.
+           ================================================================== -->
+      <section
+        class="section section--ivory story-band"
+        id="kitchen"
+        aria-labelledby="kitchen-title"
+        data-reveal-band
+      >
+        <div class="story-split">
+          <div class="story-split__head">
+            <h2 class="section-title" id="kitchen-title" data-reveal>One kitchen, the same recipes.</h2>
+
+            <div class="prose story-split__head-copy" data-reveal data-reveal-delay="1">
+              <p>
+                Maleny Cuisine was founded in the town of Maleny. Production later moved down to the
+                coast at Marcoola for logistical reasons, and because the brand was already
+                well established here in Queensland the name was kept. We still use the same great
+                recipes, and we are still very proud to be a local Sunshine Coast company.
+              </p>
+              <p>
+                We source all of our fresh produce whole and process everything ourselves on site in
+                our kitchen, so that the freshest ingredients go into all of our products.
+              </p>
+            </div>
+          </div>
+
+          <dl class="story-claims" data-reveal data-reveal-delay="2">
+            <div class="story-claims__row">
+              <dt>Preservative free</dt>
+              <dd>
+                No artificial preservatives, colours or flavours. Our entire bottled range is free of
+                dairy, eggs, nuts and oil.
+              </dd>
+            </div>
+
+            <div class="story-claims__row">
+              <dt>Gluten free and low in sodium</dt>
+              <dd>
+                Across the range, with one exception: our Special BBQ Sauce contains wheat, and its
+                soy sauce puts it above what is considered low in sodium.
+              </dd>
+            </div>
+
+            <div class="story-claims__row">
+              <dt>Vegan-friendly options</dt>
+              <dd>
+                Throughout the range. The Special BBQ Sauce is not suitable, and our Gluten Free
+                Christmas Pudding contains egg.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           THE FAMILY — the close.
+           The photograph is the real family, supplied by the client, so it is
+           the one piece of proof on this page that cannot be copied by anyone
+           else. The signed name is a drawn mark carrying no information of its
+           own: it is hidden from assistive technology and the plain credit line
+           underneath does the naming.
+           ================================================================== -->
+      <section class="section story-family" id="family" aria-labelledby="family-title" data-reveal-band>
+        <figure class="story-family__figure" data-reveal>
+          <img
+            src="assets/images/471475891_1132466684927598_2544310554581189725_n.jpeg"
+            alt="Marina, Will and their family at home on the Sunshine Coast at Christmas"
+            width="1434"
+            height="1440"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+
+        <div class="story-family__content">
+          <h2 class="section-title" id="family-title" data-reveal>The family behind the label.</h2>
+
+          <div class="prose" data-reveal data-reveal-delay="1">
+            <p>
+              We thank you for your support over the years, and are excited to continue to provide you
+              with locally made, gourmet condiments.
+            </p>
+          </div>
+
+          <p class="story-signature" aria-hidden="true" data-reveal data-reveal-delay="2">
+            Marina, Will &amp; Family
           </p>
-          <p>
-            Dietary, allergen and ingredient text is regulated. Copy it verbatim from
-            <code>content/products.md</code>, set it at full ink on a pale ground, and carve out the
-            Special BBQ Sauce from any range-wide claim.
+          <p class="story-signature__credit" data-reveal data-reveal-delay="2">
+            Marina, Will &amp; Family &mdash; Marcoola, Queensland
           </p>
+
+          <a class="button story-family__button" href="index.html#shop" data-reveal data-reveal-delay="3">
+            Shop the range
+          </a>
         </div>
       </section>
     </main>
 
-    <!-- ==================================================================
-         FOOTER — site chrome. Do not restructure per page.
-         ================================================================== -->
     <footer class="footer footer--split">
-      <!-- The page opens on a Chocolate bar and now closes on one. Six things a
-           shopper wants settled before they leave, short enough that a normal
-           screen holds all six at once. Every claim here is documented in
-           PRODUCT.md. Nothing on this bar may become a shipping promise, a
-           rating, an award or a dietary claim — regulated dietary text has to
-           stand still on a pale ground.
-           The set is repeated three times: copies two and three are hidden from
-           assistive tech and out of the tab order, and they are in the markup so
-           the loop closes without script and never runs short on a wide screen. -->
       <section class="assurance" aria-labelledby="assurance-title">
         <h2 class="visually-hidden" id="assurance-title">Why shop with Maleny Cuisine</h2>
 

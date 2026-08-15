@@ -1,29 +1,11 @@
 <!doctype html>
-<!--
-  ===========================================================================
-  MALENY CUISINE — PAGE TEMPLATE
-  Copy this file, rename it, and replace the two marked regions:
-    1. <head> — the title and description
-    2. <main id="main-content"> — the page's own bands
-  Everything else (promotion, header, mega menu, mobile drawer, footer) is
-  site chrome and should stay byte-identical across every page. If it needs to
-  change, change it here first and then propagate.
-
-  Component markup and the rules behind it: design-system.html
-  ===========================================================================
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
-    <meta
-      name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
-    />
-    <!-- REPLACE: "Page name — Maleny Cuisine" -->
-    <title>Page name — Maleny Cuisine</title>
+    <meta name="description" content="Contact Maleny Cuisine — our kitchen at Marcoola on the Sunshine Coast, our postal address, and a message form." />
+    <title>Contact Us — Maleny Cuisine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,70 +14,21 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- ==================================================================
-         PROMOTION — site chrome. Delete the whole block on a page where the
-         offer would be intrusive (checkout, policies). The script guards for
-         its absence.
-         ================================================================== -->
-    <div class="promotion" data-promotion hidden>
-      <section
-        class="promotion__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="promotion-title"
-        aria-describedby="promotion-description"
-      >
-        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <path d="M13 13l22 22M35 13 13 35" />
-          </svg>
-        </button>
-
-        <div class="promotion__copy">
-          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
-
-          <div class="promotion__delivery">
-            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
-              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
-              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
-              <circle cx="48" cy="64" r="11" />
-              <circle cx="88" cy="64" r="11" />
-            </svg>
-            <div>
-              <p class="promotion__offer">Free delivery</p>
-              <p class="promotion__threshold">On orders over $60</p>
-            </div>
-          </div>
-
-          <p class="promotion__description" id="promotion-description">
-            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
-            products and enjoy free delivery.
-          </p>
-
-          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
-        </div>
-
-        <div class="promotion__visual" aria-hidden="true">
-          <img
-            class="promotion__scene promotion__scene--desktop"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
-            alt=""
-          />
-          <img
-            class="promotion__scene promotion__scene--mobile"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
-            alt=""
-          />
-          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
-        </div>
-      </section>
-    </div>
-
+    <!--
+      DIRECTION CONTRACT: ONE KITCHEN, ONE ADDRESS
+      THESIS: The contact page says exactly where the food is made and offers one way to write — no invented hours, phone number or reply time.
+      OWN-WORLD: The house system unchanged. Ivory type-only entrance, then one paper band with the real addresses at left and the message form at right.
+      STORY: The visitor confirms the company is a real place at Marcoola, then writes a message in four fields.
+      FIRST VIEWPORT: An ivory band carrying the h1, one lede and two routes on, with the addresses and the first fields visible under it.
+      FORM: Details-beside-form split, derived directly from the content rather than rolled; this is a new surface inside an established world, not a new world.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
     <!-- ==================================================================
          HEADER — site chrome. Do not restructure per page. The only per-page
          edit allowed here is adding aria-current="page" to the nav link for
@@ -134,7 +67,7 @@
         <div class="nav-end">
           <ul class="nav-links nav-links--right">
             <li><a href="work-with-us.html">Work With Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="contact.html" aria-current="page">Contact Us</a></li>
           </ul>
 
           <div class="nav-actions">
@@ -405,7 +338,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="contact.html">
+              <a class="drawer-card" href="contact.html" aria-current="page">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Contact Us</span>
                   <span class="drawer-card__sub">We would love to hear from you</span>
@@ -422,33 +355,155 @@
       </div>
     </header>
 
-    <!-- ==================================================================
-         REPLACE EVERYTHING INSIDE <main>.
-         A page is a stack of full-bleed bands. Two starters are shown below —
-         delete the one you do not need, and read the "Page recipes" section of
-         design-system.html before adding a third band shape.
-         ================================================================== -->
     <main id="main-content">
-      <!-- STARTER B — a content band.
-           .section is paper by default. Add --ivory, --cream or --deep to
-           change the ground; add --bleed when the band runs a rail to the
-           page edge. -->
-      <section class="section" id="intro" aria-labelledby="intro-title">
+      <section class="page-head page-head--centred" aria-labelledby="page-title">
+        <h1 class="page-head__title" id="page-title">Contact Maleny Cuisine</h1>
+
+        <p class="page-head__lede">
+          We make everything ourselves, in one kitchen at Marcoola on the Sunshine Coast. Send us a
+          message and we will get back to you soon.
+        </p>
+
+        <p class="page-head__links">
+          <a class="link-wipe" href="faq.html">
+            Read the FAQs first
+            <svg class="page-head__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="link-wipe" href="work-with-us.html">
+            Wholesale and food service
+            <svg class="page-head__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </p>
+      </section>
+
+      <!-- =============================================================
+           THE MESSAGE FORM.
+           PRESENTATION ONLY — there is no backend behind this site, so nothing
+           typed here is sent. pages.js validates the form, then says exactly
+           that and points at the real email address.
+
+           The details beside it are the real ones from PRODUCT.md: two
+           addresses and an email. No phone number, no opening hours and no
+           reply time, because none of those has been supplied.
+           ============================================================= -->
+      <section class="section" id="message" aria-labelledby="message-title">
         <div class="section__head">
-          <h2 class="section-title" id="intro-title">A band heading</h2>
+          <h2 class="section-title" id="message-title">Send us a message</h2>
         </div>
 
-        <div class="prose">
-          <p>
-            Long-form copy goes here, capped at 68ch by <code>.prose</code>. Product terminology stays
-            as the brand uses it — chutney, relish, sauce, conserve, marmalade, dressing — and spelling
-            is Australian English throughout.
-          </p>
-          <p>
-            Dietary, allergen and ingredient text is regulated. Copy it verbatim from
-            <code>content/products.md</code>, set it at full ink on a pale ground, and carve out the
-            Special BBQ Sauce from any range-wide claim.
-          </p>
+        <div class="form-band">
+          <div class="form-band__aside">
+            <dl class="contact-details">
+              <div>
+                <dt>Our kitchen</dt>
+                <dd>
+                  <address>4/25 Runway Drive<br />Marcoola QLD 4564</address>
+                </dd>
+              </div>
+
+              <div>
+                <dt>Postal address</dt>
+                <dd>
+                  <address>PO Box 9487<br />Pacific Paradise QLD 4564</address>
+                </dd>
+              </div>
+
+              <div>
+                <dt>Email</dt>
+                <dd><a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a></dd>
+              </div>
+            </dl>
+          </div>
+
+          <form class="enquiry-form" data-page-form novalidate>
+            <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-form-status></p>
+
+            <fieldset class="field-group">
+              <legend class="field-group__title">Your message</legend>
+
+              <div class="field-row">
+                <p class="field">
+                  <label class="field__label" for="contact-name">Name</label>
+                  <input
+                    class="field__input"
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your name"
+                    aria-describedby="contact-name-error"
+                  />
+                  <span class="field__error" id="contact-name-error" data-error hidden></span>
+                </p>
+
+                <p class="field">
+                  <label class="field__label" for="contact-email">Email</label>
+                  <input
+                    class="field__input"
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="name@email.com"
+                    aria-describedby="contact-email-error"
+                  />
+                  <span class="field__error" id="contact-email-error" data-error hidden></span>
+                </p>
+              </div>
+
+              <p class="field">
+                <label class="field__label" for="contact-order">
+                  Order number <span class="field__optional">(optional)</span>
+                </label>
+                <input
+                  class="field__input"
+                  id="contact-order"
+                  name="order-number"
+                  type="text"
+                  placeholder="If your message is about an order"
+                />
+              </p>
+
+              <p class="field field--message">
+                <label class="field__label" for="contact-message">Message</label>
+                <textarea
+                  class="field__input"
+                  id="contact-message"
+                  name="message"
+                  rows="6"
+                  placeholder="How can we help?"
+                  aria-describedby="contact-message-error"
+                ></textarea>
+                <span class="field__error" id="contact-message-error" data-error hidden></span>
+              </p>
+            </fieldset>
+
+            <div class="form-actions">
+              <button class="button" type="submit">Send message</button>
+              <p class="form-actions__alt">
+                Or email <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>.
+              </p>
+            </div>
+
+            <p class="form-note" data-form-note hidden>
+              <strong>This form is a design preview.</strong>
+              Nothing was sent and nothing was stored. To reach Maleny Cuisine today, email
+              <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>.
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <section class="page-cta" aria-labelledby="contact-cta-title">
+        <div class="page-cta__inner">
+          <h2 class="page-cta__title" id="contact-cta-title">
+            Cooking for a cafe, a restaurant or a hotel?
+          </h2>
+          <a class="button" href="work-with-us.html">Work with us</a>
         </div>
       </section>
     </main>
@@ -745,6 +800,8 @@
       </div>
     </footer>
 
+
     <script src="script.js"></script>
+    <script src="pages.js"></script>
   </body>
 </html>

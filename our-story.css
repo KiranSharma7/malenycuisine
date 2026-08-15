@@ -1,0 +1,264 @@
+/* ==========================================================================
+   OUR STORY — the brand's editorial page.
+
+   Loads after styles.css and uses its :root tokens only. Nothing here is a new
+   value: the grounds, ink, hairlines, radii, durations and gutters are all the
+   shipped tokens, and the type steps are the shipped ramp.
+
+   The page is four bands — doorway, origin, kitchen, family — and this file
+   only has to do three things the home page never asked for:
+
+     1. bottom-anchor the dark hero instead of centring it,
+     2. set a heading beside a column of prose (the origin and kitchen bands),
+     3. give the signed family name a place to sit.
+
+   Component blocks are in page order, each with its media queries next to it,
+   matching the order rule in styles.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   THE DOORWAY
+
+   `.hero--dark` supplies the ground, the type colour and the shadow; this
+   block only changes where the content sits and what protects it.
+
+   The home page centres its hero content over a radial scrim because its
+   photograph is dark in the middle. This photograph is the opposite: open sky
+   at the top, a dark field at the foot. So the type moves to the foot, where
+   the picture is already dark, and the scrim becomes a vertical ramp that
+   leaves the sky alone. A radial scrim here would only grey out the light the
+   picture is about.
+   -------------------------------------------------------------------------- */
+.story-hero {
+  place-items: end start;
+  background-image: url("assets/images/ABOUT-US.jpeg");
+  /* A landscape frame only ever shows about two fifths of this portrait
+     photograph. High enough to keep both figures whole — a crop that takes
+     their heads off turns the picture into texture — and no higher, or the
+     band fills with empty sky. */
+  background-position: center 24%;
+}
+
+/* That crop puts the sun in the lower half of the frame, which is exactly
+   where the type lands, so the ramp is steep and finishes dark. */
+.story-hero::before {
+  background: linear-gradient(
+    180deg,
+    rgba(12, 9, 7, 0) 20%,
+    rgba(12, 9, 7, 0.5) 56%,
+    rgba(12, 9, 7, 0.9) 100%
+  );
+}
+
+.story-hero .hero__content {
+  width: min(680px, 100%);
+  padding: 0 var(--gutter) clamp(46px, 7vh, 84px);
+  text-align: left;
+}
+
+.story-hero h1 {
+  margin: 0;
+}
+
+.story-hero .hero__lede {
+  max-width: 46ch;
+  margin: clamp(18px, 2.4vh, 26px) 0 0;
+}
+
+@media (max-width: 860px) {
+  /* styles.css turns `.hero--dark` into an ordinary block at this width and
+     swaps in the mobile hero art. This photograph is already portrait, so it
+     needs no second file — only the scrim has to be restated, because the
+     stacked hero is taller and a ramp that starts at 26% would leave the top
+     of the type unprotected on a short phone. */
+  .story-hero {
+    background-image: url("assets/images/ABOUT-US.jpeg");
+    background-position: center;
+  }
+
+  /* The phone shows the whole figure, so the type sits over the brightest part
+     of the picture rather than under it. The ramp starts working earlier and
+     lands harder than the desktop one for that reason. */
+  .story-hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 9, 7, 0.24) 0%,
+      rgba(12, 9, 7, 0.5) 44%,
+      rgba(12, 9, 7, 0.88) 100%
+    );
+  }
+
+  /* The band already carries its own vertical padding once it stops being a
+     fixed pane, so the content's own foot padding would only double it. */
+  .story-hero .hero__content {
+    padding-bottom: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   THE SPLIT — a heading column beside a reading column.
+
+   Used by the origin band and the kitchen band, so a page that says two things
+   says them the same way. The heading column is the narrower of the two: the
+   Caslon step is large enough that an equal split leaves it stranded on one
+   line with a hole beneath it.
+   -------------------------------------------------------------------------- */
+.story-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: var(--head-gap) clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+
+.story-split__head .section-title {
+  max-width: 14ch;
+}
+
+/* Supporting copy under the heading, inside the narrow column. `.prose` caps
+   at 68ch, which this column never reaches — the cap that matters here is the
+   column itself. */
+.story-split__head-copy {
+  margin-top: clamp(22px, 2.4vw, 32px);
+}
+
+/* The reading column keeps the tighter measure: it already sits in half a
+   page, so 68ch would push it past the point where the eye returns cleanly. */
+.story-split__body {
+  max-width: var(--measure-tight);
+}
+
+@media (max-width: 900px) {
+  /* One column at the same width the rest of the site collapses its two-column
+     bands. The gap becomes vertical only, so the heading and its copy stay a
+     group rather than drifting apart. */
+  .story-split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 44px);
+  }
+
+  .story-split__head .section-title {
+    max-width: 18ch;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   THE CLAIMS LIST — regulated text.
+
+   Dietary and allergen copy is safety information, so this block is
+   deliberately plain: full-strength ink on the band's solid Ivory ground, at
+   body size, no clamp, no tint, no photography behind it, and the Special BBQ
+   Sauce carved out in the line itself rather than in a footnote. The only
+   decoration is the hairline that separates one claim from the next.
+   -------------------------------------------------------------------------- */
+.story-claims {
+  max-width: var(--measure-tight);
+  margin: 0;
+  color: var(--ink);
+}
+
+.story-claims__row {
+  padding: clamp(20px, 2.4vw, 28px) 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.story-claims__row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.story-claims dt {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  line-height: 1.45;
+}
+
+.story-claims dd {
+  max-width: 46ch;
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   THE FAMILY — the close.
+
+   The photograph is nearly square, so it takes the smaller half and the
+   content the larger one; the reverse leaves a tall picture next to four short
+   lines. This is the one band on the page that is not a `.story-split`,
+   because a photograph is not a heading column.
+   -------------------------------------------------------------------------- */
+.story-family {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 5.5vw, 96px);
+  align-items: center;
+}
+
+.story-family__figure {
+  margin: 0;
+}
+
+.story-family__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.story-family__content .section-title {
+  max-width: 16ch;
+}
+
+.story-family__content .prose {
+  margin-top: clamp(22px, 2.4vw, 32px);
+}
+
+/* The signed name. A drawn mark, not a typeface for reading: it carries no
+   information on its own, which is why it is hidden from assistive technology
+   and the plain credit line below does the naming. It does not count against
+   the Rare Serif Rule, because it is not the Caslon voice. */
+.story-signature {
+  margin: clamp(26px, 3vw, 40px) 0 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-script);
+  font-size: clamp(36px, 3.6vw, 52px);
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.story-signature__credit {
+  margin: 14px 0 0;
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.story-family__button {
+  margin-top: clamp(30px, 3.4vw, 42px);
+}
+
+@media (max-width: 900px) {
+  /* Picture first, then the words — the same order the customer review band
+     takes when it stacks, so a stacked image-and-copy pair reads alike
+     wherever it appears on the site. */
+  .story-family {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(30px, 5vw, 48px);
+  }
+
+  .story-family__content .section-title {
+    max-width: 18ch;
+  }
+}
+
+@media (max-width: 620px) {
+  /* A full-width button on a phone rather than a 252px control floating in a
+     column that is barely wider than it. */
+  .story-family__button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,560 @@
+/* ==========================================================================
+   STOCKISTS — the locator, as an interface only.
+
+   Loads after styles.css and uses its :root tokens only.
+
+   There is no locator behind this page yet: the client's stockist list lives
+   in the old site's plugin database and has not been supplied, so nothing on
+   this page pretends to work. The controls are real, labelled and focusable
+   with no script bound to them, the results column stands in its empty state,
+   and the map is an empty plate rather than an invented one.
+
+   That constraint is what the styling has to carry: the panel has to look
+   finished while saying it is not finished. So the empty state is designed
+   copy on a real surface, not a grey skeleton, and the map plate is a quiet
+   cream field with a label rather than a fake rendering with fake pins.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   The page hero. Centred, no background — the locator panel right below it
+   already carries the ivory/paper contrast, so the hero stays plain.
+   -------------------------------------------------------------------------- */
+
+.page-hero {
+  padding: clamp(52px, 6.5vw, 104px) var(--gutter) clamp(28px, 3.2vw, 44px);
+  text-align: center;
+  background: var(--paper);
+}
+
+.page-hero__eyebrow {
+  margin: 0 0 clamp(10px, 1.2vw, 14px);
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.page-hero__title {
+  max-width: 18ch;
+  margin: 0 auto;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-page-title);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.page-hero__lede {
+  max-width: var(--measure-tight);
+  margin: clamp(20px, 2.4vw, 30px) auto 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   The locator band.
+
+   Two columns, controls left and map right, on one paper ground. The panel
+   column is fixed in proportion rather than fluid: a search form does not get
+   better past about 420px, and every pixel past that belongs to the map.
+   -------------------------------------------------------------------------- */
+
+.locator {
+  padding: clamp(20px, 2.2vw, 36px) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+}
+
+.locator__layout {
+  display: grid;
+  grid-template-columns: minmax(340px, 30%) minmax(0, 1fr);
+  gap: clamp(20px, 2.2vw, 36px);
+  align-items: stretch;
+}
+
+.locator__panel {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.6vw, 24px);
+}
+
+/* --------------------------------------------------------------------------
+   The search form.
+
+   Ivory, the chrome ground: this is an instrument, not content, and the site
+   already says so everywhere else it puts controls on a surface.
+   -------------------------------------------------------------------------- */
+
+.locator-search {
+  padding: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-md);
+  background: var(--ivory);
+}
+
+.locator-search__title {
+  margin: 0 0 clamp(16px, 1.6vw, 22px);
+  color: var(--chocolate-deep);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.locator-search__field + .locator-search__field {
+  margin-top: clamp(14px, 1.4vw, 20px);
+}
+
+.locator-search__label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.locator-search__row {
+  display: flex;
+  gap: 10px;
+}
+
+.locator-search__input,
+.locator-search__select {
+  min-height: 52px;
+  width: 100%;
+  padding: 0 14px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  transition: border-color var(--dur) ease;
+}
+
+.locator-search__input::placeholder {
+  color: var(--ink-soft);
+}
+
+.locator-search__input:hover,
+.locator-search__select:hover,
+.locator-search__input:focus-visible,
+.locator-search__select:focus-visible {
+  border-color: var(--hairline-strong);
+}
+
+/* The shared button, held to the height of the field beside it so the row
+   reads as one control rather than two. The primitive is sized for a band CTA
+   — 252px wide with the band's own gap above it — and neither of those
+   measurements means anything inside a 340px panel. */
+.locator-search__button {
+  min-width: 0;
+  min-height: 52px;
+  flex: none;
+  margin-top: 0;
+  padding: 0 20px;
+}
+
+.locator-regions {
+  margin: clamp(18px, 1.8vw, 24px) 0 0;
+  padding: clamp(18px, 1.8vw, 24px) 0 0;
+  border: 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.locator-regions__legend {
+  padding: 0;
+  margin-bottom: 12px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.locator-regions__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* The home page's collection chip, driving a radio instead of a script. The
+   input is taken out of the visual layer but left in the accessibility tree
+   and in the tab order, so the chip is operable by keyboard and reports its
+   own state — which is the whole reason this row is radios and not buttons on
+   a page with no script. */
+.locator-chip {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.locator-chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.locator-chip:has(input:checked) {
+  color: var(--ivory);
+  background: var(--chocolate-deep);
+  border-color: var(--chocolate-deep);
+}
+
+.locator-chip:has(input:focus-visible) {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   The results column, in its empty state.
+
+   Designed copy on a real surface. A grey skeleton would be a promise that
+   something is loading; nothing is loading, and the honest thing is a
+   sentence that says why and two ways out.
+   -------------------------------------------------------------------------- */
+
+.locator-results {
+  flex: 1;
+  padding: clamp(20px, 2vw, 28px);
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.locator-results__title {
+  margin: 0 0 clamp(16px, 1.6vw, 22px);
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hairline-soft);
+  color: var(--chocolate-deep);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+.locator-results__icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  margin-bottom: 14px;
+  color: var(--chocolate-deep);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.locator-results__lead {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-panel-statement);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.locator-results__copy {
+  max-width: 46ch;
+  margin: 12px 0 0;
+  color: var(--ink-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.locator-results__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: clamp(20px, 2vw, 28px);
+}
+
+/* Both button primitives are sized for a band CTA. In a panel they only have
+   to sit side by side and match each other's height. */
+.locator-results__actions .button {
+  min-width: 0;
+  margin-top: 0;
+  padding: 16px 22px;
+}
+
+.locator-results__actions .outline-button {
+  min-height: 58px;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   The map plate.
+
+   Empty on purpose. A drawn map with pins on it would be a claim about where
+   the range is sold, and there is no list yet to make that claim from. This
+   holds the space the real map will take, at the height it will take, on the
+   quietest fill in the system with a hairline grid ruled over it.
+   -------------------------------------------------------------------------- */
+
+.locator__map {
+  min-height: 100%;
+}
+
+.locator-map {
+  position: relative;
+  height: 100%;
+  min-height: clamp(360px, 46vh, 560px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-md);
+  background: var(--cream);
+}
+
+/* Two repeating hairlines. It reads as a map plate rather than a blank tile
+   without drawing a single road, coastline or pin that would have to be
+   true. */
+.locator-map__grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, var(--hairline-soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hairline-soft) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.75;
+}
+
+.locator-map__badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid var(--hairline-soft);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  background: var(--ivory);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.locator-map__badge svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --------------------------------------------------------------------------
+   The three ways out.
+
+   Ivory, to separate two paper bands. Three cards, each answering one of the
+   three things a visitor does next when the locator cannot help them yet:
+   buy it now, get it into their own shop, or order it for a kitchen.
+   -------------------------------------------------------------------------- */
+
+.stockist-help {
+  padding: var(--section-y) var(--gutter) var(--section-y-end);
+  background: var(--ivory);
+}
+
+.stockist-help__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 40px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-card {
+  padding-top: clamp(18px, 1.8vw, 24px);
+  border-top: 2px solid var(--chocolate-deep);
+}
+
+.help-card__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: clamp(22px, 1.7vw, 27px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.help-card__copy {
+  max-width: 38ch;
+  margin: 10px 0 clamp(14px, 1.4vw, 18px);
+  color: var(--ink-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.help-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* The same arrow the site uses on every other text link — width, stroke and
+   the hover slide match .page-head__arrow in pages.css. */
+.help-card__arrow {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur) ease;
+}
+
+.help-card__link:hover .help-card__arrow,
+.help-card__link:focus-visible .help-card__arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   The kitchen's own details. Paper, centred, and the last thing on the page
+   before the footer: the one address a visitor can actually act on today.
+   -------------------------------------------------------------------------- */
+
+.stockist-contact {
+  padding: var(--section-y) var(--gutter) var(--section-y-end);
+  background: var(--paper);
+}
+
+.stockist-contact__inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stockist-contact__title {
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+}
+
+.stockist-contact__lede {
+  margin: clamp(10px, 1vw, 14px) auto 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.stockist-contact__details {
+  margin: clamp(26px, 2.8vw, 40px) 0 0;
+  text-align: left;
+}
+
+.stockist-contact__row {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+  padding: clamp(12px, 1.2vw, 16px) 0;
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.stockist-contact__row:last-child {
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.stockist-contact__row dt {
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+  line-height: 1.9;
+}
+
+.stockist-contact__row dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--type-lede);
+  line-height: 1.6;
+}
+
+.stockist-contact__row a {
+  color: inherit;
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
+   Steps.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1180px) {
+  .locator__layout {
+    grid-template-columns: minmax(300px, 36%) minmax(0, 1fr);
+  }
+
+  .stockist-help__grid {
+    gap: clamp(18px, 2vw, 28px);
+  }
+}
+
+/* The map stops being the point once it is narrower than the panel beside it:
+   below 900 the columns unstack, controls first, and the plate takes a fixed
+   height under them. */
+@media (max-width: 900px) {
+  .locator__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .locator-map {
+    min-height: 300px;
+  }
+
+  .stockist-help__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 36px);
+  }
+}
+
+@media (max-width: 620px) {
+  .locator-search__row {
+    flex-wrap: wrap;
+  }
+
+  .locator-search__button {
+    width: 100%;
+  }
+
+  .locator-results__actions .button,
+  .locator-results__actions .outline-button {
+    width: 100%;
+  }
+
+  .stockist-contact__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .stockist-contact__row dt {
+    line-height: 1.4;
+  }
+}

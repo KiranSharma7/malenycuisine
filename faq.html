@@ -1,29 +1,11 @@
 <!doctype html>
-<!--
-  ===========================================================================
-  MALENY CUISINE — PAGE TEMPLATE
-  Copy this file, rename it, and replace the two marked regions:
-    1. <head> — the title and description
-    2. <main id="main-content"> — the page's own bands
-  Everything else (promotion, header, mega menu, mobile drawer, footer) is
-  site chrome and should stay byte-identical across every page. If it needs to
-  change, change it here first and then propagate.
-
-  Component markup and the rules behind it: design-system.html
-  ===========================================================================
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
-    <meta
-      name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
-    />
-    <!-- REPLACE: "Page name — Maleny Cuisine" -->
-    <title>Page name — Maleny Cuisine</title>
+    <meta name="description" content="Answers about the Maleny Cuisine range — vegan and low sodium products, shelf life, how long a jar keeps once opened, and where to buy." />
+    <title>FAQs — Maleny Cuisine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,70 +14,21 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- ==================================================================
-         PROMOTION — site chrome. Delete the whole block on a page where the
-         offer would be intrusive (checkout, policies). The script guards for
-         its absence.
-         ================================================================== -->
-    <div class="promotion" data-promotion hidden>
-      <section
-        class="promotion__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="promotion-title"
-        aria-describedby="promotion-description"
-      >
-        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <path d="M13 13l22 22M35 13 13 35" />
-          </svg>
-        </button>
-
-        <div class="promotion__copy">
-          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
-
-          <div class="promotion__delivery">
-            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
-              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
-              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
-              <circle cx="48" cy="64" r="11" />
-              <circle cx="88" cy="64" r="11" />
-            </svg>
-            <div>
-              <p class="promotion__offer">Free delivery</p>
-              <p class="promotion__threshold">On orders over $60</p>
-            </div>
-          </div>
-
-          <p class="promotion__description" id="promotion-description">
-            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
-            products and enjoy free delivery.
-          </p>
-
-          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
-        </div>
-
-        <div class="promotion__visual" aria-hidden="true">
-          <img
-            class="promotion__scene promotion__scene--desktop"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
-            alt=""
-          />
-          <img
-            class="promotion__scene promotion__scene--mobile"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
-            alt=""
-          />
-          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
-        </div>
-      </section>
-    </div>
-
+    <!--
+      DIRECTION CONTRACT: EVERY ANSWER IN THE OPEN
+      THESIS: A food FAQ that hides dietary answers inside an accordion has buried the one thing it exists to say — so nothing here collapses.
+      OWN-WORLD: The house system unchanged. Ivory type-only entrance, then one paper band split into a sticky index and a column of open answers on hairlines.
+      STORY: The reader scans six questions in the index, jumps to the one they came for, and reads a full answer at full ink.
+      FIRST VIEWPORT: An ivory band carrying the h1 and one lede, with the index and the first two answers already visible beneath it.
+      FORM: Indexed open answers, derived directly from the content rather than rolled; this is a new surface inside an established world, not a new world.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
     <!-- ==================================================================
          HEADER — site chrome. Do not restructure per page. The only per-page
          edit allowed here is adding aria-current="page" to the nav link for
@@ -422,33 +355,121 @@
       </div>
     </header>
 
-    <!-- ==================================================================
-         REPLACE EVERYTHING INSIDE <main>.
-         A page is a stack of full-bleed bands. Two starters are shown below —
-         delete the one you do not need, and read the "Page recipes" section of
-         design-system.html before adding a third band shape.
-         ================================================================== -->
     <main id="main-content">
-      <!-- STARTER B — a content band.
-           .section is paper by default. Add --ivory, --cream or --deep to
-           change the ground; add --bleed when the band runs a rail to the
-           page edge. -->
-      <section class="section" id="intro" aria-labelledby="intro-title">
-        <div class="section__head">
-          <h2 class="section-title" id="intro-title">A band heading</h2>
-        </div>
+      <section class="page-head page-head--centred" aria-labelledby="page-title">
+        <h1 class="page-head__title" id="page-title">Frequently asked questions</h1>
 
-        <div class="prose">
-          <p>
-            Long-form copy goes here, capped at 68ch by <code>.prose</code>. Product terminology stays
-            as the brand uses it — chutney, relish, sauce, conserve, marmalade, dressing — and spelling
-            is Australian English throughout.
-          </p>
-          <p>
-            Dietary, allergen and ingredient text is regulated. Copy it verbatim from
-            <code>content/products.md</code>, set it at full ink on a pale ground, and carve out the
-            Special BBQ Sauce from any range-wide claim.
-          </p>
+        <p class="page-head__lede">
+          The six things we are asked most often — what is in the jars, how long they keep, and
+          where to find them. Every answer is on this page; nothing is hidden behind a click.
+        </p>
+
+        <p class="page-head__links">
+          <a class="link-wipe" href="contact.html">
+            Ask us something else
+            <svg class="page-head__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="link-wipe" href="faq.html#where-to-buy">
+            Find a stockist
+            <svg class="page-head__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 12h15M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </p>
+      </section>
+
+      <!-- =============================================================
+           THE ANSWERS.
+           Open on the page, not in an accordion. Two of the six are dietary
+           answers, and the Dietary Contrast Rule will not have regulated text
+           sitting behind a click at reduced strength. Once those two have to
+           be open, all six do — so the wayfinding is an index instead.
+           ============================================================= -->
+      <section class="section" id="questions" aria-labelledby="questions-title">
+        <h2 class="visually-hidden" id="questions-title">Questions and answers</h2>
+
+        <div class="faq-layout">
+          <nav class="faq-index" aria-labelledby="faq-index-title">
+            <p class="faq-index__title" id="faq-index-title">On this page</p>
+            <ol>
+              <li><a href="#vegan">Are your products vegan?</a></li>
+              <li><a href="#low-sodium">Are your products low in sodium?</a></li>
+              <li><a href="#once-opened">How long do products keep once opened?</a></li>
+              <li><a href="#shelf-life">What is the shelf life?</a></li>
+              <li><a href="#where-to-buy">Where can I buy them?</a></li>
+              <li><a href="#history">How long have you been going?</a></li>
+            </ol>
+          </nav>
+
+          <div class="faq-list">
+            <article class="faq-item" id="vegan">
+              <h3>Are your products vegan?</h3>
+              <p>
+                All our bottled products are suitable for a vegan diet, as we do not use any
+                ingredients derived from animals in any of these products. Christmas puddings are
+                not suitable for a vegan diet, as they contain egg whites.
+              </p>
+            </article>
+
+            <article class="faq-item" id="low-sodium">
+              <h3>Are your products low in sodium?</h3>
+              <p>
+                Apart from the Special BBQ Sauce, all our other products are classified as low in
+                sodium and are suitable for anyone following a low sodium diet. We do not even have
+                salt in our kitchen. The Special BBQ Sauce has soy sauce as one of the ingredients,
+                which increases the sodium content beyond what is considered to be a low sodium
+                product.
+              </p>
+            </article>
+
+            <article class="faq-item" id="once-opened">
+              <h3>How long do products keep once opened?</h3>
+              <p>
+                For maximum flavour and freshness, we recommend that you consume the products
+                within 2–3 weeks after opening. However, some products — especially the dressings —
+                are fine in a fridge for up to 6 weeks.
+              </p>
+            </article>
+
+            <article class="faq-item" id="shelf-life">
+              <h3>What is the shelf life?</h3>
+              <p>
+                You will find a best before stamp on each jar, but most of our products have a
+                shelf life of approximately 18 to 20 months from the date of production when
+                unopened.
+              </p>
+            </article>
+
+            <article class="faq-item" id="where-to-buy">
+              <h3>Where can I buy them?</h3>
+              <p>
+                You can buy through this website. To find a stockist in your area, use the
+                <a href="faq.html#where-to-buy">stockists page</a>, where you can search by postcode.
+                For wholesale, food service or becoming a stockist yourself, see
+                <a href="work-with-us.html">work with us</a>.
+              </p>
+            </article>
+
+            <article class="faq-item" id="history">
+              <h3>How long have you been going?</h3>
+              <p>
+                Maleny Cuisine was founded in the town of Maleny in 1988. Production moved down to
+                the coast at Marcoola for logistical reasons about 15 years ago, but as it was a
+                well-established brand here in Queensland the name Maleny Cuisine was kept. We
+                still use the same great recipes and are still very proud to be a local Sunshine
+                Coast company.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-cta" aria-labelledby="faq-cta-title">
+        <div class="page-cta__inner">
+          <h2 class="page-cta__title" id="faq-cta-title">Still have a question?</h2>
+          <a class="button" href="contact.html">Contact us</a>
         </div>
       </section>
     </main>
@@ -744,6 +765,7 @@
         </nav>
       </div>
     </footer>
+
 
     <script src="script.js"></script>
   </body>

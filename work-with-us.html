@@ -1,29 +1,11 @@
 <!doctype html>
-<!--
-  ===========================================================================
-  MALENY CUISINE — PAGE TEMPLATE
-  Copy this file, rename it, and replace the two marked regions:
-    1. <head> — the title and description
-    2. <main id="main-content"> — the page's own bands
-  Everything else (promotion, header, mega menu, mobile drawer, footer) is
-  site chrome and should stay byte-identical across every page. If it needs to
-  change, change it here first and then propagate.
-
-  Component markup and the rules behind it: design-system.html
-  ===========================================================================
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
-    <meta
-      name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
-    />
-    <!-- REPLACE: "Page name — Maleny Cuisine" -->
-    <title>Page name — Maleny Cuisine</title>
+    <meta name="description" content="Wholesale and food service from Maleny Cuisine — commercial pack sizes of our chutneys, relishes, sauces and jams, made by hand on the Sunshine Coast." />
+    <title>Work With Us — Maleny Cuisine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,70 +14,21 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="pages.css" />
   </head>
 
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- ==================================================================
-         PROMOTION — site chrome. Delete the whole block on a page where the
-         offer would be intrusive (checkout, policies). The script guards for
-         its absence.
-         ================================================================== -->
-    <div class="promotion" data-promotion hidden>
-      <section
-        class="promotion__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="promotion-title"
-        aria-describedby="promotion-description"
-      >
-        <button class="promotion__close" type="button" aria-label="Close promotion" data-promotion-close>
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <path d="M13 13l22 22M35 13 13 35" />
-          </svg>
-        </button>
-
-        <div class="promotion__copy">
-          <h2 id="promotion-title">A Little Something<br />From Maleny Cuisine</h2>
-
-          <div class="promotion__delivery">
-            <svg class="promotion__truck" viewBox="0 0 132 82" aria-hidden="true" focusable="false">
-              <path d="M7 45h20M12 32h24M20 19h52v45H35" />
-              <path d="M72 31h25l18 19v14H99M80 37v14h27" />
-              <circle cx="48" cy="64" r="11" />
-              <circle cx="88" cy="64" r="11" />
-            </svg>
-            <div>
-              <p class="promotion__offer">Free delivery</p>
-              <p class="promotion__threshold">On orders over $60</p>
-            </div>
-          </div>
-
-          <p class="promotion__description" id="promotion-description">
-            Stock up on your favourite Maleny Cuisine<br class="promotion__desktop-break" />
-            products and enjoy free delivery.
-          </p>
-
-          <a class="promotion__cta" href="index.html#shop" data-promotion-shop>Shop now</a>
-        </div>
-
-        <div class="promotion__visual" aria-hidden="true">
-          <img
-            class="promotion__scene promotion__scene--desktop"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-desktop-v2.png"
-            alt=""
-          />
-          <img
-            class="promotion__scene promotion__scene--mobile"
-            src="assets/images/generated/promotional-banners/promotion-product-scene-mobile-v2.png"
-            alt=""
-          />
-          <img class="promotion__logo" src="assets/images/logo.png" alt="" />
-        </div>
-      </section>
-    </div>
-
+    <!--
+      DIRECTION CONTRACT: PUT OUR KITCHEN ON YOUR MENU
+      THESIS: A trade page argues with supply facts, not with adjectives — it refuses the stock "partner with us" hero of stacked benefit cards.
+      OWN-WORLD: The house system unchanged. One Chocolate Deep doorway split against a real restaurant photograph, then paper and ivory bands of hairline-ruled facts, closing on the enquiry form.
+      STORY: A chef or buyer sees the range plated in a restaurant, reads what is supplied and in what size, checks the dietary carve-out, and sends an enquiry without leaving the page.
+      FIRST VIEWPORT: A 50/50 split — heading, one sentence and "Start an enquiry" on deep brown at left; a plated dish on a timber table at right.
+      FORM: Doorway split, derived directly from the content rather than rolled; this is a new surface inside an established world, not a new world.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+    -->
     <!-- ==================================================================
          HEADER — site chrome. Do not restructure per page. The only per-page
          edit allowed here is adding aria-current="page" to the nav link for
@@ -133,7 +66,7 @@
 
         <div class="nav-end">
           <ul class="nav-links nav-links--right">
-            <li><a href="work-with-us.html">Work With Us</a></li>
+            <li><a href="work-with-us.html" aria-current="page">Work With Us</a></li>
             <li><a href="contact.html">Contact Us</a></li>
           </ul>
 
@@ -394,7 +327,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="work-with-us.html">
+              <a class="drawer-card" href="work-with-us.html" aria-current="page">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Work With Us</span>
                   <span class="drawer-card__sub">Wholesale &amp; food service</span>
@@ -422,33 +355,372 @@
       </div>
     </header>
 
-    <!-- ==================================================================
-         REPLACE EVERYTHING INSIDE <main>.
-         A page is a stack of full-bleed bands. Two starters are shown below —
-         delete the one you do not need, and read the "Page recipes" section of
-         design-system.html before adding a third band shape.
-         ================================================================== -->
     <main id="main-content">
-      <!-- STARTER B — a content band.
-           .section is paper by default. Add --ivory, --cream or --deep to
-           change the ground; add --bleed when the band runs a rail to the
-           page edge. -->
-      <section class="section" id="intro" aria-labelledby="intro-title">
-        <div class="section__head">
-          <h2 class="section-title" id="intro-title">A band heading</h2>
+      <!-- =============================================================
+           THE DOORWAY.
+           The page's one dark band, spent at the top rather than below the
+           fold. Chocolate Deep, not Night: the Doorway Rule keeps Night for a
+           true photographic hero, and nothing under this band is dark.
+           ============================================================= -->
+      <section class="doorway" aria-labelledby="doorway-title">
+        <div class="doorway__copy">
+          <h1 class="doorway__title" id="doorway-title">
+            Put our kitchen on your menu with food service.
+          </h1>
+
+          <p class="doorway__lede">
+            Maleny Cuisine is always excited to work with new people. Tell us how we could work
+            together and we will get back to you soon.
+          </p>
+
+          <a class="button button--on-dark" href="#enquiry">Start an enquiry</a>
         </div>
 
-        <div class="prose">
-          <p>
-            Long-form copy goes here, capped at 68ch by <code>.prose</code>. Product terminology stays
-            as the brand uses it — chutney, relish, sauce, conserve, marmalade, dressing — and spelling
-            is Australian English throughout.
-          </p>
-          <p>
-            Dietary, allergen and ingredient text is regulated. Copy it verbatim from
-            <code>content/products.md</code>, set it at full ink on a pale ground, and carve out the
-            Special BBQ Sauce from any range-wide claim.
-          </p>
+        <div class="doorway__media">
+          <img
+            src="assets/images/IMG_0998-e1736483743208.jpg"
+            alt="A plated salad dressed with Maleny Cuisine sauce, served on a timber table"
+            width="2048"
+            height="997"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <!-- The food service range, from content/pages.md. Eleven products and a
+           carton size — no price, no minimum order and no lead time, because
+           none of those has been supplied.
+
+           The band's heading is hidden rather than deleted: the h1 above now
+           carries the words "food service", so a visible h2 repeating them was
+           the same line twice. The section still needs a name, or its four
+           group headings sit under nothing when the page is read aloud or
+           navigated by landmark. -->
+      <section class="section" id="food-service" aria-labelledby="food-service-title">
+        <h2 class="visually-hidden" id="food-service-title">The food service range</h2>
+
+        <!-- The range, grouped by pack format exactly as the client lists it:
+             eleven products in four groups, each headed by its own size, on one
+             shared four-column grid so a part-filled row still lines up with the
+             row above it.
+
+             The photography is the client's own food service shots, cropped
+             square. They are photographs of a tub on a bench, not cut-out
+             packshots, so the tile fills rather than contains them.
+
+             The product name is the visible label, so each photograph above it
+             is decorative and carries an empty alt rather than saying the same
+             words twice. -->
+        <h3 class="service-group__title">Chutneys &amp; Relishes 2.5kg</h3>
+
+        <ul class="service-range">
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/apple-fig-ginger-chutney-2-5kg.jpg"
+                alt=""
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Apple Fig &amp; Ginger Chutney</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/homestyle-tomato-chutney-2-5kg.jpg"
+                alt=""
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Homestyle Tomato Chutney</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/spicy-tomato-relish-2-5kg.jpg"
+                alt=""
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Spicy Tomato Relish</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/caramelised-onion-relish-2-5kg.jpg"
+                alt=""
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Caramelised Onion Relish</span>
+          </li>
+        </ul>
+
+        <h3 class="service-group__title">Sauces 2.5L</h3>
+
+        <ul class="service-range">
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/special-bbq-sauce-2-5l.jpg"
+                alt=""
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Special BBQ Sauce</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/sweet-chilli-ginger-sauce-2-5l.jpg"
+                alt=""
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Sweet Chilli and Ginger Sauce</span>
+          </li>
+        </ul>
+
+        <h3 class="service-group__title">Jams 2.8kg</h3>
+
+        <ul class="service-range">
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/chilli-jam-2-8kg.jpg"
+                alt=""
+                width="792"
+                height="594"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Chilli Jam</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/strawberry-lime-whiskey-jam-2-8kg.jpg"
+                alt=""
+                width="800"
+                height="600"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Strawberry Lime and Whiskey Jam</span>
+          </li>
+        </ul>
+
+        <!-- The carton note belongs to the teenies alone, so it sits under that
+             heading rather than under the whole range. -->
+        <h3 class="service-group__title">Teenies 45g</h3>
+        <p class="service-group__note">Sold in cartons of 48.</p>
+
+        <ul class="service-range">
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/apple-fig-ginger-chutney-teenie.jpg"
+                alt=""
+                width="1000"
+                height="1250"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Apple Fig and Ginger Chutney</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/chilli-jam-teenie.jpg"
+                alt=""
+                width="1000"
+                height="1250"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Chilli Jam</span>
+          </li>
+
+          <li class="service-item">
+            <span class="service-item__media">
+              <img
+                src="assets/images/food-service/strawberry-lime-whiskey-jam-teenie.jpg"
+                alt=""
+                width="1000"
+                height="1250"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="service-item__name">Strawberry Lime and Whiskey Jam</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- =============================================================
+           THE ENQUIRY FORM.
+           PRESENTATION ONLY — there is no backend behind this site, so nothing
+           typed here is sent. pages.js validates the form, then says exactly
+           that and points at the real email address.
+           ============================================================= -->
+      <section class="section section--ivory" id="enquiry" aria-labelledby="enquiry-title">
+        <div class="section__head">
+          <h2 class="section-title" id="enquiry-title">Send us an enquiry</h2>
+        </div>
+
+        <div class="form-band">
+          <div class="form-band__aside">
+            <p>
+              Maleny Cuisine is always excited to work with new people. Please complete the form
+              about how we can work together and we will get back to you soon.
+            </p>
+            <p>
+              Would you rather write to us directly? Email
+              <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>.
+            </p>
+          </div>
+
+          <form class="enquiry-form" data-page-form novalidate>
+            <p class="visually-hidden" role="status" aria-live="polite" aria-atomic="true" data-form-status></p>
+
+            <fieldset class="field-group">
+              <legend class="field-group__title">Your enquiry</legend>
+
+              <p class="field field--select">
+                <label class="field__label" for="enquiry-type">What is it about</label>
+                <select class="field__input" id="enquiry-type" name="enquiry-type" aria-describedby="enquiry-type-error">
+                  <option value="" selected>Choose one</option>
+                  <option value="wholesale">Wholesale or food service</option>
+                  <option value="stockist">Becoming a stockist</option>
+                  <option value="hampers">Hampers and corporate gifts</option>
+                  <option value="media">Media and marketing</option>
+                  <option value="other">Something else</option>
+                </select>
+                <svg class="field__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="m6.5 9.75 5.5 5.5 5.5-5.5" />
+                </svg>
+                <span class="field__error" id="enquiry-type-error" data-error hidden></span>
+              </p>
+
+              <p class="field field--message">
+                <label class="field__label" for="enquiry-message">How we could work together</label>
+                <textarea
+                  class="field__input"
+                  id="enquiry-message"
+                  name="message"
+                  rows="6"
+                  placeholder="Tell us about your kitchen, your shop or your idea."
+                  aria-describedby="enquiry-message-error"
+                ></textarea>
+                <span class="field__error" id="enquiry-message-error" data-error hidden></span>
+              </p>
+            </fieldset>
+
+            <fieldset class="field-group">
+              <legend class="field-group__title">How to reach you</legend>
+
+              <div class="field-row">
+                <p class="field">
+                  <label class="field__label" for="enquiry-name">Name</label>
+                  <input
+                    class="field__input"
+                    id="enquiry-name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    placeholder="Your name"
+                    aria-describedby="enquiry-name-error"
+                  />
+                  <span class="field__error" id="enquiry-name-error" data-error hidden></span>
+                </p>
+
+                <p class="field">
+                  <label class="field__label" for="enquiry-email">Email</label>
+                  <input
+                    class="field__input"
+                    id="enquiry-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="name@email.com"
+                    aria-describedby="enquiry-email-error"
+                  />
+                  <span class="field__error" id="enquiry-email-error" data-error hidden></span>
+                </p>
+              </div>
+
+              <div class="field-row">
+                <p class="field">
+                  <label class="field__label" for="enquiry-business">
+                    Business <span class="field__optional">(optional)</span>
+                  </label>
+                  <input
+                    class="field__input"
+                    id="enquiry-business"
+                    name="business"
+                    type="text"
+                    autocomplete="organization"
+                    placeholder="Cafe, restaurant or shop"
+                  />
+                </p>
+
+                <p class="field">
+                  <label class="field__label" for="enquiry-phone">
+                    Phone <span class="field__optional">(optional)</span>
+                  </label>
+                  <input
+                    class="field__input"
+                    id="enquiry-phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                    placeholder="Best number to call"
+                  />
+                </p>
+              </div>
+            </fieldset>
+
+            <div class="form-actions">
+              <button class="button" type="submit">Send enquiry</button>
+              <p class="form-actions__alt">
+                Or email <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>.
+              </p>
+            </div>
+
+            <p class="form-note" data-form-note hidden>
+              <strong>This form is a design preview.</strong>
+              Nothing was sent and nothing was stored. To reach Maleny Cuisine today, email
+              <a href="mailto:sales@malenycuisine.com.au">sales@malenycuisine.com.au</a>.
+            </p>
+          </form>
         </div>
       </section>
     </main>
@@ -745,6 +1017,8 @@
       </div>
     </footer>
 
+
     <script src="script.js"></script>
+    <script src="pages.js"></script>
   </body>
 </html>

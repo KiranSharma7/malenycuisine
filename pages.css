@@ -1,0 +1,748 @@
+/* ==========================================================================
+   PAGES — Work With Us, FAQ, Contact Us.
+
+   Three pages that carry words rather than jars. They share one shape, so a
+   visitor who lands on any of them recognises the other two: a typographic
+   opening band, one job per band underneath, and the same form vocabulary
+   throughout.
+
+   Loaded after styles.css and built entirely from its tokens. Everything the
+   three pages have in common lives here; nothing here is a second copy of a
+   primitive that styles.css already owns — the fields, buttons, bands, prose
+   and focus rings all come from there.
+
+   File order mirrors styles.css: the shared opening band first, then each
+   component in the order a visitor meets it, with its media queries beside it.
+   ========================================================================== */
+
+/* ==========================================================================
+   THE OPENING BAND
+
+   These pages have no product photograph worth a doorway, so the entrance is
+   made of type. Ivory rather than paper, so the band reads as chrome-adjacent
+   and the paper band beneath it is clearly where the content starts — the same
+   trick the header and footer use to sit either side of a page.
+   ========================================================================== */
+
+.page-head {
+  padding: clamp(52px, 6.5vw, 104px) var(--gutter) clamp(44px, 5vw, 76px);
+  border-bottom: 1px solid var(--hairline-soft);
+  background: var(--ivory);
+}
+
+/* The first of the two Caslon settings this page is allowed. It sits between
+   the hero step and the band step: nothing above it competes, but a section
+   heading further down must still read as subordinate to it. */
+.page-head__title {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-page-title);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.page-head__lede {
+  max-width: var(--measure-tight);
+  margin: clamp(20px, 2.4vw, 30px) 0 0;
+  color: var(--ink-muted);
+  font-size: var(--type-lede);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+/* A row of short jumps under the lede — used on the FAQ to reach the contact
+   page and on Contact to reach the trade page. Links, not buttons: neither is
+   the page's primary action. */
+.page-head__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(22px, 2.6vw, 32px);
+}
+
+/* FAQ and Contact open on a question rather than an argument, so their head is
+   centred: there is no photograph or second column beside it to anchor a left
+   edge to, and a centred question reads as addressed to the reader. Work With
+   Us keeps the left setting — it opens on the split doorway instead. */
+.page-head--centred {
+  text-align: center;
+}
+
+/* The two measures above are what actually place the type, so centring the band
+   is not enough — each capped block has to be centred inside it as well. */
+.page-head--centred .page-head__title,
+.page-head--centred .page-head__lede {
+  margin-inline: auto;
+}
+
+.page-head--centred .page-head__links {
+  justify-content: center;
+}
+
+.page-head__links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--chocolate-deep);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* The same arrow the primary button carries, scaled to the 13px label beside
+   it. Kept in the link's own flow rather than absolutely placed, so the wipe
+   underline still runs the full width of label plus arrow. */
+.page-head__arrow {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur) ease;
+}
+
+.page-head__links a:hover .page-head__arrow,
+.page-head__links a:focus-visible .page-head__arrow {
+  transform: translateX(4px);
+}
+
+/* Every inline link on these three pages takes the same visible ring. There is
+   no `.focus-ring` class on a link inside a paragraph, and a link nobody can
+   see the focus on is the accessibility floor going backwards. */
+.page-head__links a:focus-visible,
+.faq-item a:focus-visible,
+.form-actions__alt a:focus-visible,
+.contact-details dd a:focus-visible,
+.form-band__aside a:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   THE DOORWAY — Work With Us only.
+
+   This page is the one of the three with something to sell, so it opens on a
+   split rather than a page head: the argument on a Chocolate Deep ground, one
+   photograph of the range doing its job in a restaurant beside it.
+
+   It spends the page's whole Dark Band Allowance here, at the top, where the
+   Doorway Rule wants the atmosphere. Chocolate Deep rather than Night, so the
+   rule that reserves Night for a true hero still holds, and nothing below this
+   band is dark.
+   ========================================================================== */
+
+.doorway {
+  min-height: clamp(440px, 58vh, 640px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--chocolate-deep);
+}
+
+/* `align-items: start` is load-bearing, not tidiness. A column flex container
+   stretches its children by default, and the button is the only child here that
+   is sized by its own padding rather than by a measure — left to stretch it
+   becomes as wide as the column and stops reading as a button at all. */
+.doorway__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: clamp(56px, 6.5vw, 104px) clamp(28px, 4.4vw, 80px);
+}
+
+.doorway__title {
+  max-width: 15ch;
+  margin: 0;
+  color: var(--lamplight);
+  font-family: var(--font-display);
+  font-size: var(--type-page-title);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+/* Full-strength lamplight, not a tinted one. The palette has three ink
+   opacities for pale grounds and none for dark ones, and inventing a fourth
+   here to make a lede look quieter is exactly how a system starts to blur. */
+.doorway__lede {
+  max-width: 46ch;
+  margin: clamp(18px, 2.2vw, 28px) 0 0;
+  color: var(--lamplight);
+  font-size: var(--type-lede);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.doorway .button {
+  margin-top: clamp(26px, 3vw, 38px);
+}
+
+.doorway__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.doorway__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  /* The plate, not the tablecloth: the dish sits right of centre in this
+     photograph and the crop has to keep it whichever way the column reflows. */
+  object-position: 58% 50%;
+}
+
+@media (max-width: 900px) {
+  .doorway {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Copy first on a phone, so the heading is still the first thing under the
+     header and the photograph reads as its evidence rather than its wrapper. */
+  .doorway__media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .doorway__media img {
+    object-position: 58% 46%;
+  }
+}
+
+@media (max-width: 620px) {
+  /* A full-width button on a phone rather than a 252px control floating in a
+     column barely wider than it — the same call the story page makes. */
+  .doorway .button {
+    align-self: stretch;
+  }
+}
+
+/* ==========================================================================
+   THE FOOD SERVICE RANGE
+
+   Eleven products in four groups, each group headed by the size it is packed
+   in, because a chef buys the pack rather than the flavour.
+
+   The tiles are not cards and not links — there is no food service product page
+   to send anyone to — so they stay flat at rest: no shadow, no lift, no hover.
+   A photograph, its name, and nothing drawn around either.
+   ========================================================================== */
+
+/* One heading per pack format. Not the display voice: the Rare Serif Rule caps
+   Caslon at twice a screen and this band already spends one on its h2, so four
+   group headings have to be labels. Full ink and a hairline above, so each
+   group reads as its own shelf rather than as a caption floating over the row
+   beneath it. */
+.service-group__title {
+  margin: clamp(44px, 5vw, 76px) 0 clamp(22px, 2.4vw, 30px);
+  padding-top: clamp(20px, 2.2vw, 28px);
+  border-top: 1px solid var(--hairline);
+  color: var(--chocolate-deep);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--track-14);
+  text-transform: uppercase;
+}
+
+/* The first group opens the band, so it takes the band's own top padding
+   instead of paying a group break and drawing a rule against nothing. */
+.service-group__title:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* The carton figure belongs to one group, so it sits tight under that group's
+   heading rather than at the foot of the whole range. */
+.service-group__title:has(+ .service-group__note) {
+  margin-bottom: 8px;
+}
+
+.service-group__note {
+  margin: 0 0 clamp(22px, 2.4vw, 30px);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Full-bleed and four across, like every other band on this site — a capped,
+   centred grid was tried and read as a boxed page inside a full-bleed one. Four
+   across also lets the four groups share one column width, so a group of two or
+   three still lines its tiles up with the group of four above it. */
+.service-range {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(24px, 2.8vw, 40px) clamp(20px, 2.4vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* The client's food service photography is a tub on a bench, not a cut-out
+   packshot, so the tile fills rather than contains it — a contained scene photo
+   would letterbox and read as a mistake. Cream underneath is only what shows
+   while the image is still loading. */
+.service-item__media {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  background: var(--cream);
+}
+
+.service-item__media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.service-item__name {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1180px) {
+  .service-range {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .service-range {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================================
+   A LIST OF PLAIN FACTS
+
+   Used for the food service range and for who the range is supplied to. Rows
+   divided by hairlines rather than a grid of same-size cards: these are six or
+   eight short lines of fact, and boxing each one would spend a card's worth of
+   attention on a line of text.
+   ========================================================================== */
+
+.fact-list {
+  max-width: var(--measure);
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+  list-style: none;
+}
+
+.fact-list li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Two columns, never more. Auto-fit would give four on a wide screen, and four
+   columns of one short line each stops reading as a list and starts reading as
+   a table of nothing. The rule stays a full-width hairline in each column, so
+   the two halves still read as one list. */
+.fact-list--split {
+  /* Full width, not the single column's measure. Each cell holds one short
+     line, so the measure that protects a paragraph is not protecting anything
+     here — it was only leaving a hole on a wide screen. */
+  max-width: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(28px, 4vw, 72px);
+}
+
+@media (max-width: 720px) {
+  .fact-list--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.fact-list__note {
+  max-width: var(--measure);
+  margin: clamp(20px, 2.4vw, 28px) 0 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   THE FAQ
+
+   No accordion. Every answer here is open on the page, because two of the six
+   are dietary answers — what is vegan, what is low in sodium — and the Dietary
+   Contrast Rule will not have regulated text sitting behind a click. Once
+   those two have to be open, all six do, or the page teaches the reader that
+   some answers are hidden.
+
+   So the wayfinding moves to an index instead. It sticks beside the answers on
+   a wide screen and becomes an ordinary list of jumps on a narrow one.
+   ========================================================================== */
+
+/* Full-bleed like every other band on the site. An earlier 1180px cap was meant
+   to keep the index and the answer it points at in one glance, but a capped
+   block with nothing telling it where to sit stays at the left edge, so on a
+   wide monitor it read as a page that had failed to load its right half. The
+   glance is protected by the answer's own measure instead, below. */
+.faq-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.28fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 96px);
+}
+
+.faq-index {
+  position: sticky;
+  top: clamp(24px, 5vh, 48px);
+  align-self: start;
+}
+
+.faq-index__title {
+  margin: 0 0 18px;
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.faq-index ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: faq;
+}
+
+.faq-index li {
+  border-top: 1px solid var(--hairline-soft);
+}
+
+.faq-index li:last-child {
+  border-bottom: 1px solid var(--hairline-soft);
+}
+
+.faq-index a {
+  display: block;
+  padding: 12px 0;
+  color: var(--ink-muted);
+  font-size: 15px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.faq-index a:hover,
+.faq-index a:focus-visible {
+  color: var(--chocolate-deep);
+}
+
+.faq-index a:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.faq-list {
+  display: grid;
+  gap: clamp(34px, 4vw, 54px);
+}
+
+.faq-item {
+  padding-top: clamp(26px, 3vw, 38px);
+  border-top: 1px solid var(--hairline);
+  /* The header is not fixed, but a jump that lands a question hard against the
+     top of the window reads as though the answer above it was cut off. */
+  scroll-margin-top: clamp(24px, 5vh, 56px);
+}
+
+.faq-item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Sans, not Caslon. Six serif questions on one screen would break the Rare
+   Serif Rule six times over; this is the same call the product card makes for
+   its titles. */
+.faq-item h3 {
+  max-width: 34ch;
+  margin: 0 0 clamp(14px, 1.6vw, 20px);
+  color: var(--chocolate-deep);
+  font-size: clamp(20px, 1.7vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+}
+
+/* Full ink at body size, never clamped and never tinted back. Two of these
+   answers are dietary claims and the rest are read the same way. */
+.faq-item p {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--ink);
+  font-size: var(--type-body);
+  line-height: 1.75;
+}
+
+.faq-item p + p {
+  margin-top: 14px;
+}
+
+.faq-item a {
+  color: var(--chocolate-deep);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .faq-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Sticking is worth nothing once the index is a block the reader has already
+     scrolled past. */
+  .faq-index {
+    position: static;
+  }
+}
+
+/* ==========================================================================
+   FORMS
+
+   The fields themselves come from styles.css. What is here is the frame around
+   them: the two-column band a form sits in, the message field, the way an
+   optional field says so, and the note the page writes back after a submit.
+   ========================================================================== */
+
+.form-band {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(36px, 5vw, 90px);
+  align-items: start;
+}
+
+.form-band__aside {
+  display: grid;
+  gap: clamp(18px, 2vw, 26px);
+}
+
+.form-band__aside p {
+  max-width: 42ch;
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+/* The form fills its column. It used to stop at 720px inside a column that
+   grows past 1100px on a wide monitor, which left a dead stripe down the right
+   of the band; the column proportion above is what holds the form to a sensible
+   width now, and it is the thing to adjust if it ever needs to be narrower. */
+.enquiry-form {
+  display: grid;
+  gap: clamp(24px, 2.6vw, 34px);
+}
+
+/* More air under the group title than the shared primitive gives it. In a
+   checkout the title sits inside a tight pinned column and 16px is right; on
+   a full-width enquiry form the same 16px reads as the title having fallen
+   into the first field. Scoped to this form so checkout keeps its own spacing. */
+.enquiry-form .field-group__title {
+  margin-bottom: clamp(8px, 1vw, 14px);
+}
+
+/* A message field is a field with more room in it. The extra top padding keeps
+   the first line clear of the label, exactly as the single-line box does. */
+.field--message .field__input {
+  min-height: 172px;
+  padding-top: 30px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+/* Every required field is silent about it and every optional one says so —
+   the reverse marks the whole form with asterisks to flag the exception. */
+.field__optional {
+  color: var(--ink-quiet);
+  font-weight: 400;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px clamp(20px, 2.4vw, 30px);
+}
+
+.form-actions .button {
+  margin-top: 0;
+}
+
+.form-actions__alt {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form-actions__alt a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* What the page says back once the form validates. Cream rather than a colour,
+   because the One Family Rule has no green — and the words carry the meaning
+   anyway, which is what keeps this readable to anyone who cannot see the
+   ground change at all. */
+.form-note {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  background: var(--cream);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.form-note[hidden] {
+  display: none;
+}
+
+.form-note a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.form-note a:focus-visible {
+  outline: 2px solid var(--chocolate-deep);
+  outline-offset: 4px;
+}
+
+.form-note strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .form-band {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ==========================================================================
+   CONTACT DETAILS
+
+   An address, a postal address and an email. Real ones — nothing here is a
+   phone number, an opening hour or a response time, because none of those has
+   been supplied.
+   ========================================================================== */
+
+.contact-details {
+  display: grid;
+  gap: clamp(24px, 2.8vw, 34px);
+  margin: 0;
+}
+
+.contact-details > div {
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.contact-details dt {
+  margin-bottom: 8px;
+  color: var(--ink-quiet);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: var(--track-12);
+  text-transform: uppercase;
+}
+
+.contact-details dd,
+.contact-details address {
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+  /* <address> is the right element for a postal address and the browser's
+     default italic is not; it belongs to the same ramp as everything else. */
+  font-style: normal;
+  line-height: 1.65;
+}
+
+.contact-details dd a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.contact-details dd a:hover,
+.contact-details dd a:focus-visible {
+  color: var(--chocolate-deep);
+  text-decoration-thickness: 2px;
+}
+
+/* ==========================================================================
+   THE CLOSING BAND
+
+   One sentence and one route on. It is the last thing before the footer, so it
+   stays quiet: ivory, a statement and a link, no photograph and no second
+   dark band.
+   ========================================================================== */
+
+.page-cta {
+  padding: clamp(52px, 6vw, 88px) var(--gutter);
+  border-top: 1px solid var(--hairline-soft);
+  background: var(--ivory);
+}
+
+.page-cta__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 44px);
+}
+
+/* The Statement step, not a new one. This is exactly what that step is for —
+   one display sentence inside a band — and it stays under both the page title
+   and the section step above it. */
+.page-cta__title {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--chocolate-deep);
+  font-family: var(--font-display);
+  font-size: var(--type-statement);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+}
+
+.page-cta .button {
+  margin-top: 0;
+}

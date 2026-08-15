@@ -1,29 +1,11 @@
 <!doctype html>
-<!--
-  ===========================================================================
-  MALENY CUISINE — PAGE TEMPLATE
-  Copy this file, rename it, and replace the two marked regions:
-    1. <head> — the title and description
-    2. <main id="main-content"> — the page's own bands
-  Everything else (promotion, header, mega menu, mobile drawer, footer) is
-  site chrome and should stay byte-identical across every page. If it needs to
-  change, change it here first and then propagate.
-
-  Component markup and the rules behind it: design-system.html
-  ===========================================================================
--->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- REPLACE: one sentence, under 160 characters, in Australian English. -->
-    <meta
-      name="description"
-      content="Maleny Cuisine — handcrafted chutneys, relishes and sauces made on Queensland's Sunshine Coast."
-    />
-    <!-- REPLACE: "Page name — Maleny Cuisine" -->
-    <title>Page name — Maleny Cuisine</title>
+    <meta name="description" content="Six ways to cook with the Maleny Cuisine range, and the short answer for what every chutney, sauce, jam and dressing goes with." />
+    <title>Recipes — Maleny Cuisine</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,9 +14,27 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="recipes.css" />
+    <link rel="stylesheet" href="cart.css" />
   </head>
 
   <body>
+    <!--
+      THESIS: The home page runs these dishes past you; this page holds them
+      still. Six photographs, six names, and the jar each one is built on —
+      then the serving guide the rail has no room for.
+      OWN-WORLD: The shipped Maleny Cuisine system, unchanged. Ivory chrome,
+      white content ground with one cream band of reference, fig-brown ink, one
+      Caslon line per band, 2px and 4px corners, hairlines, flat at rest.
+      STORY: A cook lands from the header, reads what the page is in one
+      sentence, picks a dish, and leaves through the jar that dish uses.
+      FIRST VIEWPORT: Chrome, a short white header block, then the first row of
+      three dishes with the second row breaking the fold.
+      FORM: Index — the home page's recipe rail unrolled into a grid.
+      CONSTRAINT: Method copy is the client's to supply. Nothing on this page
+      invents a quantity, a cooking time or a serving count, and every line in
+      the serving guide is the client's own product copy.
+    -->
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <!-- ==================================================================
@@ -122,8 +122,8 @@
           <li class="has-mega">
             <a href="index.html#shop" aria-expanded="false" aria-controls="mega-shop">Shop</a>
           </li>
-          <li><a href="recipes.html">Recipes</a></li>
-          <li><a href="our-story.html">Our Story</a></li>
+          <li><a href="recipes.html" aria-current="page">Recipes</a></li>
+          <li><a href="index.html#story">Our Story</a></li>
           <li><a href="stockists.html">Stockists</a></li>
         </ul>
 
@@ -133,8 +133,8 @@
 
         <div class="nav-end">
           <ul class="nav-links nav-links--right">
-            <li><a href="work-with-us.html">Work With Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="index.html#work-with-us">Work With Us</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
           </ul>
 
           <div class="nav-actions">
@@ -145,13 +145,16 @@
               </svg>
             </button>
 
-            <a class="icon-button account-link" href="#" aria-label="Your account">
+            <a class="icon-button account-link" href="#account" aria-label="Your account">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="12" cy="8" r="4"></circle>
                 <path d="M4.75 20.25a7.25 7.25 0 0 1 14.5 0"></path>
               </svg>
             </a>
 
+            <!-- A real link to the bag page, not a placeholder anchor: cart.js
+                 takes the click over and opens the slide-out instead, so the
+                 icon still leads somewhere with JavaScript off. -->
             <a class="icon-button bag-link" href="cart-b.html" aria-label="Shopping bag, 0 items">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6.25 7.25h11.5l1.1 12a1.5 1.5 0 0 1-1.5 1.65H6.65a1.5 1.5 0 0 1-1.5-1.65l1.1-12Z"></path>
@@ -167,18 +170,18 @@
         <div class="mega-menu__inner">
           <div class="mega-menu__column">
             <ul class="mega-links">
-              <li><a href="archive-a.html">Best Sellers</a></li>
-              <li><a href="archive-a.html?category=chutneys">Chutneys</a></li>
-              <li><a href="archive-a.html?category=chutneys">Relishes</a></li>
-              <li><a href="archive-a.html?category=sauces">Sauces</a></li>
-              <li><a href="archive-a.html?category=dressings">Salad Dressings</a></li>
-              <li><a href="archive-a.html?category=jams">Jams &amp; Marmalades</a></li>
+              <li><a href="index.html#best-sellers">Best Sellers</a></li>
+              <li><a href="index.html#chutneys">Chutneys</a></li>
+              <li><a href="index.html#relishes">Relishes</a></li>
+              <li><a href="index.html#sauces">Sauces</a></li>
+              <li><a href="index.html#dressings">Salad Dressings</a></li>
+              <li><a href="index.html#jams">Jams &amp; Marmalades</a></li>
               <li><a href="index.html#shop">Shop All</a></li>
             </ul>
           </div>
 
           <div class="mega-cards">
-            <a class="mega-card" href="archive-a.html?category=chutneys">
+            <a class="mega-card" href="index.html#chutneys">
               <span class="mega-card__media">
                 <img src="assets/images/Maleny-Cuisine-Chutneys.jpg" alt="" loading="lazy" />
               </span>
@@ -193,7 +196,7 @@
               </span>
             </a>
 
-            <a class="mega-card" href="archive-a.html?category=sauces">
+            <a class="mega-card" href="index.html#sauces">
               <span class="mega-card__media">
                 <img src="assets/images/Maleny-Cuisine-Sauces.jpg" alt="" loading="lazy" />
               </span>
@@ -208,7 +211,7 @@
               </span>
             </a>
 
-            <a class="mega-card" href="archive-a.html?category=jams">
+            <a class="mega-card" href="index.html#jams">
               <span class="mega-card__media">
                 <img src="assets/images/Maleny-Cuisine-Jams-Marmalades.jpg" alt="" loading="lazy" />
               </span>
@@ -279,7 +282,7 @@
         <div class="drawer-panel is-active" id="panel-shop" role="tabpanel" aria-labelledby="tab-shop">
           <ul class="drawer-list">
             <li>
-              <a class="drawer-card" href="archive-a.html">
+              <a class="drawer-card" href="index.html#best-sellers">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Best Sellers</span>
                   <span class="drawer-card__sub">The best of Maleny Cuisine</span>
@@ -290,7 +293,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="archive-a.html?category=chutneys">
+              <a class="drawer-card" href="index.html#chutneys">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Chutneys</span>
                   <span class="drawer-card__sub">Slow-cooked in small batches</span>
@@ -301,7 +304,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="archive-a.html?category=chutneys">
+              <a class="drawer-card" href="index.html#relishes">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Relishes</span>
                   <span class="drawer-card__sub">Tomato, onion &amp; eggplant</span>
@@ -312,7 +315,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="archive-a.html?category=sauces">
+              <a class="drawer-card" href="index.html#sauces">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Sauces</span>
                   <span class="drawer-card__sub">BBQ, sweet chilli &amp; more</span>
@@ -323,7 +326,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="archive-a.html?category=dressings">
+              <a class="drawer-card" href="index.html#dressings">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Salad Dressings</span>
                   <span class="drawer-card__sub">Italian, Thai &amp; sweet mustard</span>
@@ -334,7 +337,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="archive-a.html?category=jams">
+              <a class="drawer-card" href="index.html#jams">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Jams &amp; Marmalades</span>
                   <span class="drawer-card__sub">Fruit picked at its best</span>
@@ -372,7 +375,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="our-story.html">
+              <a class="drawer-card" href="index.html#story">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Our Story</span>
                   <span class="drawer-card__sub">Made on the Sunshine Coast</span>
@@ -394,7 +397,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="work-with-us.html">
+              <a class="drawer-card" href="index.html#work-with-us">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Work With Us</span>
                   <span class="drawer-card__sub">Wholesale &amp; food service</span>
@@ -405,7 +408,7 @@
               </a>
             </li>
             <li>
-              <a class="drawer-card" href="contact.html">
+              <a class="drawer-card" href="index.html#contact">
                 <span class="drawer-card__text">
                   <span class="drawer-card__title">Contact Us</span>
                   <span class="drawer-card__sub">We would love to hear from you</span>
@@ -418,38 +421,210 @@
           </ul>
         </div>
 
-        <a class="mobile-menu__account" href="#">My account</a>
+        <a class="mobile-menu__account" href="#account">My account</a>
       </div>
     </header>
 
-    <!-- ==================================================================
-         REPLACE EVERYTHING INSIDE <main>.
-         A page is a stack of full-bleed bands. Two starters are shown below —
-         delete the one you do not need, and read the "Page recipes" section of
-         design-system.html before adding a third band shape.
-         ================================================================== -->
     <main id="main-content">
-      <!-- STARTER B — a content band.
-           .section is paper by default. Add --ivory, --cream or --deep to
-           change the ground; add --bleed when the band runs a rail to the
-           page edge. -->
-      <section class="section" id="intro" aria-labelledby="intro-title">
-        <div class="section__head">
-          <h2 class="section-title" id="intro-title">A band heading</h2>
-        </div>
+      <!-- Hero. The archive's shape, not the home page's: a listing page has
+           nothing to establish and six dishes to get to, so the opening is a
+           label and one sentence on white, with the first row of cards
+           breaking the fold. -->
+      <section class="page-hero" aria-labelledby="recipes-title">
+        <h1 class="page-hero__title" id="recipes-title">Recipes</h1>
+        <p class="page-hero__lede">
+          Explore our collection of delicious, gourmet recipes designed to elevate any
+          dish with our premium condiments.
+        </p>
+      </section>
 
-        <div class="prose">
-          <p>
-            Long-form copy goes here, capped at 68ch by <code>.prose</code>. Product terminology stays
-            as the brand uses it — chutney, relish, sauce, conserve, marmalade, dressing — and spelling
-            is Australian English throughout.
-          </p>
-          <p>
-            Dietary, allergen and ingredient text is regulated. Copy it verbatim from
-            <code>content/products.md</code>, set it at full ink on a pale ground, and carve out the
-            Special BBQ Sauce from any range-wide claim.
-          </p>
-        </div>
+      <!-- The index. The home page runs these six dishes as a drifting rail;
+           here they stand still in a grid, because a page you arrived at on
+           purpose should not move while you read it. Each card leads to the jar
+           the dish is built on — the only destination that exists today, and an
+           honest one: the method copy is the client's to supply. -->
+      <section class="recipe-index" aria-labelledby="recipe-index-title">
+        <h2 class="visually-hidden" id="recipe-index-title">Recipes</h2>
+
+        <ul class="recipe-grid">
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-pasta-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/hover/Recipes-Home-Page-Image.jpg"
+                  alt=""
+                  width="1066"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">Weeknight</p>
+                <h3 class="recipe-card__title" id="recipe-pasta-name">
+                  <a class="recipe-card__link" href="product.html">Tomato pasta</a>
+                </h3>
+                <p class="recipe-card__note">
+                  A spoonful of relish stirred through the pan lifts a plain tomato sauce
+                  into something worth serving.
+                </p>
+                <p class="recipe-card__product">Made with Spicy Tomato Relish</p>
+              </div>
+            </article>
+          </li>
+
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-pizza-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/lamb-savoury-eggplant-chutney-pizza.jpg"
+                  alt=""
+                  width="1080"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">To share</p>
+                <h3 class="recipe-card__title" id="recipe-pizza-name">
+                  <a class="recipe-card__link" href="product.html">Lamb and eggplant pizza</a>
+                </h3>
+                <p class="recipe-card__note">
+                  Eggplant relish under the lamb, on a thin base. The relish was made for
+                  lamb, and this is the plainest way to prove it.
+                </p>
+                <p class="recipe-card__product">Made with Mediterranean Eggplant Relish</p>
+              </div>
+            </article>
+          </li>
+
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-dumplings-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/sweet-chilli-ginger-pork-dumplings.jpg"
+                  alt=""
+                  width="1080"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">To share</p>
+                <h3 class="recipe-card__title" id="recipe-dumplings-name">
+                  <a class="recipe-card__link" href="product.html">Pork dumplings</a>
+                </h3>
+                <p class="recipe-card__note">
+                  Buderim ginger through sweet chilli, poured straight from the bottle as
+                  the dipping sauce.
+                </p>
+                <p class="recipe-card__product">Made with Sweet Chilli and Ginger Sauce</p>
+              </div>
+            </article>
+          </li>
+
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-salad-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/IMG_0998-e1736483743208.jpg"
+                  alt=""
+                  width="2048"
+                  height="997"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">Summer</p>
+                <h3 class="recipe-card__title" id="recipe-salad-name">
+                  <a class="recipe-card__link" href="product.html">Thai noodle salad</a>
+                </h3>
+                <p class="recipe-card__note">
+                  Noodles, cabbage and peanuts, splashed liberally with an oil-free
+                  dressing while everything is still warm.
+                </p>
+                <p class="recipe-card__product">Made with Thai Style Salad Dressing</p>
+              </div>
+            </article>
+          </li>
+
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-board-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/chutney-cheese-fruit.jpg"
+                  alt=""
+                  width="1080"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">Entertaining</p>
+                <h3 class="recipe-card__title" id="recipe-board-name">
+                  <a class="recipe-card__link" href="product.html">Cheese and fruit board</a>
+                </h3>
+                <p class="recipe-card__note">
+                  Tart green apple and sweet fig against a soft cheese — the chutney does
+                  the whole job, simply served.
+                </p>
+                <p class="recipe-card__product">Made with Apple Fig and Ginger Chutney</p>
+              </div>
+            </article>
+          </li>
+
+          <li class="recipe-grid__item">
+            <article class="recipe-card" aria-labelledby="recipe-platter-name">
+              <a class="recipe-card__media" href="product.html" tabindex="-1" aria-hidden="true">
+                <img
+                  class="recipe-card__image"
+                  src="assets/images/Grazing-Platter-1.jpg"
+                  alt=""
+                  width="1080"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+
+              <div class="recipe-card__content">
+                <p class="recipe-card__eyebrow">Entertaining</p>
+                <h3 class="recipe-card__title" id="recipe-platter-name">
+                  <a class="recipe-card__link" href="product.html">Grazing platter</a>
+                </h3>
+                <p class="recipe-card__note">
+                  Cold meats, cheeses and bread on a board, with onion marmalade in a bowl
+                  at the middle of it.
+                </p>
+                <p class="recipe-card__product">Made with Caramelised Onion Marmalade</p>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </section>
+
+      <!-- The way out. One line, one button: the page has argued for the jars,
+           so it ends by pointing at them. -->
+      <section class="recipe-cta" aria-labelledby="recipe-cta-title">
+        <h2 class="recipe-cta__title" id="recipe-cta-title">Cook with the pantry.</h2>
+        <p class="recipe-cta__lede">
+          Seventeen products, made by hand at Marcoola from Sunshine Coast produce.
+        </p>
+        <a class="button recipe-cta__button" href="archive-a.html">Shop all products</a>
       </section>
     </main>
 
@@ -674,10 +849,10 @@
 
           <nav class="footer-links" aria-label="Help">
             <p class="footer-label">Help</p>
-            <a href="#">Shipping</a>
-            <a href="faq.html">FAQs</a>
-            <a href="contact.html">Contact</a>
-            <a href="work-with-us.html">Wholesale</a>
+            <a href="#shipping">Shipping</a>
+            <a href="#faqs">FAQs</a>
+            <a href="#contact">Contact</a>
+            <a href="#work-with-us">Wholesale</a>
           </nav>
 
           <div class="split-contact">
@@ -713,8 +888,8 @@
       <div class="footer-base footer-base--split">
         <p>&copy; <span data-year>2026</span> Maleny Cuisine Pty Ltd</p>
         <nav class="footer-base__legal" aria-label="Legal">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#terms">Terms</a>
         </nav>
         <nav class="footer-base__social" aria-label="Social media">
           <a href="https://www.instagram.com/" target="_blank" rel="noopener">
@@ -745,6 +920,82 @@
       </div>
     </footer>
 
+    <!-- ==================================================================
+         THE BAG — site chrome for any page that sells.
+
+         Two parts. First the record: an empty list that cart.js appends a line
+         to each time a jar is added. It is markup rather than script state for
+         the same reason the bag page's list is, and it is hidden because this
+         page has no room to show a bag — the panel below is its only view.
+
+         Then the panel itself, copied whole from cart-b.html. The header's bag
+         icon is a real link to that page, so with JavaScript off the bag still
+         works; with it, the link opens this instead, and so does Add to cart.
+         ================================================================== -->
+    <ul class="bag-store" data-cart hidden></ul>
+    <p class="visually-hidden" data-cart-status role="status" aria-live="polite" aria-atomic="true"></p>
+
+    <div class="mini-bag" id="mini-bag" data-mini-bag aria-hidden="true">
+      <div class="mini-bag__scrim" data-mini-scrim></div>
+
+      <section class="mini-bag__panel" role="dialog" aria-modal="true" aria-labelledby="mini-bag-title">
+        <header class="mini-bag__head">
+          <h2 class="mini-bag__title" id="mini-bag-title">Your bag</h2>
+          <button class="icon-button" type="button" data-mini-close aria-label="Close bag">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="mini-bag__body">
+          <ul class="mini-bag__list" data-mini-list hidden></ul>
+
+          <!-- The bag starts empty on this page, so this is the state that
+               ships visible and the foot below it ships hidden. -->
+          <!-- The one page where "Shop all products" would be a link back to
+               itself. The range is already behind the panel, so the button
+               closes it rather than navigating anywhere. -->
+          <div class="mini-bag__empty" data-mini-empty>
+            <p>Your bag is empty. The whole range is right behind this panel.</p>
+            <button class="outline-button" type="button" data-mini-close>
+              Keep shopping <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mini-bag__foot" data-mini-foot hidden>
+          <div class="delivery-meter" data-delivery-meter>
+            <p class="delivery-meter__text" data-meter-text>
+              <span class="delivery-meter__amount">$60.00</span> more and delivery is free — the offer
+              applies to orders over $60.
+            </p>
+            <div class="delivery-meter__track" aria-hidden="true">
+              <div class="delivery-meter__fill" data-meter-fill style="--meter-progress: 0"></div>
+            </div>
+          </div>
+
+          <dl class="mini-bag__subtotal">
+            <dt>Subtotal</dt>
+            <dd data-subtotal>$0.00</dd>
+          </dl>
+
+          <!-- Two routes to the same money: the full checkout, and the direct
+               one that skips it. Both are dead anchors in this prototype until
+               a payment provider exists. -->
+          <div class="mini-bag__actions">
+            <a class="button cart-checkout" href="checkout.html">Proceed to checkout</a>
+            <a class="button cart-checkout cart-pay" href="#payment">
+              <svg class="cart-pay__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="4" y="10.5" width="16" height="9.5" rx="1.5" />
+                <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5" />
+              </svg>
+              Pay now
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
     <script src="script.js"></script>
+    <script src="cart.js"></script>
   </body>
 </html>

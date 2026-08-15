@@ -199,3 +199,54 @@ if (filterBar && "IntersectionObserver" in window) {
     { threshold: 0 }
   ).observe(sentinel);
 }
+
+/* ---------------------------------------------------------------
+   Category — the chip row, read back off the URL.
+
+   Each chip is still a real link, so the row works with JavaScript
+   off; it simply lands on the full grid instead of a narrowed one.
+   The category rides in the query string rather than the hash so it
+   never fights the skip link or an in-page anchor.
+   --------------------------------------------------------------- */
+
+if (archiveGrid) {
+  const category = new URLSearchParams(window.location.search).get("category");
+
+  if (category) {
+    let matched = 0;
+
+    archiveGrid.querySelectorAll(".archive-grid__item").forEach((item) => {
+      const isMatch = item.dataset.category === category;
+      item.hidden = !isMatch;
+      if (isMatch) matched += 1;
+    });
+
+    /* A category nobody stocks would otherwise leave an empty page with no
+       explanation, so the narrowing is abandoned rather than shown. */
+    if (matched === 0) {
+      archiveGrid
+        .querySelectorAll(".archive-grid__item")
+        .forEach((item) => (item.hidden = false));
+    } else {
+      /* The chip that is now the page moves aria-current onto itself, and the
+         headings say which line is on screen rather than "Shop All". */
+      const chip = document.querySelector(
+        `.archive-filter__chips a[href$="category=${category}"]`
+      );
+
+      if (chip) {
+        document
+          .querySelectorAll(".archive-filter__chips [aria-current]")
+          .forEach((other) => other.removeAttribute("aria-current"));
+        chip.setAttribute("aria-current", "page");
+
+        const label = chip.textContent.trim();
+        const title = document.getElementById("archive-title");
+        const gridTitle = document.getElementById("archive-grid-title");
+        if (title) title.textContent = label;
+        if (gridTitle) gridTitle.textContent = label;
+        document.title = `${label} — Maleny Cuisine`;
+      }
+    }
+  }
+}

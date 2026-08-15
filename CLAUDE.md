@@ -11,19 +11,43 @@ and JS. **No framework, no build step, no package.json, no tests.**
 The shipped site is exactly these files:
 
 ```
-index.html        the whole page — chrome, hero, all bands, footer
-styles.css        the product stylesheet (tokens + every component)
+index.html        home — chrome, hero, all bands, footer
+archive-a.html    the full catalogue
+product.html      a single product
+cart-b.html       the bag
+checkout.html     the checkout
+our-story.html    the brand's editorial page
+contact.html      enquiry form
+faq.html          questions and answers
+work-with-us.html wholesale and food service
+
+styles.css        the product stylesheet (tokens + every shared component)
 script.js         header/menu/search, the product rail, reveals, marquees
-testimonials.css  the customer review band
-testimonials.js   the review carousel
+testimonials.css  the customer review band          (index)
+testimonials.js   the review carousel               (index)
+archive.css       the catalogue grid and filters    (archive-a)
+archive.js        "
+cart.css          the bag, and the bag count in the header
+cart.js           "
+checkout.css      the pay step only                 (checkout)
+checkout.js       "
+our-story.css     the four story bands              (our-story)
+pages.css         contact, faq and work-with-us
+pages.js          "
 assets/images/    photography, packshots, logo
 ```
 
-Everything else in the working directory is local docs or tooling and is deliberately
-untracked (see `.gitignore`, which ignores `*` and then allows the files above back in).
-That includes the four reference files — `design-system.html`, `design-system.css`,
-`page-template.html` and `DESIGN.md` — which are read constantly and shipped never.
-When you add a shipped file, you must add an `!` allow line for it, or Git will not see it.
+Every page lives flat at the repository root and links its siblings by file name —
+there is no build step and no sub-directory of pages. Do not create one.
+
+The rest of the working directory is local docs or tooling: `.gitignore` keeps
+`.agents/` and `design-references/` out. The four reference files —
+`design-system.html`, `design-system.css`, `page-template.html` and `DESIGN.md` —
+are tracked, read constantly, and linked from a shipped page never.
+
+Form fields (`.field-group`, `.field`, `.field__label`, …) are a **shared primitive in
+`styles.css`**, not a checkout component. Four pages use them. `checkout.css` keeps only
+what belongs to paying: card fields, hints and card marks.
 
 ## The design system — read this before building any page
 
@@ -54,9 +78,9 @@ promotion dialog, header, mega menu, search panel, mobile drawer and split foote
 all wired to `script.js`. Copy it, replace the contents of `<main>`, and the chrome
 is correct for free.
 
-Two things to fix in anything copied out of those two files: they refer to the home
-page as `index2.html`, and the shipped home page is `index.html`. `design-system.html`
-is a reference page, so its own demo markup uses placeholder `href="#"` links.
+One thing to fix in anything copied out of `design-system.html`: it is a reference
+page, so its own demo markup uses placeholder `href="#"` links. Replace them with the
+real page names.
 
 **`DESIGN.md`** is the companion prose: the named rules behind the tokens (the One
 Family Rule, the Doorway Rule, the Dark Band Allowance, the Dietary Contrast Rule,
